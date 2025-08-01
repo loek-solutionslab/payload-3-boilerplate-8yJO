@@ -46,6 +46,26 @@ pnpm payload migrate:create migration_name
 pnpm payload [command]
 ```
 
+### Production Build & Migrations
+
+When deploying to production environments (Railway, Vercel, etc.), the build process may prompt for migration confirmation. To handle this:
+
+1. **Set environment variable in production:**
+   ```bash
+   PAYLOAD_MIGRATE_SKIP_PROMPT=true
+   ```
+
+2. **Alternative: Run migrations locally before deployment:**
+   ```bash
+   # Connect to production database locally
+   DATABASE_URI=your-production-db-uri pnpm payload migrate
+   ```
+
+3. **If migrations get stuck during build:**
+   - The postgres adapter is configured to skip prompts in production when `NODE_ENV=production`
+   - Ensure `PAYLOAD_MIGRATE_SKIP_PROMPT=true` is set in your deployment platform
+   - Consider running migrations as a separate deployment step
+
 ## Architecture Overview
 
 This is a Next.js 15 application with Payload CMS V3, using PostgreSQL as the database. The project uses the App Router pattern with distinct sections for frontend and admin functionality.

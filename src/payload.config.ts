@@ -62,6 +62,11 @@ export default buildConfig({
     pool: {
       connectionString: process.env.DATABASE_URI || '',
     },
+    migrationDir: path.resolve(dirname, 'migrations'),
+    // Skip interactive prompts in production
+    ...(process.env.NODE_ENV === 'production' && {
+      disableDevWarning: true,
+    }),
   }),
   collections: [Pages, Posts, Media, Categories, Users, Comments],
   cors: [getServerSideURL()].filter(Boolean),
