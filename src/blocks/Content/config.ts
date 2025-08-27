@@ -1,4 +1,5 @@
 import type { Block, Field } from 'payload'
+import { backgroundColorField } from '@/fields/backgroundColor'
 
 import {
   FixedToolbarFeature,
@@ -70,5 +71,6 @@ export const Content: Block = {
       type: 'array',
       fields: columnFields,
     },
+    backgroundColorField,
   ],
 }

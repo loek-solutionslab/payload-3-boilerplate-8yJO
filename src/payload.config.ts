@@ -12,8 +12,16 @@ import { Media } from './collections/Media'
 import { Pages } from './collections/Pages'
 import { Posts } from './collections/Posts'
 import { Users } from './collections/Users'
+import { Courses } from './collections/Courses'
+import { AgeGroups } from './collections/AgeGroups'
+import { Services } from './collections/Services'
+import { Testimonials } from './collections/Testimonials'
+import { Team } from './collections/Team'
+import { FAQ } from './collections/FAQ'
 import { Footer } from './Footer/config'
 import { Header } from './Header/config'
+import { SiteSettings } from './globals/SiteSettings'
+import { StyleSettings } from './globals/StyleSettings'
 import { plugins } from './plugins'
 import { defaultLexical } from '@/fields/defaultLexical'
 import { getServerSideURL } from './utilities/getURL'
@@ -68,9 +76,9 @@ export default buildConfig({
       disableDevWarning: true,
     }),
   }),
-  collections: [Pages, Posts, Media, Categories, Users, Comments],
+  collections: [Pages, Posts, Media, Categories, Users, Comments, Courses, AgeGroups, Services, Testimonials, Team, FAQ],
   cors: [getServerSideURL()].filter(Boolean),
-  globals: [Header, Footer],
+  globals: [Header, Footer, SiteSettings, StyleSettings],
   plugins: [
     ...plugins,
     // storage-adapter-placeholder

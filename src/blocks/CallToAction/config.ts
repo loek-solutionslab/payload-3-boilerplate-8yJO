@@ -1,4 +1,5 @@
 import type { Block } from 'payload'
+import { backgroundColorField } from '@/fields/backgroundColor'
 
 import {
   FixedToolbarFeature,
@@ -34,6 +35,7 @@ export const CallToAction: Block = {
         maxRows: 2,
       },
     }),
+    backgroundColorField,
   ],
   labels: {
     plural: 'Calls to Action',

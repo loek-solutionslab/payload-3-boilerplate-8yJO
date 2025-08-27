@@ -73,6 +73,12 @@ export interface Config {
     categories: Category;
     users: User;
     comments: Comment;
+    courses: Course;
+    ageGroups: AgeGroup;
+    services: Service;
+    testimonials: Testimonial;
+    team: Team;
+    faq: Faq;
     redirects: Redirect;
     forms: Form;
     'form-submissions': FormSubmission;
@@ -89,6 +95,12 @@ export interface Config {
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     comments: CommentsSelect<false> | CommentsSelect<true>;
+    courses: CoursesSelect<false> | CoursesSelect<true>;
+    ageGroups: AgeGroupsSelect<false> | AgeGroupsSelect<true>;
+    services: ServicesSelect<false> | ServicesSelect<true>;
+    testimonials: TestimonialsSelect<false> | TestimonialsSelect<true>;
+    team: TeamSelect<false> | TeamSelect<true>;
+    faq: FaqSelect<false> | FaqSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
@@ -103,10 +115,14 @@ export interface Config {
   globals: {
     header: Header;
     footer: Footer;
+    siteSettings: SiteSetting;
+    styleSettings: StyleSetting;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
+    siteSettings: SiteSettingsSelect<false> | SiteSettingsSelect<true>;
+    styleSettings: StyleSettingsSelect<false> | StyleSettingsSelect<true>;
   };
   locale: null;
   user: User & {
@@ -180,7 +196,179 @@ export interface Page {
       | null;
     media?: (number | null) | Media;
   };
-  layout: (CallToActionBlock | ContentBlock | MediaBlock | ArchiveBlock | FormBlock)[];
+  layout: (
+    | CallToActionBlock
+    | ContentBlock
+    | MediaBlock
+    | ArchiveBlock
+    | FormBlock
+    | {
+        title: string;
+        features?:
+          | {
+              icon?: (number | null) | Media;
+              title: string;
+              description?: string | null;
+              link: {
+                type?: ('reference' | 'custom') | null;
+                newTab?: boolean | null;
+                reference?: {
+                  relationTo: 'pages';
+                  value: number | Page;
+                } | null;
+                url?: string | null;
+                label: string;
+                /**
+                 * Choose how the link should be rendered.
+                 */
+                appearance?: ('default' | 'outline') | null;
+              };
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'features';
+      }
+    | {
+        title: string;
+        description?: string | null;
+        buttonText?: string | null;
+        image?: (number | null) | Media;
+        /**
+         * HTML toegestaan voor links
+         */
+        privacyText?: string | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'newsletterCTA';
+      }
+    | {
+        title: string;
+        description?: string | null;
+        image: number | Media;
+        imagePosition?: ('left' | 'right') | null;
+        primaryButton: {
+          type?: ('reference' | 'custom') | null;
+          newTab?: boolean | null;
+          reference?: {
+            relationTo: 'pages';
+            value: number | Page;
+          } | null;
+          url?: string | null;
+          label: string;
+          /**
+           * Choose how the link should be rendered.
+           */
+          appearance?: ('default' | 'outline') | null;
+        };
+        secondaryButton: {
+          type?: ('reference' | 'custom') | null;
+          newTab?: boolean | null;
+          reference?: {
+            relationTo: 'pages';
+            value: number | Page;
+          } | null;
+          url?: string | null;
+          label: string;
+          /**
+           * Choose how the link should be rendered.
+           */
+          appearance?: ('default' | 'outline') | null;
+        };
+        /**
+         * Choose a background color for this block
+         */
+        backgroundColor?:
+          | (
+              | ''
+              | 'bg-[#FFFFFF]'
+              | 'bg-[#F2F2F2]'
+              | 'bg-[#B8B8B5]'
+              | 'bg-[#656564]'
+              | 'bg-[#000000]'
+              | 'bg-[#EDF3F5]'
+              | 'bg-[#B396AE]'
+              | 'bg-[#4F758D]'
+              | 'bg-[#3F5D70]'
+              | 'bg-[#17252A]'
+              | 'bg-[#E5F7F4]'
+              | 'bg-[#40C7B8]'
+              | 'bg-[#01B09A]'
+              | 'bg-[#008C7B]'
+              | 'bg-[#00432E]'
+              | 'bg-[#FDF4FB]'
+              | 'bg-[#F6EEE8]'
+              | 'bg-[#F5E0DF]'
+              | 'bg-[#C2BAB2]'
+              | 'bg-[#484542]'
+              | 'bg-[#FFF0F0]'
+              | 'bg-[#FF7971]'
+              | 'bg-[#FF6B68]'
+              | 'bg-[#CC5555]'
+              | 'bg-[#4C2020]'
+              | 'bg-[#F2F8FC]'
+              | 'bg-[#B2D5EA]'
+              | 'bg-[#A6D2E4]'
+              | 'bg-[#61A8BA]'
+              | 'bg-[#353F43]'
+            )
+          | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'hero';
+      }
+    | {
+        title?: string | null;
+        description?: string | null;
+        /**
+         * Selecteer tot 6 testimonials om weer te geven
+         */
+        testimonials: (number | Testimonial)[];
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'testimonials';
+      }
+    | {
+        title?: string | null;
+        description?: string | null;
+        /**
+         * Selecteer de vragen die je wilt weergeven in deze sectie
+         */
+        faqs: (number | Faq)[];
+        /**
+         * Laat leeg om alle geselecteerde vragen te tonen, of kies een categorie om alleen vragen uit die categorie te tonen
+         */
+        filterByCategory?:
+          | (
+              | ''
+              | 'general'
+              | 'screen-time'
+              | 'baby'
+              | 'toddler'
+              | 'preschooler'
+              | 'elementary'
+              | 'courses'
+              | 'daycare'
+              | 'municipality'
+              | 'school'
+            )
+          | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'faq';
+      }
+    | CourseArchiveBlock
+    | AgeGroupsArchiveBlock
+    | PostsArchiveBlock
+    | RelumeHeaderBlock
+    | RelumeLayoutBlock
+    | RelumeCTABlock
+    | RelumeGalleryBlock
+    | RelumePricingBlock
+    | RelumeTeamBlock
+    | RelumeContactBlock
+  )[];
   meta?: {
     title?: string | null;
     /**
@@ -319,6 +507,44 @@ export interface CallToActionBlock {
         id?: string | null;
       }[]
     | null;
+  /**
+   * Choose a background color for this block
+   */
+  backgroundColor?:
+    | (
+        | ''
+        | 'bg-[#FFFFFF]'
+        | 'bg-[#F2F2F2]'
+        | 'bg-[#B8B8B5]'
+        | 'bg-[#656564]'
+        | 'bg-[#000000]'
+        | 'bg-[#EDF3F5]'
+        | 'bg-[#B396AE]'
+        | 'bg-[#4F758D]'
+        | 'bg-[#3F5D70]'
+        | 'bg-[#17252A]'
+        | 'bg-[#E5F7F4]'
+        | 'bg-[#40C7B8]'
+        | 'bg-[#01B09A]'
+        | 'bg-[#008C7B]'
+        | 'bg-[#00432E]'
+        | 'bg-[#FDF4FB]'
+        | 'bg-[#F6EEE8]'
+        | 'bg-[#F5E0DF]'
+        | 'bg-[#C2BAB2]'
+        | 'bg-[#484542]'
+        | 'bg-[#FFF0F0]'
+        | 'bg-[#FF7971]'
+        | 'bg-[#FF6B68]'
+        | 'bg-[#CC5555]'
+        | 'bg-[#4C2020]'
+        | 'bg-[#F2F8FC]'
+        | 'bg-[#B2D5EA]'
+        | 'bg-[#A6D2E4]'
+        | 'bg-[#61A8BA]'
+        | 'bg-[#353F43]'
+      )
+    | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'cta';
@@ -364,6 +590,44 @@ export interface ContentBlock {
         id?: string | null;
       }[]
     | null;
+  /**
+   * Choose a background color for this block
+   */
+  backgroundColor?:
+    | (
+        | ''
+        | 'bg-[#FFFFFF]'
+        | 'bg-[#F2F2F2]'
+        | 'bg-[#B8B8B5]'
+        | 'bg-[#656564]'
+        | 'bg-[#000000]'
+        | 'bg-[#EDF3F5]'
+        | 'bg-[#B396AE]'
+        | 'bg-[#4F758D]'
+        | 'bg-[#3F5D70]'
+        | 'bg-[#17252A]'
+        | 'bg-[#E5F7F4]'
+        | 'bg-[#40C7B8]'
+        | 'bg-[#01B09A]'
+        | 'bg-[#008C7B]'
+        | 'bg-[#00432E]'
+        | 'bg-[#FDF4FB]'
+        | 'bg-[#F6EEE8]'
+        | 'bg-[#F5E0DF]'
+        | 'bg-[#C2BAB2]'
+        | 'bg-[#484542]'
+        | 'bg-[#FFF0F0]'
+        | 'bg-[#FF7971]'
+        | 'bg-[#FF6B68]'
+        | 'bg-[#CC5555]'
+        | 'bg-[#4C2020]'
+        | 'bg-[#F2F8FC]'
+        | 'bg-[#B2D5EA]'
+        | 'bg-[#A6D2E4]'
+        | 'bg-[#61A8BA]'
+        | 'bg-[#353F43]'
+      )
+    | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'content';
@@ -374,6 +638,44 @@ export interface ContentBlock {
  */
 export interface MediaBlock {
   media: number | Media;
+  /**
+   * Choose a background color for this block
+   */
+  backgroundColor?:
+    | (
+        | ''
+        | 'bg-[#FFFFFF]'
+        | 'bg-[#F2F2F2]'
+        | 'bg-[#B8B8B5]'
+        | 'bg-[#656564]'
+        | 'bg-[#000000]'
+        | 'bg-[#EDF3F5]'
+        | 'bg-[#B396AE]'
+        | 'bg-[#4F758D]'
+        | 'bg-[#3F5D70]'
+        | 'bg-[#17252A]'
+        | 'bg-[#E5F7F4]'
+        | 'bg-[#40C7B8]'
+        | 'bg-[#01B09A]'
+        | 'bg-[#008C7B]'
+        | 'bg-[#00432E]'
+        | 'bg-[#FDF4FB]'
+        | 'bg-[#F6EEE8]'
+        | 'bg-[#F5E0DF]'
+        | 'bg-[#C2BAB2]'
+        | 'bg-[#484542]'
+        | 'bg-[#FFF0F0]'
+        | 'bg-[#FF7971]'
+        | 'bg-[#FF6B68]'
+        | 'bg-[#CC5555]'
+        | 'bg-[#4C2020]'
+        | 'bg-[#F2F8FC]'
+        | 'bg-[#B2D5EA]'
+        | 'bg-[#A6D2E4]'
+        | 'bg-[#61A8BA]'
+        | 'bg-[#353F43]'
+      )
+    | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'mediaBlock';
@@ -703,6 +1005,934 @@ export interface Form {
   createdAt: string;
 }
 /**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "testimonials".
+ */
+export interface Testimonial {
+  id: number;
+  name: string;
+  /**
+   * Bijvoorbeeld: "Moeder van 2", "Pedagoog", "Directeur"
+   */
+  role?: string | null;
+  /**
+   * Naam van kinderdagverblijf, school of gemeente (optioneel)
+   */
+  company?: string | null;
+  content: string;
+  rating: '1' | '2' | '3' | '4' | '5';
+  /**
+   * Optionele profielfoto
+   */
+  avatar?: (number | null) | Media;
+  serviceUsed?: ('general' | 'course' | 'daycare' | 'municipality' | 'school') | null;
+  /**
+   * Toon deze testimonial op de homepage en andere belangrijke pagina's
+   */
+  featured?: boolean | null;
+  tags?:
+    | ('screen-time' | 'parenting' | 'education' | 'balance' | 'baby' | 'toddler' | 'preschooler' | 'elementary')[]
+    | null;
+  publishedAt?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "faq".
+ */
+export interface Faq {
+  id: number;
+  question: string;
+  answer: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  category:
+    | 'general'
+    | 'screen-time'
+    | 'baby'
+    | 'toddler'
+    | 'preschooler'
+    | 'elementary'
+    | 'courses'
+    | 'daycare'
+    | 'municipality'
+    | 'school'
+    | 'technical';
+  tags?:
+    | (
+        | 'parenting'
+        | 'education'
+        | 'balance'
+        | 'safety'
+        | 'development'
+        | 'media'
+        | 'apps'
+        | 'games'
+        | 'videos'
+        | 'social-media'
+      )[]
+    | null;
+  /**
+   * Bepaalt de volgorde waarin vragen worden weergegeven binnen een categorie
+   */
+  order: number;
+  /**
+   * Schakel uit om tijdelijk te verbergen zonder te verwijderen
+   */
+  active?: boolean | null;
+  /**
+   * Markeer als deze vraag vaak als nuttig wordt beoordeeld door bezoekers
+   */
+  helpful?: boolean | null;
+  /**
+   * Koppel gerelateerde vragen die bezoekers ook interessant kunnen vinden
+   */
+  relatedQuestions?: (number | Faq)[] | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CourseArchiveBlock".
+ */
+export interface CourseArchiveBlock {
+  title?: string | null;
+  description?: string | null;
+  introContent?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  populateBy?: ('collection' | 'selection' | 'targetAudience') | null;
+  targetAudience?: ('parents' | 'daycare' | 'schools' | 'municipalities')[] | null;
+  limit?: number | null;
+  selectedCourses?: (number | Course)[] | null;
+  showCategories?: boolean | null;
+  layout?: ('grid' | 'list') | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'courseArchive';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "courses".
+ */
+export interface Course {
+  id: number;
+  title: string;
+  description: string;
+  fullDescription?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  image: number | Media;
+  /**
+   * Prijs in euro's
+   */
+  price: number;
+  /**
+   * Bijvoorbeeld: "4 weken" of "2 dagen"
+   */
+  duration: string;
+  targetAudience?: ('parents' | 'daycare' | 'schools' | 'municipalities')[] | null;
+  features?:
+    | {
+        feature: string;
+        id?: string | null;
+      }[]
+    | null;
+  sessions?:
+    | {
+        title: string;
+        description?: string | null;
+        duration?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  testimonials?: (number | Testimonial)[] | null;
+  publishedAt?: string | null;
+  meta?: {
+    title?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
+    description?: string | null;
+  };
+  slug?: string | null;
+  slugLock?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "AgeGroupsArchiveBlock".
+ */
+export interface AgeGroupsArchiveBlock {
+  title?: string | null;
+  description?: string | null;
+  introContent?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  populateBy?: ('collection' | 'selection') | null;
+  selectedAgeGroups?: (number | AgeGroup)[] | null;
+  limit?: number | null;
+  layout?: ('grid' | 'list' | 'timeline') | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'ageGroupsArchive';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ageGroups".
+ */
+export interface AgeGroup {
+  id: number;
+  title: string;
+  /**
+   * Bijvoorbeeld: "0-1 jaar" of "4-6 jaar"
+   */
+  ageRange: string;
+  description: string;
+  heroImage: number | Media;
+  /**
+   * Bepaalt de volgorde waarin leeftijdsgroepen worden weergegeven
+   */
+  order: number;
+  content?:
+    | {
+        title: string;
+        content: {
+          root: {
+            type: string;
+            children: {
+              type: string;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        };
+        image?: (number | null) | Media;
+        imagePosition?: ('left' | 'right') | null;
+        id?: string | null;
+      }[]
+    | null;
+  tips?:
+    | {
+        tip: string;
+        id?: string | null;
+      }[]
+    | null;
+  resources?:
+    | {
+        title: string;
+        description?: string | null;
+        link?: string | null;
+        type?: ('article' | 'video' | 'app' | 'website' | 'book') | null;
+        id?: string | null;
+      }[]
+    | null;
+  faqs?: (number | Faq)[] | null;
+  relatedCourses?: (number | Course)[] | null;
+  publishedAt?: string | null;
+  meta?: {
+    title?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
+    description?: string | null;
+  };
+  slug?: string | null;
+  slugLock?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PostsArchiveBlock".
+ */
+export interface PostsArchiveBlock {
+  title?: string | null;
+  description?: string | null;
+  introContent?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  populateBy?: ('collection' | 'selection' | 'category') | null;
+  categories?: (number | Category)[] | null;
+  selectedPosts?: (number | Post)[] | null;
+  limit?: number | null;
+  showCategories?: boolean | null;
+  layout?: ('grid' | 'list' | 'magazine') | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'postsArchive';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "RelumeHeaderBlock".
+ */
+export interface RelumeHeaderBlock {
+  variant: 'header-01' | 'header-05' | 'header-46' | 'header-47' | 'header-50' | 'header-54' | 'header-62';
+  title: string;
+  description?: string | null;
+  primaryButton?: {
+    text?: string | null;
+    link?: string | null;
+    show?: boolean | null;
+  };
+  secondaryButton?: {
+    text?: string | null;
+    link?: string | null;
+    show?: boolean | null;
+  };
+  /**
+   * The main image for the header section
+   */
+  image?: (number | null) | Media;
+  /**
+   * Background image for full-screen header variants
+   */
+  backgroundImage?: (number | null) | Media;
+  imagePosition?: ('left' | 'right') | null;
+  features?:
+    | {
+        text?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  alignment?: ('left' | 'center' | 'right') | null;
+  /**
+   * Opacity of the dark overlay on background image (0-100)
+   */
+  overlayOpacity?: number | null;
+  /**
+   * Choose a background color for this block
+   */
+  backgroundColor?:
+    | (
+        | ''
+        | 'bg-[#FFFFFF]'
+        | 'bg-[#F2F2F2]'
+        | 'bg-[#B8B8B5]'
+        | 'bg-[#656564]'
+        | 'bg-[#000000]'
+        | 'bg-[#EDF3F5]'
+        | 'bg-[#B396AE]'
+        | 'bg-[#4F758D]'
+        | 'bg-[#3F5D70]'
+        | 'bg-[#17252A]'
+        | 'bg-[#E5F7F4]'
+        | 'bg-[#40C7B8]'
+        | 'bg-[#01B09A]'
+        | 'bg-[#008C7B]'
+        | 'bg-[#00432E]'
+        | 'bg-[#FDF4FB]'
+        | 'bg-[#F6EEE8]'
+        | 'bg-[#F5E0DF]'
+        | 'bg-[#C2BAB2]'
+        | 'bg-[#484542]'
+        | 'bg-[#FFF0F0]'
+        | 'bg-[#FF7971]'
+        | 'bg-[#FF6B68]'
+        | 'bg-[#CC5555]'
+        | 'bg-[#4C2020]'
+        | 'bg-[#F2F8FC]'
+        | 'bg-[#B2D5EA]'
+        | 'bg-[#A6D2E4]'
+        | 'bg-[#61A8BA]'
+        | 'bg-[#353F43]'
+      )
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'relumeHeader';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "RelumeLayoutBlock".
+ */
+export interface RelumeLayoutBlock {
+  variant: 'layout-01' | 'layout-03' | 'layout-10' | 'layout-192' | 'layout-238' | 'layout-239';
+  /**
+   * Small text above the main title
+   */
+  tagline?: string | null;
+  title: string;
+  description?: string | null;
+  primaryButton?: {
+    text?: string | null;
+    link?: string | null;
+    variant?: ('primary' | 'secondary' | 'link') | null;
+    show?: boolean | null;
+  };
+  secondaryButton?: {
+    text?: string | null;
+    link?: string | null;
+    variant?: ('primary' | 'secondary' | 'link') | null;
+    show?: boolean | null;
+  };
+  /**
+   * Main image for two-column layouts
+   */
+  mainImage?: (number | null) | Media;
+  imagePosition?: ('left' | 'right') | null;
+  features?:
+    | {
+        icon?: (number | null) | Media;
+        title: string;
+        description?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  columns?:
+    | {
+        /**
+         * Icon for layout-238, image for layout-239
+         */
+        icon?: (number | null) | Media;
+        title: string;
+        description?: string | null;
+        buttonText?: string | null;
+        buttonLink?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  textAlignment?: ('left' | 'center' | 'right') | null;
+  /**
+   * Choose a background color for this block
+   */
+  backgroundColor?:
+    | (
+        | ''
+        | 'bg-[#FFFFFF]'
+        | 'bg-[#F2F2F2]'
+        | 'bg-[#B8B8B5]'
+        | 'bg-[#656564]'
+        | 'bg-[#000000]'
+        | 'bg-[#EDF3F5]'
+        | 'bg-[#B396AE]'
+        | 'bg-[#4F758D]'
+        | 'bg-[#3F5D70]'
+        | 'bg-[#17252A]'
+        | 'bg-[#E5F7F4]'
+        | 'bg-[#40C7B8]'
+        | 'bg-[#01B09A]'
+        | 'bg-[#008C7B]'
+        | 'bg-[#00432E]'
+        | 'bg-[#FDF4FB]'
+        | 'bg-[#F6EEE8]'
+        | 'bg-[#F5E0DF]'
+        | 'bg-[#C2BAB2]'
+        | 'bg-[#484542]'
+        | 'bg-[#FFF0F0]'
+        | 'bg-[#FF7971]'
+        | 'bg-[#FF6B68]'
+        | 'bg-[#CC5555]'
+        | 'bg-[#4C2020]'
+        | 'bg-[#F2F8FC]'
+        | 'bg-[#B2D5EA]'
+        | 'bg-[#A6D2E4]'
+        | 'bg-[#61A8BA]'
+        | 'bg-[#353F43]'
+      )
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'relumeLayout';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "RelumeCTABlock".
+ */
+export interface RelumeCTABlock {
+  variant: 'cta-02' | 'cta-20' | 'cta-26';
+  title: string;
+  description?: string | null;
+  /**
+   * Image for two-column CTA layout
+   */
+  image?: (number | null) | Media;
+  buttonText?: string | null;
+  buttonVariant?: ('primary' | 'secondary') | null;
+  emailPlaceholder?: string | null;
+  privacyText?: string | null;
+  alignment?: ('left' | 'center') | null;
+  /**
+   * Choose a background color for this block
+   */
+  backgroundColor?:
+    | (
+        | ''
+        | 'bg-[#FFFFFF]'
+        | 'bg-[#F2F2F2]'
+        | 'bg-[#B8B8B5]'
+        | 'bg-[#656564]'
+        | 'bg-[#000000]'
+        | 'bg-[#EDF3F5]'
+        | 'bg-[#B396AE]'
+        | 'bg-[#4F758D]'
+        | 'bg-[#3F5D70]'
+        | 'bg-[#17252A]'
+        | 'bg-[#E5F7F4]'
+        | 'bg-[#40C7B8]'
+        | 'bg-[#01B09A]'
+        | 'bg-[#008C7B]'
+        | 'bg-[#00432E]'
+        | 'bg-[#FDF4FB]'
+        | 'bg-[#F6EEE8]'
+        | 'bg-[#F5E0DF]'
+        | 'bg-[#C2BAB2]'
+        | 'bg-[#484542]'
+        | 'bg-[#FFF0F0]'
+        | 'bg-[#FF7971]'
+        | 'bg-[#FF6B68]'
+        | 'bg-[#CC5555]'
+        | 'bg-[#4C2020]'
+        | 'bg-[#F2F8FC]'
+        | 'bg-[#B2D5EA]'
+        | 'bg-[#A6D2E4]'
+        | 'bg-[#61A8BA]'
+        | 'bg-[#353F43]'
+      )
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'relumeCTA';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "RelumeGalleryBlock".
+ */
+export interface RelumeGalleryBlock {
+  /**
+   * Choose the gallery layout style
+   */
+  variant?: ('gallery-04' | 'gallery-08') | null;
+  /**
+   * Main heading for the gallery section
+   */
+  title: string;
+  /**
+   * Optional description text below the title
+   */
+  description?: string | null;
+  images?:
+    | {
+        /**
+         * Select an image for the gallery
+         */
+        image: number | Media;
+        /**
+         * Add a link when users click on this image
+         */
+        link?: {
+          type?: ('none' | 'reference' | 'custom') | null;
+          reference?: {
+            relationTo: 'pages';
+            value: number | Page;
+          } | null;
+          url?: string | null;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Choose a background color for this block
+   */
+  backgroundColor?:
+    | (
+        | ''
+        | 'bg-[#FFFFFF]'
+        | 'bg-[#F2F2F2]'
+        | 'bg-[#B8B8B5]'
+        | 'bg-[#656564]'
+        | 'bg-[#000000]'
+        | 'bg-[#EDF3F5]'
+        | 'bg-[#B396AE]'
+        | 'bg-[#4F758D]'
+        | 'bg-[#3F5D70]'
+        | 'bg-[#17252A]'
+        | 'bg-[#E5F7F4]'
+        | 'bg-[#40C7B8]'
+        | 'bg-[#01B09A]'
+        | 'bg-[#008C7B]'
+        | 'bg-[#00432E]'
+        | 'bg-[#FDF4FB]'
+        | 'bg-[#F6EEE8]'
+        | 'bg-[#F5E0DF]'
+        | 'bg-[#C2BAB2]'
+        | 'bg-[#484542]'
+        | 'bg-[#FFF0F0]'
+        | 'bg-[#FF7971]'
+        | 'bg-[#FF6B68]'
+        | 'bg-[#CC5555]'
+        | 'bg-[#4C2020]'
+        | 'bg-[#F2F8FC]'
+        | 'bg-[#B2D5EA]'
+        | 'bg-[#A6D2E4]'
+        | 'bg-[#61A8BA]'
+        | 'bg-[#353F43]'
+      )
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'relumeGallery';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "RelumePricingBlock".
+ */
+export interface RelumePricingBlock {
+  /**
+   * Small text above the title
+   */
+  tagline?: string | null;
+  /**
+   * Main heading for the pricing section
+   */
+  title: string;
+  /**
+   * Description text below the title
+   */
+  description?: string | null;
+  /**
+   * Label for the monthly pricing tab
+   */
+  monthlyTabLabel?: string | null;
+  /**
+   * Label for the yearly pricing tab
+   */
+  yearlyTabLabel?: string | null;
+  plans?:
+    | {
+        /**
+         * Name of the pricing plan (e.g., "Basisplan")
+         */
+        name: string;
+        /**
+         * Monthly price display (e.g., "$19/mo")
+         */
+        monthlyPrice: string;
+        /**
+         * Yearly price display (e.g., "$180/yr")
+         */
+        yearlyPrice: string;
+        /**
+         * Optional discount text for yearly plan (e.g., "Bespaar 20% met het jaarplan")
+         */
+        yearlyDiscount?: string | null;
+        features?:
+          | {
+              /**
+               * Description of the feature included in this plan
+               */
+              text: string;
+              id?: string | null;
+            }[]
+          | null;
+        /**
+         * Text for the call-to-action button
+         */
+        buttonText?: string | null;
+        buttonLink?: {
+          type?: ('reference' | 'custom') | null;
+          reference?: {
+            relationTo: 'pages';
+            value: number | Page;
+          } | null;
+          url?: string | null;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Choose a background color for this block
+   */
+  backgroundColor?:
+    | (
+        | ''
+        | 'bg-[#FFFFFF]'
+        | 'bg-[#F2F2F2]'
+        | 'bg-[#B8B8B5]'
+        | 'bg-[#656564]'
+        | 'bg-[#000000]'
+        | 'bg-[#EDF3F5]'
+        | 'bg-[#B396AE]'
+        | 'bg-[#4F758D]'
+        | 'bg-[#3F5D70]'
+        | 'bg-[#17252A]'
+        | 'bg-[#E5F7F4]'
+        | 'bg-[#40C7B8]'
+        | 'bg-[#01B09A]'
+        | 'bg-[#008C7B]'
+        | 'bg-[#00432E]'
+        | 'bg-[#FDF4FB]'
+        | 'bg-[#F6EEE8]'
+        | 'bg-[#F5E0DF]'
+        | 'bg-[#C2BAB2]'
+        | 'bg-[#484542]'
+        | 'bg-[#FFF0F0]'
+        | 'bg-[#FF7971]'
+        | 'bg-[#FF6B68]'
+        | 'bg-[#CC5555]'
+        | 'bg-[#4C2020]'
+        | 'bg-[#F2F8FC]'
+        | 'bg-[#B2D5EA]'
+        | 'bg-[#A6D2E4]'
+        | 'bg-[#61A8BA]'
+        | 'bg-[#353F43]'
+      )
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'relumePricing';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "RelumeTeamBlock".
+ */
+export interface RelumeTeamBlock {
+  /**
+   * Small text above the title
+   */
+  tagline?: string | null;
+  /**
+   * Main heading for the team section
+   */
+  title: string;
+  /**
+   * Description text below the title
+   */
+  description?: string | null;
+  teamMembers?:
+    | {
+        /**
+         * Professional headshot photo
+         */
+        photo: number | Media;
+        /**
+         * Team member's full name
+         */
+        name: string;
+        /**
+         * Team member's role or job title
+         */
+        position: string;
+        /**
+         * Brief description of their expertise or role
+         */
+        bio: string;
+        socialLinks?:
+          | {
+              platform: 'linkedin' | 'twitter' | 'instagram' | 'facebook' | 'dribbble' | 'github' | 'website';
+              /**
+               * Full URL to the social media profile
+               */
+              url: string;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Optional section to promote open positions
+   */
+  hiringSection?: {
+    show?: boolean | null;
+    title?: string | null;
+    description?: string | null;
+    buttonText?: string | null;
+    buttonLink?: {
+      type?: ('reference' | 'custom') | null;
+      reference?: {
+        relationTo: 'pages';
+        value: number | Page;
+      } | null;
+      url?: string | null;
+    };
+  };
+  /**
+   * Choose a background color for this block
+   */
+  backgroundColor?:
+    | (
+        | ''
+        | 'bg-[#FFFFFF]'
+        | 'bg-[#F2F2F2]'
+        | 'bg-[#B8B8B5]'
+        | 'bg-[#656564]'
+        | 'bg-[#000000]'
+        | 'bg-[#EDF3F5]'
+        | 'bg-[#B396AE]'
+        | 'bg-[#4F758D]'
+        | 'bg-[#3F5D70]'
+        | 'bg-[#17252A]'
+        | 'bg-[#E5F7F4]'
+        | 'bg-[#40C7B8]'
+        | 'bg-[#01B09A]'
+        | 'bg-[#008C7B]'
+        | 'bg-[#00432E]'
+        | 'bg-[#FDF4FB]'
+        | 'bg-[#F6EEE8]'
+        | 'bg-[#F5E0DF]'
+        | 'bg-[#C2BAB2]'
+        | 'bg-[#484542]'
+        | 'bg-[#FFF0F0]'
+        | 'bg-[#FF7971]'
+        | 'bg-[#FF6B68]'
+        | 'bg-[#CC5555]'
+        | 'bg-[#4C2020]'
+        | 'bg-[#F2F8FC]'
+        | 'bg-[#B2D5EA]'
+        | 'bg-[#A6D2E4]'
+        | 'bg-[#61A8BA]'
+        | 'bg-[#353F43]'
+      )
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'relumeTeam';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "RelumeContactBlock".
+ */
+export interface RelumeContactBlock {
+  contactMethods?:
+    | {
+        /**
+         * Choose an icon to represent this contact method
+         */
+        icon: 'email' | 'phone' | 'location' | 'calendar' | 'message' | 'clock';
+        /**
+         * Heading for this contact method (e.g., "E-mail", "Telefoon")
+         */
+        title: string;
+        /**
+         * Brief description or context for this contact method
+         */
+        description: string;
+        /**
+         * The actual contact info (email, phone number, address, etc.)
+         */
+        contactInfo: string;
+        /**
+         * Optional link (mailto:, tel:, maps URL, etc.)
+         */
+        link?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Choose a background color for this block
+   */
+  backgroundColor?:
+    | (
+        | ''
+        | 'bg-[#FFFFFF]'
+        | 'bg-[#F2F2F2]'
+        | 'bg-[#B8B8B5]'
+        | 'bg-[#656564]'
+        | 'bg-[#000000]'
+        | 'bg-[#EDF3F5]'
+        | 'bg-[#B396AE]'
+        | 'bg-[#4F758D]'
+        | 'bg-[#3F5D70]'
+        | 'bg-[#17252A]'
+        | 'bg-[#E5F7F4]'
+        | 'bg-[#40C7B8]'
+        | 'bg-[#01B09A]'
+        | 'bg-[#008C7B]'
+        | 'bg-[#00432E]'
+        | 'bg-[#FDF4FB]'
+        | 'bg-[#F6EEE8]'
+        | 'bg-[#F5E0DF]'
+        | 'bg-[#C2BAB2]'
+        | 'bg-[#484542]'
+        | 'bg-[#FFF0F0]'
+        | 'bg-[#FF7971]'
+        | 'bg-[#FF6B68]'
+        | 'bg-[#CC5555]'
+        | 'bg-[#4C2020]'
+        | 'bg-[#F2F8FC]'
+        | 'bg-[#B2D5EA]'
+        | 'bg-[#A6D2E4]'
+        | 'bg-[#61A8BA]'
+        | 'bg-[#353F43]'
+      )
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'relumeContact';
+}
+/**
  * Comments submitted by visitors on blog posts
  *
  * This interface was referenced by `Config`'s JSON-Schema
@@ -721,6 +1951,145 @@ export interface Comment {
    */
   isApproved?: boolean | null;
   publishedAt?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "services".
+ */
+export interface Service {
+  id: number;
+  title: string;
+  serviceType: 'daycare' | 'municipality' | 'school' | 'parents' | 'general';
+  description: string;
+  heroImage: number | Media;
+  benefits?:
+    | {
+        /**
+         * Naam van het icoon (bijvoorbeeld: "check", "star", "heart")
+         */
+        icon?: string | null;
+        title: string;
+        description: string;
+        id?: string | null;
+      }[]
+    | null;
+  features?:
+    | {
+        title: string;
+        description?: string | null;
+        image?: (number | null) | Media;
+        id?: string | null;
+      }[]
+    | null;
+  process?:
+    | {
+        step: number;
+        title: string;
+        description: string;
+        id?: string | null;
+      }[]
+    | null;
+  pricing?: {
+    hasCustomPricing?: boolean | null;
+    /**
+     * Prijs in euro's
+     */
+    price?: number | null;
+    /**
+     * Bijvoorbeeld: "Vanaf €500" of "Op aanvraag"
+     */
+    priceDescription?: string | null;
+  };
+  callToAction?: {
+    title?: string | null;
+    description?: string | null;
+    buttonText?: string | null;
+    buttonLink?: string | null;
+  };
+  testimonials?: (number | Testimonial)[] | null;
+  relatedServices?: (number | Service)[] | null;
+  publishedAt?: string | null;
+  meta?: {
+    title?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
+    description?: string | null;
+  };
+  slug?: string | null;
+  slugLock?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "team".
+ */
+export interface Team {
+  id: number;
+  name: string;
+  /**
+   * Bijvoorbeeld: "Oprichter & Media-adviseur", "Pedagogisch Expert"
+   */
+  role: string;
+  image: number | Media;
+  /**
+   * Korte beschrijving van achtergrond en expertise
+   */
+  bio: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  /**
+   * Bijvoorbeeld: "Schermtijd balans", "Pedagogische ontwikkeling"
+   */
+  expertise?:
+    | {
+        area: string;
+        id?: string | null;
+      }[]
+    | null;
+  qualifications?:
+    | {
+        qualification: string;
+        institution?: string | null;
+        year?: number | null;
+        id?: string | null;
+      }[]
+    | null;
+  socialMedia?: {
+    linkedin?: string | null;
+    twitter?: string | null;
+    instagram?: string | null;
+    website?: string | null;
+  };
+  /**
+   * Bepaalt de volgorde waarin teamleden worden weergegeven
+   */
+  order: number;
+  /**
+   * Schakel uit om tijdelijk te verbergen zonder te verwijderen
+   */
+  active?: boolean | null;
+  /**
+   * Optionele quote om te tonen op de over-ons pagina
+   */
+  featuredQuote?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -829,6 +2198,30 @@ export interface PayloadLockedDocument {
         value: number | Comment;
       } | null)
     | ({
+        relationTo: 'courses';
+        value: number | Course;
+      } | null)
+    | ({
+        relationTo: 'ageGroups';
+        value: number | AgeGroup;
+      } | null)
+    | ({
+        relationTo: 'services';
+        value: number | Service;
+      } | null)
+    | ({
+        relationTo: 'testimonials';
+        value: number | Testimonial;
+      } | null)
+    | ({
+        relationTo: 'team';
+        value: number | Team;
+      } | null)
+    | ({
+        relationTo: 'faq';
+        value: number | Faq;
+      } | null)
+    | ({
         relationTo: 'redirects';
         value: number | Redirect;
       } | null)
@@ -922,6 +2315,102 @@ export interface PagesSelect<T extends boolean = true> {
         mediaBlock?: T | MediaBlockSelect<T>;
         archive?: T | ArchiveBlockSelect<T>;
         formBlock?: T | FormBlockSelect<T>;
+        features?:
+          | T
+          | {
+              title?: T;
+              features?:
+                | T
+                | {
+                    icon?: T;
+                    title?: T;
+                    description?: T;
+                    link?:
+                      | T
+                      | {
+                          type?: T;
+                          newTab?: T;
+                          reference?: T;
+                          url?: T;
+                          label?: T;
+                          appearance?: T;
+                        };
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        newsletterCTA?:
+          | T
+          | {
+              title?: T;
+              description?: T;
+              buttonText?: T;
+              image?: T;
+              privacyText?: T;
+              id?: T;
+              blockName?: T;
+            };
+        hero?:
+          | T
+          | {
+              title?: T;
+              description?: T;
+              image?: T;
+              imagePosition?: T;
+              primaryButton?:
+                | T
+                | {
+                    type?: T;
+                    newTab?: T;
+                    reference?: T;
+                    url?: T;
+                    label?: T;
+                    appearance?: T;
+                  };
+              secondaryButton?:
+                | T
+                | {
+                    type?: T;
+                    newTab?: T;
+                    reference?: T;
+                    url?: T;
+                    label?: T;
+                    appearance?: T;
+                  };
+              backgroundColor?: T;
+              id?: T;
+              blockName?: T;
+            };
+        testimonials?:
+          | T
+          | {
+              title?: T;
+              description?: T;
+              testimonials?: T;
+              id?: T;
+              blockName?: T;
+            };
+        faq?:
+          | T
+          | {
+              title?: T;
+              description?: T;
+              faqs?: T;
+              filterByCategory?: T;
+              id?: T;
+              blockName?: T;
+            };
+        courseArchive?: T | CourseArchiveBlockSelect<T>;
+        ageGroupsArchive?: T | AgeGroupsArchiveBlockSelect<T>;
+        postsArchive?: T | PostsArchiveBlockSelect<T>;
+        relumeHeader?: T | RelumeHeaderBlockSelect<T>;
+        relumeLayout?: T | RelumeLayoutBlockSelect<T>;
+        relumeCTA?: T | RelumeCTABlockSelect<T>;
+        relumeGallery?: T | RelumeGalleryBlockSelect<T>;
+        relumePricing?: T | RelumePricingBlockSelect<T>;
+        relumeTeam?: T | RelumeTeamBlockSelect<T>;
+        relumeContact?: T | RelumeContactBlockSelect<T>;
       };
   meta?:
     | T
@@ -958,6 +2447,7 @@ export interface CallToActionBlockSelect<T extends boolean = true> {
             };
         id?: T;
       };
+  backgroundColor?: T;
   id?: T;
   blockName?: T;
 }
@@ -984,6 +2474,7 @@ export interface ContentBlockSelect<T extends boolean = true> {
             };
         id?: T;
       };
+  backgroundColor?: T;
   id?: T;
   blockName?: T;
 }
@@ -993,6 +2484,7 @@ export interface ContentBlockSelect<T extends boolean = true> {
  */
 export interface MediaBlockSelect<T extends boolean = true> {
   media?: T;
+  backgroundColor?: T;
   id?: T;
   blockName?: T;
 }
@@ -1018,6 +2510,284 @@ export interface FormBlockSelect<T extends boolean = true> {
   form?: T;
   enableIntro?: T;
   introContent?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CourseArchiveBlock_select".
+ */
+export interface CourseArchiveBlockSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  introContent?: T;
+  populateBy?: T;
+  targetAudience?: T;
+  limit?: T;
+  selectedCourses?: T;
+  showCategories?: T;
+  layout?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "AgeGroupsArchiveBlock_select".
+ */
+export interface AgeGroupsArchiveBlockSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  introContent?: T;
+  populateBy?: T;
+  selectedAgeGroups?: T;
+  limit?: T;
+  layout?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PostsArchiveBlock_select".
+ */
+export interface PostsArchiveBlockSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  introContent?: T;
+  populateBy?: T;
+  categories?: T;
+  selectedPosts?: T;
+  limit?: T;
+  showCategories?: T;
+  layout?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "RelumeHeaderBlock_select".
+ */
+export interface RelumeHeaderBlockSelect<T extends boolean = true> {
+  variant?: T;
+  title?: T;
+  description?: T;
+  primaryButton?:
+    | T
+    | {
+        text?: T;
+        link?: T;
+        show?: T;
+      };
+  secondaryButton?:
+    | T
+    | {
+        text?: T;
+        link?: T;
+        show?: T;
+      };
+  image?: T;
+  backgroundImage?: T;
+  imagePosition?: T;
+  features?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  alignment?: T;
+  overlayOpacity?: T;
+  backgroundColor?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "RelumeLayoutBlock_select".
+ */
+export interface RelumeLayoutBlockSelect<T extends boolean = true> {
+  variant?: T;
+  tagline?: T;
+  title?: T;
+  description?: T;
+  primaryButton?:
+    | T
+    | {
+        text?: T;
+        link?: T;
+        variant?: T;
+        show?: T;
+      };
+  secondaryButton?:
+    | T
+    | {
+        text?: T;
+        link?: T;
+        variant?: T;
+        show?: T;
+      };
+  mainImage?: T;
+  imagePosition?: T;
+  features?:
+    | T
+    | {
+        icon?: T;
+        title?: T;
+        description?: T;
+        id?: T;
+      };
+  columns?:
+    | T
+    | {
+        icon?: T;
+        title?: T;
+        description?: T;
+        buttonText?: T;
+        buttonLink?: T;
+        id?: T;
+      };
+  textAlignment?: T;
+  backgroundColor?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "RelumeCTABlock_select".
+ */
+export interface RelumeCTABlockSelect<T extends boolean = true> {
+  variant?: T;
+  title?: T;
+  description?: T;
+  image?: T;
+  buttonText?: T;
+  buttonVariant?: T;
+  emailPlaceholder?: T;
+  privacyText?: T;
+  alignment?: T;
+  backgroundColor?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "RelumeGalleryBlock_select".
+ */
+export interface RelumeGalleryBlockSelect<T extends boolean = true> {
+  variant?: T;
+  title?: T;
+  description?: T;
+  images?:
+    | T
+    | {
+        image?: T;
+        link?:
+          | T
+          | {
+              type?: T;
+              reference?: T;
+              url?: T;
+            };
+        id?: T;
+      };
+  backgroundColor?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "RelumePricingBlock_select".
+ */
+export interface RelumePricingBlockSelect<T extends boolean = true> {
+  tagline?: T;
+  title?: T;
+  description?: T;
+  monthlyTabLabel?: T;
+  yearlyTabLabel?: T;
+  plans?:
+    | T
+    | {
+        name?: T;
+        monthlyPrice?: T;
+        yearlyPrice?: T;
+        yearlyDiscount?: T;
+        features?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+            };
+        buttonText?: T;
+        buttonLink?:
+          | T
+          | {
+              type?: T;
+              reference?: T;
+              url?: T;
+            };
+        id?: T;
+      };
+  backgroundColor?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "RelumeTeamBlock_select".
+ */
+export interface RelumeTeamBlockSelect<T extends boolean = true> {
+  tagline?: T;
+  title?: T;
+  description?: T;
+  teamMembers?:
+    | T
+    | {
+        photo?: T;
+        name?: T;
+        position?: T;
+        bio?: T;
+        socialLinks?:
+          | T
+          | {
+              platform?: T;
+              url?: T;
+              id?: T;
+            };
+        id?: T;
+      };
+  hiringSection?:
+    | T
+    | {
+        show?: T;
+        title?: T;
+        description?: T;
+        buttonText?: T;
+        buttonLink?:
+          | T
+          | {
+              type?: T;
+              reference?: T;
+              url?: T;
+            };
+      };
+  backgroundColor?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "RelumeContactBlock_select".
+ */
+export interface RelumeContactBlockSelect<T extends boolean = true> {
+  contactMethods?:
+    | T
+    | {
+        icon?: T;
+        title?: T;
+        description?: T;
+        contactInfo?: T;
+        link?: T;
+        id?: T;
+      };
+  backgroundColor?: T;
   id?: T;
   blockName?: T;
 }
@@ -1190,6 +2960,232 @@ export interface CommentsSelect<T extends boolean = true> {
   post?: T;
   isApproved?: T;
   publishedAt?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "courses_select".
+ */
+export interface CoursesSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  fullDescription?: T;
+  image?: T;
+  price?: T;
+  duration?: T;
+  targetAudience?: T;
+  features?:
+    | T
+    | {
+        feature?: T;
+        id?: T;
+      };
+  sessions?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        duration?: T;
+        id?: T;
+      };
+  testimonials?: T;
+  publishedAt?: T;
+  meta?:
+    | T
+    | {
+        title?: T;
+        image?: T;
+        description?: T;
+      };
+  slug?: T;
+  slugLock?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ageGroups_select".
+ */
+export interface AgeGroupsSelect<T extends boolean = true> {
+  title?: T;
+  ageRange?: T;
+  description?: T;
+  heroImage?: T;
+  order?: T;
+  content?:
+    | T
+    | {
+        title?: T;
+        content?: T;
+        image?: T;
+        imagePosition?: T;
+        id?: T;
+      };
+  tips?:
+    | T
+    | {
+        tip?: T;
+        id?: T;
+      };
+  resources?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        link?: T;
+        type?: T;
+        id?: T;
+      };
+  faqs?: T;
+  relatedCourses?: T;
+  publishedAt?: T;
+  meta?:
+    | T
+    | {
+        title?: T;
+        image?: T;
+        description?: T;
+      };
+  slug?: T;
+  slugLock?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "services_select".
+ */
+export interface ServicesSelect<T extends boolean = true> {
+  title?: T;
+  serviceType?: T;
+  description?: T;
+  heroImage?: T;
+  benefits?:
+    | T
+    | {
+        icon?: T;
+        title?: T;
+        description?: T;
+        id?: T;
+      };
+  features?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+        id?: T;
+      };
+  process?:
+    | T
+    | {
+        step?: T;
+        title?: T;
+        description?: T;
+        id?: T;
+      };
+  pricing?:
+    | T
+    | {
+        hasCustomPricing?: T;
+        price?: T;
+        priceDescription?: T;
+      };
+  callToAction?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        buttonText?: T;
+        buttonLink?: T;
+      };
+  testimonials?: T;
+  relatedServices?: T;
+  publishedAt?: T;
+  meta?:
+    | T
+    | {
+        title?: T;
+        image?: T;
+        description?: T;
+      };
+  slug?: T;
+  slugLock?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "testimonials_select".
+ */
+export interface TestimonialsSelect<T extends boolean = true> {
+  name?: T;
+  role?: T;
+  company?: T;
+  content?: T;
+  rating?: T;
+  avatar?: T;
+  serviceUsed?: T;
+  featured?: T;
+  tags?: T;
+  publishedAt?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "team_select".
+ */
+export interface TeamSelect<T extends boolean = true> {
+  name?: T;
+  role?: T;
+  image?: T;
+  bio?: T;
+  expertise?:
+    | T
+    | {
+        area?: T;
+        id?: T;
+      };
+  qualifications?:
+    | T
+    | {
+        qualification?: T;
+        institution?: T;
+        year?: T;
+        id?: T;
+      };
+  socialMedia?:
+    | T
+    | {
+        linkedin?: T;
+        twitter?: T;
+        instagram?: T;
+        website?: T;
+      };
+  order?: T;
+  active?: T;
+  featuredQuote?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "faq_select".
+ */
+export interface FaqSelect<T extends boolean = true> {
+  question?: T;
+  answer?: T;
+  category?: T;
+  tags?: T;
+  order?: T;
+  active?: T;
+  helpful?: T;
+  relatedQuestions?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -1417,11 +3413,20 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   createdAt?: T;
 }
 /**
+ * Configure the site header, logo, and main navigation.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header".
  */
 export interface Header {
   id: number;
+  /**
+   * Upload your site logo. Will be displayed in the header.
+   */
+  logo?: (number | null) | Media;
+  /**
+   * Add navigation links that will appear in the main header menu.
+   */
   navItems?:
     | {
         link: {
@@ -1434,9 +3439,38 @@ export interface Header {
           url?: string | null;
           label: string;
         };
+        /**
+         * Optional description for accessibility and tooltips
+         */
+        description?: string | null;
+        /**
+         * Highlight this navigation item (e.g., different styling)
+         */
+        featured?: boolean | null;
         id?: string | null;
       }[]
     | null;
+  /**
+   * Optional prominent button in the header (e.g., "Contact Us", "Sign Up")
+   */
+  ctaButton?: {
+    show?: boolean | null;
+    link?: {
+      type?: ('reference' | 'custom') | null;
+      newTab?: boolean | null;
+      reference?: {
+        relationTo: 'pages';
+        value: number | Page;
+      } | null;
+      url?: string | null;
+      label: string;
+    };
+    style?: ('primary' | 'secondary' | 'accent') | null;
+  };
+  /**
+   * Display a search icon in the header navigation
+   */
+  showSearch?: boolean | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -1466,9 +3500,222 @@ export interface Footer {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "siteSettings".
+ */
+export interface SiteSetting {
+  id: number;
+  siteName: string;
+  siteDescription: string;
+  defaultSEO?: {
+    title?: string | null;
+    description?: string | null;
+    keywords?: string | null;
+    ogImage?: (number | null) | Media;
+  };
+  analytics?: {
+    /**
+     * Bijvoorbeeld: G-XXXXXXXXXX
+     */
+    googleAnalyticsId?: string | null;
+    /**
+     * Bijvoorbeeld: GTM-XXXXXXX
+     */
+    googleTagManagerId?: string | null;
+    facebookPixelId?: string | null;
+  };
+  maintenance?: {
+    enabled?: boolean | null;
+    message?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    /**
+     * IP adressen die nog steeds toegang hebben tijdens onderhoud
+     */
+    allowedIPs?:
+      | {
+          ip?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  notifications?: {
+    enabled?: boolean | null;
+    type?: ('info' | 'warning' | 'success' | 'error') | null;
+    message?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    dismissible?: boolean | null;
+  };
+  forms: {
+    /**
+     * E-mailadres waar contactformulieren naartoe gestuurd worden
+     */
+    contactEmail: string;
+    /**
+     * Welke service gebruik je voor de nieuwsbrief?
+     */
+    newsletterProvider?: ('mailchimp' | 'convertkit' | 'klaviyo' | 'custom') | null;
+    /**
+     * Voor spam bescherming op formulieren
+     */
+    recaptchaSiteKey?: string | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * Manage site-wide colors, fonts, and design system settings.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "styleSettings".
+ */
+export interface StyleSetting {
+  id: number;
+  /**
+   * Define the available background colors for blocks. These will appear as options in all block configurations.
+   */
+  backgroundColors?:
+    | {
+        /**
+         * Display name for this color (e.g., "Persian Green Light", "Neutral Dark")
+         */
+        name: string;
+        /**
+         * CSS color value (e.g., "#01B09A", "rgb(1, 176, 154)", or CSS class like "bg-primary")
+         */
+        value: string;
+        /**
+         * Group colors by category for better organization
+         */
+        category?:
+          | ('neutrals' | 'smalt-blue' | 'persian-green' | 'merino' | 'bittersweet' | 'regent-st-blue' | 'other')
+          | null;
+        /**
+         * Shade level for better organization (optional)
+         */
+        shade?: ('lightest' | 'lighter' | 'light' | 'base' | 'dark' | 'darker' | 'darkest') | null;
+        /**
+         * Check this to make this the default background color for new blocks
+         */
+        isDefault?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Define text colors for typography and content blocks.
+   */
+  textColors?:
+    | {
+        name: string;
+        value: string;
+        usage?: ('headings' | 'body' | 'links' | 'accent' | 'muted') | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Define available font families for the site.
+   */
+  fontFamilies?:
+    | {
+        /**
+         * Display name (e.g., "Primary Heading Font", "Body Text")
+         */
+        name: string;
+        /**
+         * CSS font-family value (e.g., "Inter, sans-serif", "font-heading")
+         */
+        cssValue: string;
+        category?: ('headings' | 'body' | 'display' | 'mono') | null;
+        weights?:
+          | {
+              /**
+               * e.g., "Regular", "Medium", "Bold"
+               */
+              name?: string | null;
+              /**
+               * e.g., "400", "500", "700", "font-medium"
+               */
+              value?: string | null;
+              id?: string | null;
+            }[]
+          | null;
+        /**
+         * Check this for the default font family
+         */
+        isDefault?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Define typography scale for consistent sizing.
+   */
+  fontSizes?:
+    | {
+        /**
+         * e.g., "Heading 1", "Body Large", "Caption"
+         */
+        name: string;
+        /**
+         * e.g., "2.5rem", "18px", "text-xl"
+         */
+        value: string;
+        category?: ('display' | 'heading' | 'body' | 'caption') | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Define consistent spacing values for margins, padding, and gaps.
+   */
+  spacing?:
+    | {
+        /**
+         * e.g., "Extra Small", "Medium", "Large"
+         */
+        name: string;
+        /**
+         * e.g., "8px", "1rem", "space-4"
+         */
+        value: string;
+        /**
+         * e.g., "Button padding", "Section margins"
+         */
+        usage?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header_select".
  */
 export interface HeaderSelect<T extends boolean = true> {
+  logo?: T;
   navItems?:
     | T
     | {
@@ -1481,8 +3728,26 @@ export interface HeaderSelect<T extends boolean = true> {
               url?: T;
               label?: T;
             };
+        description?: T;
+        featured?: T;
         id?: T;
       };
+  ctaButton?:
+    | T
+    | {
+        show?: T;
+        link?:
+          | T
+          | {
+              type?: T;
+              newTab?: T;
+              reference?: T;
+              url?: T;
+              label?: T;
+            };
+        style?: T;
+      };
+  showSearch?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
@@ -1504,6 +3769,118 @@ export interface FooterSelect<T extends boolean = true> {
               url?: T;
               label?: T;
             };
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "siteSettings_select".
+ */
+export interface SiteSettingsSelect<T extends boolean = true> {
+  siteName?: T;
+  siteDescription?: T;
+  defaultSEO?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        keywords?: T;
+        ogImage?: T;
+      };
+  analytics?:
+    | T
+    | {
+        googleAnalyticsId?: T;
+        googleTagManagerId?: T;
+        facebookPixelId?: T;
+      };
+  maintenance?:
+    | T
+    | {
+        enabled?: T;
+        message?: T;
+        allowedIPs?:
+          | T
+          | {
+              ip?: T;
+              id?: T;
+            };
+      };
+  notifications?:
+    | T
+    | {
+        enabled?: T;
+        type?: T;
+        message?: T;
+        dismissible?: T;
+      };
+  forms?:
+    | T
+    | {
+        contactEmail?: T;
+        newsletterProvider?: T;
+        recaptchaSiteKey?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "styleSettings_select".
+ */
+export interface StyleSettingsSelect<T extends boolean = true> {
+  backgroundColors?:
+    | T
+    | {
+        name?: T;
+        value?: T;
+        category?: T;
+        shade?: T;
+        isDefault?: T;
+        id?: T;
+      };
+  textColors?:
+    | T
+    | {
+        name?: T;
+        value?: T;
+        usage?: T;
+        id?: T;
+      };
+  fontFamilies?:
+    | T
+    | {
+        name?: T;
+        cssValue?: T;
+        category?: T;
+        weights?:
+          | T
+          | {
+              name?: T;
+              value?: T;
+              id?: T;
+            };
+        isDefault?: T;
+        id?: T;
+      };
+  fontSizes?:
+    | T
+    | {
+        name?: T;
+        value?: T;
+        category?: T;
+        id?: T;
+      };
+  spacing?:
+    | T
+    | {
+        name?: T;
+        value?: T;
+        usage?: T;
         id?: T;
       };
   updatedAt?: T;

@@ -1,0 +1,50 @@
+export const testimonials = [
+  {
+    name: 'Sarah van der Berg',
+    role: 'Moeder van 2 kinderen (4 en 7 jaar)',
+    content: 'Dankzij Lisanne heb ik geleerd hoe ik schermtijd kan inzetten als hulpmiddel in plaats van een probleem. Mijn kinderen zijn nu veel creatiever en we hebben eindelijk rust in huis.',
+    rating: 5,
+    location: 'Amsterdam',
+    active: true,
+  },
+  {
+    name: 'Mark Jansen',
+    role: 'Vader en docent basisonderwijs',
+    content: 'De workshop was een eye-opener! Ik kan nu zowel thuis als op school praktische tips geven over gezond schermgebruik. Zeer aan te raden voor alle ouders én professionals.',
+    rating: 5,
+    location: 'Utrecht',
+    active: true,
+  },
+  {
+    name: 'Linda Koetsier',
+    role: 'Leidinggevende kinderopvang',
+    content: 'De training voor ons team heeft ons enorm geholpen bij het opstellen van een consistent schermbeleid. Lisanne weet complexe onderwerpen begrijpelijk uit te leggen.',
+    rating: 5,
+    location: 'Den Haag',
+    active: true,
+  },
+  {
+    name: 'Tom en Eva Mulder',
+    role: 'Ouders van 3 kinderen',
+    content: 'We worstelden met eindeloze discussies over schermtijd. Na de cursus hebben we duidelijke afspraken die iedereen begrijpt. De rust is teruggekeerd in ons gezin!',
+    rating: 5,
+    location: 'Rotterdam',
+    active: true,
+  },
+  {
+    name: 'Marieke de Wit',
+    role: 'Alleenstaande moeder (zoon van 5)',
+    content: 'Als werkende alleenstaande moeder voelde ik me schuldig over schermtijd. Lisanne heeft me laten zien dat kwaliteit belangrijker is dan kwantiteit. Wat een opluchting!',
+    rating: 5,
+    location: 'Eindhoven',
+    active: true,
+  },
+  {
+    name: 'Directie Basisschool De Regenboog',
+    role: 'Onderwijsinstelling',
+    content: 'De lessen digitale geletterdheid waren perfect aangepast aan onze leerlingen. Kinderen, ouders én leerkrachten zijn enthousiast. We boeken Lisanne zeker opnieuw in!',
+    rating: 5,
+    location: 'Groningen',
+    active: true,
+  }
+]

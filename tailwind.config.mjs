@@ -1,13 +1,17 @@
+import relumeTailwindPreset from "@relume_io/relume-tailwind";
+
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
+    './node_modules/@relume_io/relume-ui/dist/**/*.{js,ts,jsx,tsx}',
     './pages/**/*.{ts,tsx}',
     './components/**/*.{ts,tsx}',
-    './app/**/*.{ts,tsx}',
-    './src/**/*.{ts,tsx}',
+    './app/**/*.{ts,tsx,mdx}',
+    './src/**/*.{ts,tsx,mdx}',
   ],
   darkMode: ['selector', '[data-theme="dark"]'],
   plugins: [require('tailwindcss-animate'), require('@tailwindcss/typography')],
+  presets: [relumeTailwindPreset],
   prefix: '',
   safelist: [
     'lg:col-span-4',

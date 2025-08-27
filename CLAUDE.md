@@ -112,3 +112,201 @@ This is a Next.js 15 application with Payload CMS V3, using PostgreSQL as the da
 - Extend existing blocks rather than creating new ones when possible
 - Use the fields directory for reusable field configurations
 - Maintain type safety by running `generate:types` after schema changes
+
+## Payload CMS Core Concepts
+
+### Collections
+Collections are the primary way to structure recurring data. Each collection:
+- Represents a group of documents with a common schema
+- Auto-generates Local API, REST API, and GraphQL API endpoints
+- Can include authentication features when enabled
+- Supports custom access control, hooks, and admin UI configuration
+
+Common collection patterns:
+- Users (with authentication enabled)
+- Pages, Posts, Products
+- Media/Uploads
+- Categories, Tags
+
+### Fields
+Fields define the schema and UI for documents. Key field concepts:
+- **Field Types**: Text, Number, Select, Relationship, Array, Blocks, RichText, Upload, etc.
+- **Validation**: Built-in and custom validation rules
+- **Conditional Logic**: Show/hide fields based on other field values
+- **Access Control**: Field-level permissions
+- **Localization**: Field-level translation support
+- **Hooks**: Field-specific lifecycle hooks
+
+### Hooks
+Hooks execute custom logic during document lifecycle:
+
+**Collection Hooks**:
+- `beforeOperation`: Modify arguments before operations
+- `beforeChange`: Run before create/update (data is unvalidated)
+- `afterChange`: Run after create/update (data is validated and saved)
+- `afterRead`: Modify data before returning to client
+- `beforeDelete`/`afterDelete`: Handle deletion logic
+
+**Field Hooks**:
+- `beforeValidate`: Transform data before validation
+- `afterRead`: Format data for output
+- `beforeChange`/`afterChange`: Field-specific change handlers
+
+### Authentication
+When enabled on a collection:
+- Adds login, logout, refresh, and password reset operations
+- Supports email verification and API keys
+- Integrates with JWT for token-based auth
+- Provides user account management UI in admin panel
+
+### Access Control
+Define permissions at multiple levels:
+```typescript
+// Collection-level access
+access: {
+  create: ({ req: { user } }) => user?.role === 'admin',
+  read: true, // Public access
+  update: ({ req: { user }, id }) => user?.id === id,
+  delete: () => false, // No one can delete
+}
+
+// Field-level access
+fields: [{
+  name: 'secretField',
+  type: 'text',
+  access: {
+    read: ({ req: { user } }) => user?.role === 'admin',
+  }
+}]
+```
+
+### Globals
+Globals are single-instance documents for non-repeating data:
+- Site settings
+- Navigation menus
+- Footer content
+- SEO defaults
+
+### Relationships
+Payload provides powerful relationship fields:
+- One-to-one, one-to-many, many-to-many
+- Polymorphic relationships (relate to multiple collections)
+- Virtual relationships via hooks
+- Automatic reverse lookups
+
+## Common Development Patterns
+
+### Custom Components
+```typescript
+// Custom field component
+import { Field } from '@payloadcms/ui'
+export const CustomField: Field = {
+  name: 'customField',
+  type: 'text',
+  admin: {
+    components: {
+      Field: '/path/to/CustomFieldComponent',
+    }
+  }
+}
+```
+
+### Extending Collections
+```typescript
+// Base collection config
+const baseCollection = {
+  slug: 'base',
+  access: defaultAccess,
+  hooks: defaultHooks,
+}
+
+// Extended collection
+const extendedCollection = {
+  ...baseCollection,
+  slug: 'extended',
+  fields: [
+    ...baseFields,
+    // Additional fields
+  ]
+}
+```
+
+### Block-Based Content
+```typescript
+// Define reusable blocks
+const contentBlocks = {
+  slug: 'content',
+  fields: [
+    {
+      name: 'layout',
+      type: 'blocks',
+      blocks: [
+        BannerBlock,
+        ContentBlock,
+        MediaBlock,
+        // Add more blocks as needed
+      ]
+    }
+  ]
+}
+```
+
+### API Usage
+```typescript
+// Local API (server-side)
+import { getPayloadHMR } from '@payloadcms/next/utilities'
+const payload = await getPayloadHMR({ config })
+const pages = await payload.find({ collection: 'pages' })
+
+// REST API
+fetch('/api/pages?where[slug][equals]=home')
+
+// GraphQL
+const query = `
+  query {
+    Pages(where: { slug: { equals: "home" } }) {
+      docs {
+        id
+        title
+      }
+    }
+  }
+`
+```
+
+## Best Practices
+
+### Performance
+- Use `depth` parameter to limit nested data fetching
+- Implement pagination for large collections
+- Cache frequently accessed data
+- Use indexes on frequently queried fields
+- Optimize images with Sharp integration
+
+### Security
+- Always validate and sanitize user input
+- Use field-level access control for sensitive data
+- Implement rate limiting on public APIs
+- Store secrets in environment variables
+- Enable CSRF protection in production
+
+### Code Organization
+- Group related collections in subdirectories
+- Create reusable field configs in `/fields`
+- Keep hooks in separate files for complex logic
+- Use TypeScript for type safety
+- Generate types after schema changes
+
+### Testing
+- Test hooks with mock data
+- Validate access control rules
+- Test API endpoints
+- Check field validations
+- Verify email templates
+
+### Migration Strategy
+- Create migrations for schema changes
+- Test migrations locally first
+- Back up database before production migrations
+- Document breaking changes
+- Use feature flags for gradual rollouts

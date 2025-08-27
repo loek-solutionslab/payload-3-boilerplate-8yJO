@@ -7,6 +7,21 @@ import { CallToAction } from '../../blocks/CallToAction/config'
 import { Content } from '../../blocks/Content/config'
 import { FormBlock } from '../../blocks/Form/config'
 import { MediaBlock } from '../../blocks/MediaBlock/config'
+import { FeaturesBlock } from '../../blocks/FeaturesBlock/config'
+import { NewsletterCTA } from '../../blocks/NewsletterCTA/config'
+import { HeroBlock } from '../../blocks/HeroBlock/config'
+import { TestimonialsBlock } from '../../blocks/TestimonialsBlock/config'
+import { FAQBlock } from '../../blocks/FAQBlock/config'
+import { CourseArchive } from '../../blocks/CourseArchive/config'
+import { AgeGroupsArchive } from '../../blocks/AgeGroupsArchive/config'
+import { PostsArchive } from '../../blocks/PostsArchive/config'
+import { RelumeHeader } from '../../blocks/RelumeHeader/config'
+import { RelumeLayout } from '../../blocks/RelumeLayout/config'
+import { RelumeCTA } from '../../blocks/RelumeCTA/config'
+import { RelumeGallery } from '../../blocks/RelumeGallery/config'
+import { RelumePricing } from '../../blocks/RelumePricing/config'
+import { RelumeTeam } from '../../blocks/RelumeTeam/config'
+import { RelumeContact } from '../../blocks/RelumeContact/config'
 import { hero } from '@/heros/config'
 import { slugField } from '@/fields/slug'
 import { populatePublishedAt } from '../../hooks/populatePublishedAt'
@@ -77,7 +92,28 @@ export const Pages: CollectionConfig<'pages'> = {
             {
               name: 'layout',
               type: 'blocks',
-              blocks: [CallToAction, Content, MediaBlock, Archive, FormBlock],
+              blocks: [
+                CallToAction,
+                Content,
+                MediaBlock,
+                Archive,
+                FormBlock,
+                FeaturesBlock,
+                NewsletterCTA,
+                HeroBlock,
+                TestimonialsBlock,
+                FAQBlock,
+                CourseArchive,
+                AgeGroupsArchive,
+                PostsArchive,
+                RelumeHeader,
+                RelumeLayout,
+                RelumeCTA,
+                RelumeGallery,
+                RelumePricing,
+                RelumeTeam,
+                RelumeContact,
+              ],
               required: true,
             },
           ],

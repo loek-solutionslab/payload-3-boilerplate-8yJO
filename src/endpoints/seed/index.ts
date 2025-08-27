@@ -13,6 +13,12 @@ import { post1 } from './post-1'
 import { post2 } from './post-2'
 import { post3 } from './post-3'
 import { post4 } from './post-4'
+import { courses } from './courses'
+import { ageGroups } from './age-groups'
+import { services } from './services'
+import { testimonials } from './testimonials'
+import { team } from './team'
+import { faq } from './faq'
 
 const collections: CollectionSlug[] = [
   'categories',
@@ -21,9 +27,15 @@ const collections: CollectionSlug[] = [
   'posts',
   'forms',
   'form-submissions',
-  'search'
+  'search',
+  'courses',
+  'ageGroups',
+  'services',
+  'testimonials',
+  'team',
+  'faq'
 ]
-const globals: GlobalSlug[] = ['header', 'footer']
+const globals: GlobalSlug[] = ['header', 'footer', 'siteSettings']
 
 async function fetchFileByURL(url: string): Promise<File> {
   const res = await fetch(url, {
@@ -320,6 +332,49 @@ export const seed = async ({
       }
     })
 
+    // Create custom collections for Schermblij
+    payload.logger.info(`— Seeding courses...`)
+    const coursePromises = courses.map(course => payload.create({
+      collection: 'courses',
+      data: course
+    }))
+    await Promise.all(coursePromises)
+
+    payload.logger.info(`— Seeding age groups...`)
+    const ageGroupPromises = ageGroups.map(ageGroup => payload.create({
+      collection: 'ageGroups',
+      data: ageGroup
+    }))
+    await Promise.all(ageGroupPromises)
+
+    payload.logger.info(`— Seeding services...`)
+    const servicePromises = services.map(service => payload.create({
+      collection: 'services',
+      data: service
+    }))
+    await Promise.all(servicePromises)
+
+    payload.logger.info(`— Seeding testimonials...`)
+    const testimonialPromises = testimonials.map(testimonial => payload.create({
+      collection: 'testimonials',
+      data: testimonial
+    }))
+    await Promise.all(testimonialPromises)
+
+    payload.logger.info(`— Seeding team...`)
+    const teamPromises = team.map(member => payload.create({
+      collection: 'team',
+      data: member
+    }))
+    await Promise.all(teamPromises)
+
+    payload.logger.info(`— Seeding FAQ...`)
+    const faqPromises = faq.map(question => payload.create({
+      collection: 'faq',
+      data: question
+    }))
+    await Promise.all(faqPromises)
+
     // Create home page
     payload.logger.info(`— Seeding home page...`)
 
@@ -394,27 +449,57 @@ export const seed = async ({
           {
             link: {
               type: 'custom',
-              label: 'Admin',
-              url: '/admin'
+              label: 'Over Lisanne',
+              url: '/over-lisanne'
             }
           },
           {
             link: {
               type: 'custom',
-              label: 'Source Code',
-              newTab: true,
-              url: 'https://github.com/payloadcms/payload/tree/main/templates/website'
+              label: 'Cursussen',
+              url: '/cursussen'
             }
           },
           {
             link: {
               type: 'custom',
-              label: 'Payload',
-              newTab: true,
-              url: 'https://payloadcms.com/'
+              label: 'Contact',
+              url: '/contact'
+            }
+          },
+          {
+            link: {
+              type: 'custom',
+              label: 'Privacy',
+              url: '/privacy'
             }
           }
         ]
+      }
+    })
+
+    // Update site settings
+    payload.logger.info(`— Seeding site settings...`)
+
+    await payload.updateGlobal({
+      slug: 'siteSettings',
+      data: {
+        siteName: 'Schermblij',
+        siteDescription: 'Hulp bij het vinden van de perfecte balans tussen schermtijd en offline activiteiten voor kinderen.',
+        defaultSEO: {
+          title: 'Schermblij - Gezonde schermtijd voor kinderen',
+          description: 'Bij Schermblij helpen we ouders om een gezonde balans te creëren tussen online en offline activiteiten. Ontdek hoe digitale media een waardevolle aanvulling kan zijn op het leven van uw kinderen.',
+          keywords: 'schermtijd, kinderen, opvoeding, digitale media, balans, ouders, educatie'
+        },
+        notifications: {
+          enabled: false
+        },
+        maintenance: {
+          enabled: false
+        },
+        forms: {
+          contactEmail: 'info@schermblij.nl'
+        }
       }
     })
 
