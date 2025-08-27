@@ -117,14 +117,15 @@ async function runMigration() {
         )`
       },
       {
-        name: 'pages__blocks_relumeTeam_teamMembers_socialLinks',
-        sql: `CREATE TABLE IF NOT EXISTS "pages__blocks_relumeTeam_teamMembers_socialLinks" (
+        name: 'pages__blocks_relumeTeam_socialLinks',
+        sql: `CREATE TABLE IF NOT EXISTS "pages__blocks_relumeTeam_socialLinks" (
           "id" SERIAL PRIMARY KEY,
           "_order" INTEGER NOT NULL,
           "_parent_id" INTEGER NOT NULL,
-          "plat" VARCHAR NOT NULL,
+          "team_member" VARCHAR NOT NULL,
+          "platform" VARCHAR NOT NULL,
           "url" VARCHAR NOT NULL,
-          CONSTRAINT "pages__blocks_relumeTeam_teamMembers_socialLinks_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "pages__blocks_relumeTeam_teamMembers"("id") ON DELETE CASCADE
+          CONSTRAINT "pages__blocks_relumeTeam_socialLinks_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "pages__blocks_relumeTeam"("id") ON DELETE CASCADE
         )`
       },
       {
@@ -215,12 +216,13 @@ async function runMigration() {
       { table: 'header', column: 'show_search', type: 'boolean' }
     ]
 
-    // Special migration to rename platform column to plat to avoid PostgreSQL 63 char limit
-    const columnRenames = [
-      { 
-        table: 'pages__blocks_relumeTeam_teamMembers_socialLinks', 
-        oldColumn: 'platform', 
-        newColumn: 'plat' 
+    // Data migration: Move social links from nested structure to top-level
+    const dataRestructuring = [
+      {
+        description: 'Move social links from teamMembers to top-level socialLinks',
+        oldTable: 'pages__blocks_relumeTeam_teamMembers_socialLinks',
+        newTable: 'pages__blocks_relumeTeam_socialLinks',
+        teamMembersTable: 'pages__blocks_relumeTeam_teamMembers'
       }
     ]
 
@@ -282,55 +284,63 @@ async function runMigration() {
       }
     }
 
-    // Handle column renames for PostgreSQL identifier length limits
-    for (const rename of columnRenames) {
+    // Handle data restructuring to fix PostgreSQL identifier length limits
+    for (const migration of dataRestructuring) {
       try {
-        const { table, oldColumn, newColumn } = rename
+        console.log(`🔄 ${migration.description}...`)
         
-        // Check if table exists first
-        const tableCheck = await client.query(`
+        // Check if old nested table exists
+        const oldTableCheck = await client.query(`
           SELECT table_name 
           FROM information_schema.tables 
           WHERE table_schema = 'public' AND table_name = $1
-        `, [table])
+        `, [migration.oldTable])
 
-        if (tableCheck.rows.length === 0) {
-          console.log(`⚠️  Table ${table} does not exist, skipping column rename`)
-          continue
-        }
+        // Check if new flat table exists
+        const newTableCheck = await client.query(`
+          SELECT table_name 
+          FROM information_schema.tables 
+          WHERE table_schema = 'public' AND table_name = $1
+        `, [migration.newTable])
 
-        // Check if old column exists and new column doesn't exist
-        const oldColumnCheck = await client.query(`
-          SELECT column_name 
-          FROM information_schema.columns 
-          WHERE table_name = $1 AND column_name = $2
-        `, [table, oldColumn])
-
-        const newColumnCheck = await client.query(`
-          SELECT column_name 
-          FROM information_schema.columns 
-          WHERE table_name = $1 AND column_name = $2
-        `, [table, newColumn])
-
-        if (oldColumnCheck.rows.length > 0 && newColumnCheck.rows.length === 0) {
-          console.log(`Renaming column ${oldColumn} to ${newColumn} in ${table}...`)
-          await client.query(`ALTER TABLE "${table}" RENAME COLUMN "${oldColumn}" TO "${newColumn}"`)
-          console.log(`✅ Column renamed successfully`)
-        } else if (newColumnCheck.rows.length > 0) {
-          console.log(`ℹ️  Column ${newColumn} already exists in ${table}`)
+        if (oldTableCheck.rows.length > 0 && newTableCheck.rows.length > 0) {
+          // Check if data migration is needed
+          const oldDataCount = await client.query(`SELECT COUNT(*) FROM "${migration.oldTable}"`)
+          const newDataCount = await client.query(`SELECT COUNT(*) FROM "${migration.newTable}"`)
+          
+          if (oldDataCount.rows[0].count > 0 && newDataCount.rows[0].count === '0') {
+            console.log(`Migrating ${oldDataCount.rows[0].count} social links to new structure...`)
+            
+            // Migrate data from nested to flat structure
+            const migrateResult = await client.query(`
+              INSERT INTO "${migration.newTable}" ("_order", "_parent_id", "team_member", "platform", "url")
+              SELECT 
+                sl."_order",
+                tm."_parent_id", -- Reference the relumeTeam block, not the teamMember
+                tm."name" as "team_member",
+                COALESCE(sl."plat", sl."platform") as "platform", -- Handle both old and new column names
+                sl."url"
+              FROM "${migration.oldTable}" sl
+              JOIN "${migration.teamMembersTable}" tm ON sl."_parent_id" = tm."id"
+            `)
+            
+            console.log(`✅ Migrated ${migrateResult.rowCount} social links successfully`)
+          } else {
+            console.log(`ℹ️  Data migration not needed (old: ${oldDataCount.rows[0].count}, new: ${newDataCount.rows[0].count})`)
+          }
         } else {
-          console.log(`ℹ️  Column ${oldColumn} not found in ${table}`)
+          console.log(`ℹ️  Migration tables not found, skipping data migration`)
         }
       } catch (error) {
-        console.error(`❌ Error renaming column ${rename.oldColumn} to ${rename.newColumn} in ${rename.table}:`, error.message)
-        // Continue with other renames instead of failing completely
+        console.error(`❌ Error during data migration:`, error.message)
+        // Continue with other migrations instead of failing completely
       }
     }
 
     // Verificatie van kritieke tabellen
     const criticalTables = [
       'pages__blocks_relumeTeam_teamMembers',
-      'pages__blocks_relumeTeam_teamMembers_socialLinks',
+      'pages__blocks_relumeTeam_socialLinks',
       'pages__blocks_relumeContact_contactMethods',
       'pages__blocks_relumePricing',
       'pages__blocks_relumePricing_plans'

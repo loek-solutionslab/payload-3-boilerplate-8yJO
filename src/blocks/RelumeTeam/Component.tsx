@@ -33,8 +33,13 @@ const SocialIcon: React.FC<{ platform: string; className?: string }> = ({ platfo
   }
 }
 
-const TeamMember: React.FC<{ member: any; index: number }> = ({ member, index }) => {
-  const { photo, name, position, bio, socialLinks } = member
+const TeamMember: React.FC<{ member: any; index: number; socialLinks: any[] }> = ({ member, index, socialLinks }) => {
+  const { photo, name, position, bio } = member
+  
+  // Filter social links for this specific team member
+  const memberSocialLinks = socialLinks?.filter(link => 
+    link.teamMember === name || link.teamMember === member.name
+  ) || []
 
   return (
     <div className="flex flex-col items-start">
@@ -52,9 +57,9 @@ const TeamMember: React.FC<{ member: any; index: number }> = ({ member, index })
         <h6 className="text-muted-foreground md:text-md">{position}</h6>
       </div>
       <p className="text-sm">{bio}</p>
-      {socialLinks && socialLinks.length > 0 && (
+      {memberSocialLinks && memberSocialLinks.length > 0 && (
         <div className="mt-6 flex gap-3.5">
-          {socialLinks.map((link: any, linkIndex: number) => (
+          {memberSocialLinks.map((link: any, linkIndex: number) => (
             <a
               key={linkIndex}
               href={link.url}
@@ -78,6 +83,7 @@ export const RelumeTeamComponent: React.FC<RelumeTeamProps> = ({ block }) => {
     title, 
     description, 
     teamMembers = [], 
+    socialLinks = [],
     hiringSection,
     backgroundColor 
   } = block
@@ -131,7 +137,7 @@ export const RelumeTeamComponent: React.FC<RelumeTeamProps> = ({ block }) => {
                 : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-4'
           }`}>
             {teamMembers.map((member, index) => (
-              <TeamMember key={index} member={member} index={index} />
+              <TeamMember key={index} member={member} index={index} socialLinks={socialLinks} />
             ))}
           </div>
         )}

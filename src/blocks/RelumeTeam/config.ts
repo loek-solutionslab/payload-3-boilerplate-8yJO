@@ -87,43 +87,53 @@ export const RelumeTeam: Block = {
             description: 'Brief description of their expertise or role',
           },
         },
+      ],
+    },
+    {
+      name: 'socialLinks',
+      type: 'array',
+      label: 'Social Media Links',
+      maxRows: 50, // Allow more links since they're shared across team members
+      labels: {
+        singular: 'Social Link',
+        plural: 'Social Links',
+      },
+      admin: {
+        description: 'Social media links for team members. Associate each link with a team member.',
+      },
+      fields: [
         {
-          name: 'socialLinks',
-          type: 'array',
-          label: 'Social Media Links',
-          maxRows: 5,
-          labels: {
-            singular: 'Social Link',
-            plural: 'Social Links',
+          name: 'teamMember',
+          type: 'text',
+          label: 'Team Member Name',
+          required: true,
+          admin: {
+            description: 'Enter the exact name of the team member this link belongs to',
           },
-          admin: {},
-          fields: [
-            {
-              name: 'platform',
-              type: 'select',
-              label: 'Platform',
-              dbName: 'plat',
-              options: [
-                { label: 'LinkedIn', value: 'linkedin' },
-                { label: 'Twitter/X', value: 'twitter' },
-                { label: 'Instagram', value: 'instagram' },
-                { label: 'Facebook', value: 'facebook' },
-                { label: 'Dribbble', value: 'dribbble' },
-                { label: 'GitHub', value: 'github' },
-                { label: 'Website', value: 'website' },
-              ],
-              required: true,
-            },
-            {
-              name: 'url',
-              type: 'text',
-              label: 'Profile URL',
-              required: true,
-              admin: {
-                description: 'Full URL to the social media profile',
-              },
-            },
+        },
+        {
+          name: 'platform',
+          type: 'select',
+          label: 'Platform',
+          options: [
+            { label: 'LinkedIn', value: 'linkedin' },
+            { label: 'Twitter/X', value: 'twitter' },
+            { label: 'Instagram', value: 'instagram' },
+            { label: 'Facebook', value: 'facebook' },
+            { label: 'Dribbble', value: 'dribbble' },
+            { label: 'GitHub', value: 'github' },
+            { label: 'Website', value: 'website' },
           ],
+          required: true,
+        },
+        {
+          name: 'url',
+          type: 'text',
+          label: 'Profile URL',
+          required: true,
+          admin: {
+            description: 'Full URL to the social media profile',
+          },
         },
       ],
     },
