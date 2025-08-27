@@ -1813,16 +1813,23 @@ export interface RelumeTeamBlock {
          * Brief description of their expertise or role
          */
         bio: string;
-        socialLinks?:
-          | {
-              platform: 'linkedin' | 'twitter' | 'instagram' | 'facebook' | 'dribbble' | 'github' | 'website';
-              /**
-               * Full URL to the social media profile
-               */
-              url: string;
-              id?: string | null;
-            }[]
-          | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Social media links for team members. Associate each link with a team member.
+   */
+  socialLinks?:
+    | {
+        /**
+         * Enter the exact name of the team member this link belongs to
+         */
+        teamMember: string;
+        platform: 'linkedin' | 'twitter' | 'instagram' | 'facebook' | 'dribbble' | 'github' | 'website';
+        /**
+         * Full URL to the social media profile
+         */
+        url: string;
         id?: string | null;
       }[]
     | null;
@@ -2784,13 +2791,14 @@ export interface RelumeTeamBlockSelect<T extends boolean = true> {
         name?: T;
         position?: T;
         bio?: T;
-        socialLinks?:
-          | T
-          | {
-              platform?: T;
-              url?: T;
-              id?: T;
-            };
+        id?: T;
+      };
+  socialLinks?:
+    | T
+    | {
+        teamMember?: T;
+        platform?: T;
+        url?: T;
         id?: T;
       };
   hiringSection?:

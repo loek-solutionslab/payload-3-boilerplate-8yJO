@@ -242,6 +242,22 @@ async function runMigration() {
         } else {
           console.log(`ℹ️  Table ${tableSpec.name} already exists`)
         }
+        
+        // Special handling for the new flat socialLinks table
+        if (tableSpec.name === 'pages__blocks_relumeTeam_socialLinks') {
+          // Ensure this table is created even if old nested table exists
+          const newTableCheck = await client.query(`
+            SELECT table_name 
+            FROM information_schema.tables 
+            WHERE table_schema = 'public' AND table_name = $1
+          `, ['pages__blocks_relumeTeam_socialLinks'])
+          
+          if (newTableCheck.rows.length === 0) {
+            console.log(`🔄 Creating new flat socialLinks table...`)
+            await client.query(tableSpec.sql)
+            console.log(`✅ New flat socialLinks table created successfully`)
+          }
+        }
       } catch (error) {
         console.error(`❌ Error creating table ${tableSpec.name}:`, error.message)
         // Continue with other tables instead of failing completely
