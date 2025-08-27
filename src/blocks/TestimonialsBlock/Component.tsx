@@ -67,7 +67,7 @@ export const TestimonialsBlock: React.FC<Props> = ({ className, ...block }) => {
                 {renderStars(testimonial.rating || '5')}
                 
                 <blockquote className="flex-1 text-gray-900 mb-6">
-                  "{testimonial.content}"
+                  &ldquo;{testimonial.content}&rdquo;
                 </blockquote>
                 
                 <div className="flex items-center">

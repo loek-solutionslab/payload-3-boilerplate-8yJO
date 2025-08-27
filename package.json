@@ -48,6 +48,7 @@
     "payload": "latest",
     "payload-admin-bar": "^1.0.6",
     "prism-react-renderer": "^2.4.0",
+    "queue-microtask": "^1.2.3",
     "react": "19.0.0-rc-65a56d0e-20241020",
     "react-dom": "19.0.0-rc-65a56d0e-20241020",
     "react-hook-form": "7.45.4",

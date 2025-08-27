@@ -93,8 +93,8 @@ export const CourseArchiveBlock: React.FC<
 
         <CourseArchiveClient
           courses={courses}
-          showCategories={showCategories}
-          layout={layout}
+          showCategories={showCategories || false}
+          layout={layout || 'grid'}
         />
       </div>
     </div>

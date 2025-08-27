@@ -329,35 +329,7 @@ export interface Page {
         blockName?: string | null;
         blockType: 'testimonials';
       }
-    | {
-        title?: string | null;
-        description?: string | null;
-        /**
-         * Selecteer de vragen die je wilt weergeven in deze sectie
-         */
-        faqs: (number | Faq)[];
-        /**
-         * Laat leeg om alle geselecteerde vragen te tonen, of kies een categorie om alleen vragen uit die categorie te tonen
-         */
-        filterByCategory?:
-          | (
-              | ''
-              | 'general'
-              | 'screen-time'
-              | 'baby'
-              | 'toddler'
-              | 'preschooler'
-              | 'elementary'
-              | 'courses'
-              | 'daycare'
-              | 'municipality'
-              | 'school'
-            )
-          | null;
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'faq';
-      }
+    | FAQBlock
     | CourseArchiveBlock
     | AgeGroupsArchiveBlock
     | PostsArchiveBlock
@@ -1036,6 +1008,39 @@ export interface Testimonial {
   publishedAt?: string | null;
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FAQBlock".
+ */
+export interface FAQBlock {
+  title?: string | null;
+  description?: string | null;
+  /**
+   * Selecteer de vragen die je wilt weergeven in deze sectie
+   */
+  faqs: (number | Faq)[];
+  /**
+   * Laat leeg om alle geselecteerde vragen te tonen, of kies een categorie om alleen vragen uit die categorie te tonen
+   */
+  filterByCategory?:
+    | (
+        | ''
+        | 'general'
+        | 'screen-time'
+        | 'baby'
+        | 'toddler'
+        | 'preschooler'
+        | 'elementary'
+        | 'courses'
+        | 'daycare'
+        | 'municipality'
+        | 'school'
+      )
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'faq';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2391,16 +2396,7 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
-        faq?:
-          | T
-          | {
-              title?: T;
-              description?: T;
-              faqs?: T;
-              filterByCategory?: T;
-              id?: T;
-              blockName?: T;
-            };
+        faq?: T | FAQBlockSelect<T>;
         courseArchive?: T | CourseArchiveBlockSelect<T>;
         ageGroupsArchive?: T | AgeGroupsArchiveBlockSelect<T>;
         postsArchive?: T | PostsArchiveBlockSelect<T>;
@@ -2510,6 +2506,18 @@ export interface FormBlockSelect<T extends boolean = true> {
   form?: T;
   enableIntro?: T;
   introContent?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FAQBlock_select".
+ */
+export interface FAQBlockSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  faqs?: T;
+  filterByCategory?: T;
   id?: T;
   blockName?: T;
 }

@@ -101,7 +101,7 @@ export const TeamCard: React.FC<TeamCardProps> = ({ member, className, showFullB
         
         {member.featuredQuote && (
           <blockquote className="italic text-gray-700 border-l-4 border-blue-200 pl-4 my-4">
-            "{member.featuredQuote}"
+            &ldquo;{member.featuredQuote}&rdquo;
           </blockquote>
         )}
         
