@@ -102,6 +102,9 @@ export const RelumeTeam: Block = {
               name: 'platform',
               type: 'select',
               label: 'Platform',
+              admin: {
+                dbName: 'plat', // Short name to avoid PostgreSQL 63 char limit
+              },
               options: [
                 { label: 'LinkedIn', value: 'linkedin' },
                 { label: 'Twitter/X', value: 'twitter' },
