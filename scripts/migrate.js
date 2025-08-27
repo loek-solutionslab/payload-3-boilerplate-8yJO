@@ -9,34 +9,29 @@ async function runMigration() {
     await client.connect()
     console.log('Connected to database')
 
-    // Check if description column exists
-    const descriptionCheck = await client.query(`
-      SELECT column_name 
-      FROM information_schema.columns 
-      WHERE table_name = 'header_nav_items' AND column_name = 'description'
-    `)
+    // Define all missing columns we need to check
+    const migrations = [
+      { table: 'header_nav_items', column: 'description', type: 'varchar' },
+      { table: 'header_nav_items', column: 'featured', type: 'boolean' },
+      { table: 'header', column: 'logo_id', type: 'integer' }
+    ]
 
-    if (descriptionCheck.rows.length === 0) {
-      console.log('Adding description column to header_nav_items...')
-      await client.query('ALTER TABLE header_nav_items ADD COLUMN description varchar')
-      console.log('Description column added successfully')
-    } else {
-      console.log('Description column already exists')
-    }
+    for (const migration of migrations) {
+      const { table, column, type } = migration
+      
+      const columnCheck = await client.query(`
+        SELECT column_name 
+        FROM information_schema.columns 
+        WHERE table_name = $1 AND column_name = $2
+      `, [table, column])
 
-    // Check if featured column exists
-    const featuredCheck = await client.query(`
-      SELECT column_name 
-      FROM information_schema.columns 
-      WHERE table_name = 'header_nav_items' AND column_name = 'featured'
-    `)
-
-    if (featuredCheck.rows.length === 0) {
-      console.log('Adding featured column to header_nav_items...')
-      await client.query('ALTER TABLE header_nav_items ADD COLUMN featured boolean')
-      console.log('Featured column added successfully')
-    } else {
-      console.log('Featured column already exists')
+      if (columnCheck.rows.length === 0) {
+        console.log(`Adding ${column} column to ${table}...`)
+        await client.query(`ALTER TABLE ${table} ADD COLUMN ${column} ${type}`)
+        console.log(`${column} column added successfully`)
+      } else {
+        console.log(`${column} column already exists in ${table}`)
+      }
     }
 
     console.log('All migrations completed successfully')
