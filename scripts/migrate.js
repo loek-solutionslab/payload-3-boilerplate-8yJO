@@ -101,6 +101,19 @@ async function runMigration() {
         )`
       },
       {
+        name: 'team_members',
+        sql: `CREATE TABLE IF NOT EXISTS "team_members" (
+          "id" SERIAL PRIMARY KEY,
+          "photo_id" INTEGER,
+          "name" VARCHAR NOT NULL,
+          "position" VARCHAR,
+          "bio" TEXT,
+          "updated_at" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+          "created_at" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+          CONSTRAINT "team_members_photo_id_fk" FOREIGN KEY ("photo_id") REFERENCES "media"("id") ON DELETE SET NULL
+        )`
+      },
+      {
         name: 'pages_blocks_relume_team_members',
         sql: `CREATE TABLE IF NOT EXISTS "pages_blocks_relume_team_members" (
           "id" SERIAL PRIMARY KEY,
@@ -108,7 +121,31 @@ async function runMigration() {
           "_parent_id" INTEGER NOT NULL,
           "team_member_id" INTEGER,
           CONSTRAINT "pages_blocks_relume_team_members_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "pages_blocks_relume_team"("id") ON DELETE CASCADE,
-          CONSTRAINT "pages_blocks_relume_team_members_team_member_id_fk" FOREIGN KEY ("team_member_id") REFERENCES "team"("id") ON DELETE SET NULL
+          CONSTRAINT "pages_blocks_relume_team_members_team_member_id_fk" FOREIGN KEY ("team_member_id") REFERENCES "team_members"("id") ON DELETE SET NULL
+        )`
+      },
+      {
+        name: 'social',
+        sql: `CREATE TABLE IF NOT EXISTS "social" (
+          "id" SERIAL PRIMARY KEY,
+          "platform" VARCHAR NOT NULL,
+          "url" VARCHAR NOT NULL,
+          "updated_at" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+          "created_at" TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )`
+      },
+      {
+        name: 'pages_blocks_relume_contact_contact_methods',
+        sql: `CREATE TABLE IF NOT EXISTS "pages_blocks_relume_contact_contact_methods" (
+          "id" SERIAL PRIMARY KEY,
+          "_order" INTEGER NOT NULL,
+          "_parent_id" INTEGER NOT NULL,
+          "icon" VARCHAR,
+          "title" VARCHAR NOT NULL,
+          "description" TEXT,
+          "contact_info" VARCHAR,
+          "link" VARCHAR,
+          CONSTRAINT "pages_blocks_relume_contact_contact_methods_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "pages_blocks_relume_contact"("id") ON DELETE CASCADE
         )`
       },
       {
@@ -118,15 +155,6 @@ async function runMigration() {
           "_order" INTEGER NOT NULL,
           "_parent_id" INTEGER NOT NULL,
           "_path" VARCHAR NOT NULL,
-          "title" VARCHAR NOT NULL,
-          "description" TEXT,
-          "phone_label" VARCHAR DEFAULT 'Telefoon',
-          "phone_number" VARCHAR,
-          "email_label" VARCHAR DEFAULT 'Email',
-          "email_address" VARCHAR,
-          "address_label" VARCHAR DEFAULT 'Adres',
-          "street_address" VARCHAR,
-          "city_postal" VARCHAR,
           "background_color" VARCHAR,
           "block_name" VARCHAR,
           CONSTRAINT "pages_blocks_relume_contact_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "pages"("id") ON DELETE CASCADE
