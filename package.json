@@ -5,7 +5,7 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "build": "cross-env NODE_OPTIONS=--no-deprecation PAYLOAD_MIGRATE_SKIP_PROMPT=true payload migrate && cross-env NODE_OPTIONS=--no-deprecation next build",
+    "build": "node scripts/migrate.js && cross-env NODE_OPTIONS=--no-deprecation next build",
     "build:with-migrations": "payload migrate && cross-env NODE_OPTIONS=--no-deprecation next build",
     "dev": "cross-env NODE_OPTIONS=--no-deprecation next dev",
     "dev:prod": "cross-env NODE_OPTIONS=--no-deprecation rm -rf .next && pnpm build && pnpm start",
