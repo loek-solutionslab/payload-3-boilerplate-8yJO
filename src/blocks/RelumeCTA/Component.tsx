@@ -95,10 +95,10 @@ export const RelumeCTABlockComponent: React.FC<RelumeCTABlockProps> = (props) =>
                 <Input 
                   id="email" 
                   type="email" 
-                  placeholder={emailPlaceholder}
+                  placeholder={emailPlaceholder || undefined}
                 />
                 <Button 
-                  title={buttonText}
+                  title={buttonText || undefined}
                   variant={buttonVariant as any}
                 >
                   {buttonText}
@@ -135,7 +135,7 @@ export const RelumeCTABlockComponent: React.FC<RelumeCTABlockProps> = (props) =>
                 <Input 
                   id="email" 
                   type="email" 
-                  placeholder={emailPlaceholder}
+                  placeholder={emailPlaceholder || undefined}
                 />
                 <Button
                   title={buttonText}
@@ -177,7 +177,7 @@ export const RelumeCTABlockComponent: React.FC<RelumeCTABlockProps> = (props) =>
                 <Input 
                   id="email" 
                   type="email" 
-                  placeholder={emailPlaceholder}
+                  placeholder={emailPlaceholder || undefined}
                 />
                 <Button 
                   title={buttonText}
