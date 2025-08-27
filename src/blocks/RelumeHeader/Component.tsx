@@ -4,9 +4,9 @@ import { Button } from "@relume_io/relume-ui";
 import React from "react";
 import type { RelumeHeaderBlock } from "@/payload-types";
 
-interface RelumeHeaderBlockProps extends RelumeHeaderBlock {}
+interface RelumeHeaderProps extends RelumeHeaderBlock {}
 
-export const RelumeHeaderBlock: React.FC<RelumeHeaderBlockProps> = (props) => {
+export const RelumeHeaderBlockComponent: React.FC<RelumeHeaderProps> = (props) => {
   const {
     variant = 'header-01',
     title,
@@ -51,12 +51,12 @@ export const RelumeHeaderBlock: React.FC<RelumeHeaderBlockProps> = (props) => {
               )}
               <div className="mt-6 flex flex-wrap gap-4 md:mt-8">
                 {primaryButton?.show && primaryButton?.text && (
-                  <Button title={primaryButton.text}>
+                  <Button >
                     {primaryButton.text}
                   </Button>
                 )}
                 {secondaryButton?.show && secondaryButton?.text && (
-                  <Button title={secondaryButton.text} variant="secondary">
+                  <Button  variant="secondary">
                     {secondaryButton.text}
                   </Button>
                 )}
@@ -94,12 +94,12 @@ export const RelumeHeaderBlock: React.FC<RelumeHeaderBlockProps> = (props) => {
               )}
               <div className="mt-6 flex flex-wrap gap-4 md:mt-8">
                 {primaryButton?.show && primaryButton?.text && (
-                  <Button title={primaryButton.text}>
+                  <Button >
                     {primaryButton.text}
                   </Button>
                 )}
                 {secondaryButton?.show && secondaryButton?.text && (
-                  <Button title={secondaryButton.text} variant="secondary-alt">
+                  <Button  variant="secondary-alt">
                     {secondaryButton.text}
                   </Button>
                 )}
@@ -160,12 +160,12 @@ export const RelumeHeaderBlock: React.FC<RelumeHeaderBlockProps> = (props) => {
               )}
               <div className="mt-6 flex flex-wrap gap-4 md:mt-8">
                 {primaryButton?.show && primaryButton?.text && (
-                  <Button title={primaryButton.text}>
+                  <Button >
                     {primaryButton.text}
                   </Button>
                 )}
                 {secondaryButton?.show && secondaryButton?.text && (
-                  <Button title={secondaryButton.text} variant="secondary">
+                  <Button  variant="secondary">
                     {secondaryButton.text}
                   </Button>
                 )}
@@ -195,12 +195,12 @@ export const RelumeHeaderBlock: React.FC<RelumeHeaderBlockProps> = (props) => {
             )}
             <div className="mt-6 flex flex-wrap gap-4 md:mt-8">
               {primaryButton?.show && primaryButton?.text && (
-                <Button title={primaryButton.text}>
+                <Button >
                   {primaryButton.text}
                 </Button>
               )}
               {secondaryButton?.show && secondaryButton?.text && (
-                <Button title={secondaryButton.text} variant="secondary-alt">
+                <Button  variant="secondary-alt">
                   {secondaryButton.text}
                 </Button>
               )}
@@ -268,7 +268,7 @@ export const RelumeHeaderBlock: React.FC<RelumeHeaderBlockProps> = (props) => {
               {description}
             </p>
           )}
-          {features.length > 0 && (
+          {features && features.length > 0 && (
             <div className="mt-6 space-y-2">
               {features.map((feature, index) => (
                 <div key={index} className="flex items-center justify-center">
@@ -281,12 +281,12 @@ export const RelumeHeaderBlock: React.FC<RelumeHeaderBlockProps> = (props) => {
           )}
           <div className="mt-6 flex items-center justify-center gap-x-4 md:mt-8">
             {primaryButton?.show && primaryButton?.text && (
-              <Button title={primaryButton.text}>
+              <Button >
                 {primaryButton.text}
               </Button>
             )}
             {secondaryButton?.show && secondaryButton?.text && (
-              <Button title={secondaryButton.text} variant="secondary">
+              <Button  variant="secondary">
                 {secondaryButton.text}
               </Button>
             )}

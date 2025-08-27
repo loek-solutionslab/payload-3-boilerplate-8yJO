@@ -277,7 +277,7 @@ export const RelumeLayoutBlockComponent: React.FC<RelumeLayoutBlockProps> = (pro
             </div>
           </div>
           <div className="grid grid-cols-1 items-start justify-center gap-y-12 md:grid-cols-3 md:gap-x-8 md:gap-y-16 lg:gap-x-12">
-            {columns.slice(0, 3).map((column, index) => (
+            {columns && columns.length > 0 && columns.slice(0, 3).map((column, index) => (
               <div key={index} className={`flex flex-col items-center ${alignmentClass}`}>
                 <div className="mb-5 md:mb-6">
                   <img
@@ -337,7 +337,7 @@ export const RelumeLayoutBlockComponent: React.FC<RelumeLayoutBlockProps> = (pro
               </div>
             </div>
             <div className="grid grid-cols-1 items-start justify-center gap-y-12 md:grid-cols-3 md:gap-x-8 md:gap-y-16 lg:gap-x-12">
-              {columns.slice(0, 3).map((column, index) => (
+              {columns && columns.length > 0 && columns.slice(0, 3).map((column, index) => (
                 <div key={index} className="flex w-full flex-col items-center text-center">
                   <div className="rb-6 mb-6 md:mb-8">
                     <img

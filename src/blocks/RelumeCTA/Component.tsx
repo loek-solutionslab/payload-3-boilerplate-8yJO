@@ -138,7 +138,6 @@ export const RelumeCTABlockComponent: React.FC<RelumeCTABlockProps> = (props) =>
                   placeholder={emailPlaceholder || undefined}
                 />
                 <Button
-                  title={buttonText}
                   variant={buttonVariant as any}
                   size="sm"
                   className="items-center justify-center px-6 py-3"
@@ -179,9 +178,7 @@ export const RelumeCTABlockComponent: React.FC<RelumeCTABlockProps> = (props) =>
                   type="email" 
                   placeholder={emailPlaceholder || undefined}
                 />
-                <Button 
-                  title={buttonText}
-                >
+                <Button>
                   {buttonText}
                 </Button>
               </form>

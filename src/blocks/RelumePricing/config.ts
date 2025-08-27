@@ -9,9 +9,7 @@ export const RelumePricing: Block = {
     singular: 'Relume Pricing Block',
     plural: 'Relume Pricing Blocks',
   },
-  admin: {
-    description: 'Pricing table with monthly/yearly plans and feature comparison',
-  },
+  admin: {},
   fields: [
     {
       name: 'tagline',
@@ -69,13 +67,7 @@ export const RelumePricing: Block = {
         singular: 'Plan',
         plural: 'Plans',
       },
-      admin: {
-        components: {
-          RowLabel: ({ data, index }) => {
-            return data?.name || `Plan ${String(index + 1).padStart(2, '0')}`
-          },
-        },
-      },
+      admin: {},
       fields: [
         {
           name: 'name',
@@ -122,13 +114,7 @@ export const RelumePricing: Block = {
             singular: 'Feature',
             plural: 'Features',
           },
-          admin: {
-            components: {
-              RowLabel: ({ data, index }) => {
-                return data?.text || `Feature ${String(index + 1).padStart(2, '0')}`
-              },
-            },
-          },
+          admin: {},
           fields: [
             {
               name: 'text',

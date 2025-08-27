@@ -9,9 +9,7 @@ export const RelumeTeam: Block = {
     singular: 'Relume Team Block',
     plural: 'Relume Team Blocks',
   },
-  admin: {
-    description: 'Team showcase with member profiles, social links, and hiring section',
-  },
+  admin: {},
   fields: [
     {
       name: 'tagline',
@@ -52,13 +50,7 @@ export const RelumeTeam: Block = {
         singular: 'Team Member',
         plural: 'Team Members',
       },
-      admin: {
-        components: {
-          RowLabel: ({ data, index }) => {
-            return data?.name || `Team Member ${String(index + 1).padStart(2, '0')}`
-          },
-        },
-      },
+      admin: {},
       fields: [
         {
           name: 'photo',
@@ -106,13 +98,7 @@ export const RelumeTeam: Block = {
             singular: 'Social Link',
             plural: 'Social Links',
           },
-          admin: {
-            components: {
-              RowLabel: ({ data, index }) => {
-                return data?.platform || `Social Link ${String(index + 1).padStart(2, '0')}`
-              },
-            },
-          },
+          admin: {},
           fields: [
             {
               name: 'platform',
@@ -149,7 +135,6 @@ export const RelumeTeam: Block = {
       label: 'Hiring Section',
       dbName: 'hiring',
       admin: {
-        collapsed: true,
         description: 'Optional section to promote open positions',
       },
       fields: [

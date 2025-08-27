@@ -132,21 +132,23 @@ export const RelumePricingComponent: React.FC<RelumePricingProps> = ({ block }) 
         </div>
 
         {/* Pricing Plans */}
-        <div className={`grid gap-8 ${
-          plans.length === 1 
-            ? 'grid-cols-1 max-w-md mx-auto' 
-            : plans.length === 2 
-              ? 'grid-cols-1 md:grid-cols-2' 
-              : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'
-        }`}>
-          {plans.map((plan, index) => (
-            <PricingPlan
-              key={index}
-              plan={plan}
-              period={selectedPeriod}
-            />
-          ))}
-        </div>
+        {plans && plans.length > 0 && (
+          <div className={`grid gap-8 ${
+            plans.length === 1 
+              ? 'grid-cols-1 max-w-md mx-auto' 
+              : plans.length === 2 
+                ? 'grid-cols-1 md:grid-cols-2' 
+                : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'
+          }`}>
+            {plans.map((plan, index) => (
+              <PricingPlan
+                key={index}
+                plan={plan}
+                period={selectedPeriod}
+              />
+            ))}
+          </div>
+        )}
       </div>
     </section>
   )

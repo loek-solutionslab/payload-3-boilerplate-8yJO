@@ -85,8 +85,11 @@ export const RelumeTeamComponent: React.FC<RelumeTeamProps> = ({ block }) => {
   const getHiringButtonHref = () => {
     if (!hiringSection?.show || !hiringSection?.buttonLink) return '#'
     
-    if (hiringSection.buttonLink.type === 'reference' && hiringSection.buttonLink.reference?.value?.slug) {
-      return `/${hiringSection.buttonLink.reference.value.slug}`
+    if (hiringSection.buttonLink.type === 'reference' && hiringSection.buttonLink.reference?.value) {
+      const page = hiringSection.buttonLink.reference.value
+      if (typeof page === 'object' && 'slug' in page && page.slug) {
+        return `/${page.slug}`
+      }
     }
     
     if (hiringSection.buttonLink.type === 'custom' && hiringSection.buttonLink.url) {
@@ -96,7 +99,7 @@ export const RelumeTeamComponent: React.FC<RelumeTeamProps> = ({ block }) => {
     return '#'
   }
   
-  const ButtonComponent = hiringSection?.buttonLink?.type === 'reference' ? Link : 'a'
+  const ButtonComponent = (hiringSection?.buttonLink?.type === 'reference' ? Link : 'a') as any
   const buttonProps = hiringSection?.buttonLink?.type === 'custom' 
     ? { target: '_blank', rel: 'noopener noreferrer' } 
     : {}
@@ -119,17 +122,19 @@ export const RelumeTeamComponent: React.FC<RelumeTeamProps> = ({ block }) => {
         </div>
         
         {/* Team Members Grid */}
-        <div className={`grid gap-x-8 gap-y-12 md:gap-y-16 ${
-          teamMembers.length <= 2 
-            ? 'grid-cols-1 md:grid-cols-2' 
-            : teamMembers.length <= 3
-              ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'
-              : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-4'
-        }`}>
-          {teamMembers.map((member, index) => (
-            <TeamMember key={index} member={member} index={index} />
-          ))}
-        </div>
+        {teamMembers && teamMembers.length > 0 && (
+          <div className={`grid gap-x-8 gap-y-12 md:gap-y-16 ${
+            teamMembers.length <= 2 
+              ? 'grid-cols-1 md:grid-cols-2' 
+              : teamMembers.length <= 3
+                ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'
+                : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-4'
+          }`}>
+            {teamMembers.map((member, index) => (
+              <TeamMember key={index} member={member} index={index} />
+            ))}
+          </div>
+        )}
 
         {/* Hiring Section */}
         {hiringSection?.show && (

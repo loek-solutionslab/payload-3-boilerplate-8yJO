@@ -9,9 +9,7 @@ export const RelumeGallery: Block = {
     singular: 'Relume Gallery Block',
     plural: 'Relume Gallery Blocks',
   },
-  admin: {
-    description: 'Gallery components for displaying image collections with different layouts',
-  },
+  admin: {},
   fields: [
     {
       name: 'variant',
@@ -60,13 +58,7 @@ export const RelumeGallery: Block = {
         singular: 'Image',
         plural: 'Images',
       },
-      admin: {
-        components: {
-          RowLabel: ({ data, index }) => {
-            return data?.image?.alt || `Image ${String(index + 1).padStart(2, '0')}`
-          },
-        },
-      },
+      admin: {},
       fields: [
         {
           name: 'image',
@@ -82,7 +74,6 @@ export const RelumeGallery: Block = {
           type: 'group',
           label: 'Optional Link',
           admin: {
-            collapsed: true,
             description: 'Add a link when users click on this image',
           },
           fields: [
