@@ -128,6 +128,18 @@ async function runMigration() {
         )`
       },
       {
+        name: 'pages__blocks_relumeContact',
+        sql: `CREATE TABLE IF NOT EXISTS "pages__blocks_relumeContact" (
+          "id" SERIAL PRIMARY KEY,
+          "_order" INTEGER NOT NULL,
+          "_parent_id" INTEGER NOT NULL,
+          "_path" VARCHAR NOT NULL,
+          "background_color" VARCHAR,
+          "block_name" VARCHAR,
+          CONSTRAINT "pages__blocks_relumeContact_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "pages"("id") ON DELETE CASCADE
+        )`
+      },
+      {
         name: 'pages__blocks_relumeContact_contactMethods',
         sql: `CREATE TABLE IF NOT EXISTS "pages__blocks_relumeContact_contactMethods" (
           "id" SERIAL PRIMARY KEY,
@@ -139,18 +151,6 @@ async function runMigration() {
           "contact_info" VARCHAR,
           "link" VARCHAR,
           CONSTRAINT "pages__blocks_relumeContact_contactMethods_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "pages__blocks_relumeContact"("id") ON DELETE CASCADE
-        )`
-      },
-      {
-        name: 'pages__blocks_relumeContact',
-        sql: `CREATE TABLE IF NOT EXISTS "pages__blocks_relumeContact" (
-          "id" SERIAL PRIMARY KEY,
-          "_order" INTEGER NOT NULL,
-          "_parent_id" INTEGER NOT NULL,
-          "_path" VARCHAR NOT NULL,
-          "background_color" VARCHAR,
-          "block_name" VARCHAR,
-          CONSTRAINT "pages__blocks_relumeContact_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "pages"("id") ON DELETE CASCADE
         )`
       },
       {
