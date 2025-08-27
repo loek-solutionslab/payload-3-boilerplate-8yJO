@@ -30,7 +30,6 @@ export const HeaderNav: React.FC<{ header: HeaderType }> = ({ header }) => {
                 transition-colors hover:text-primary 
                 ${featured ? 'font-semibold text-primary' : ''}
               `}
-              title={description || undefined}
             />
           )
         })}
