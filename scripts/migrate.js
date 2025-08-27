@@ -103,8 +103,8 @@ async function runMigration() {
         )`
       },
       {
-        name: 'pages__blocks_relumeTeam_teamMembers',
-        sql: `CREATE TABLE IF NOT EXISTS "pages__blocks_relumeTeam_teamMembers" (
+        name: 'team_members',
+        sql: `CREATE TABLE IF NOT EXISTS "team_members" (
           "id" SERIAL PRIMARY KEY,
           "_order" INTEGER NOT NULL,
           "_parent_id" INTEGER NOT NULL,
@@ -112,19 +112,19 @@ async function runMigration() {
           "name" VARCHAR NOT NULL,
           "position" VARCHAR NOT NULL,
           "bio" TEXT NOT NULL,
-          CONSTRAINT "pages__blocks_relumeTeam_teamMembers_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "pages__blocks_relumeTeam"("id") ON DELETE CASCADE,
-          CONSTRAINT "pages__blocks_relumeTeam_teamMembers_photo_id_fk" FOREIGN KEY ("photo_id") REFERENCES "media"("id") ON DELETE SET NULL
+          CONSTRAINT "team_members_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "pages__blocks_relumeTeam"("id") ON DELETE CASCADE,
+          CONSTRAINT "team_members_photo_id_fk" FOREIGN KEY ("photo_id") REFERENCES "media"("id") ON DELETE SET NULL
         )`
       },
       {
-        name: 'pages__blocks_relumeTeam_teamMembers_socialLinks',
-        sql: `CREATE TABLE IF NOT EXISTS "pages__blocks_relumeTeam_teamMembers_socialLinks" (
+        name: 'social',
+        sql: `CREATE TABLE IF NOT EXISTS "social" (
           "id" SERIAL PRIMARY KEY,
           "_order" INTEGER NOT NULL,
           "_parent_id" INTEGER NOT NULL,
           "platform" VARCHAR NOT NULL,
           "url" VARCHAR NOT NULL,
-          CONSTRAINT "pages__blocks_relumeTeam_teamMembers_socialLinks_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "pages__blocks_relumeTeam_teamMembers"("id") ON DELETE CASCADE
+          CONSTRAINT "social_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "team_members"("id") ON DELETE CASCADE
         )`
       },
       {
@@ -275,8 +275,8 @@ async function runMigration() {
 
     // Verificatie van kritieke tabellen
     const criticalTables = [
-      'pages__blocks_relumeTeam_teamMembers',
-      'pages__blocks_relumeTeam_teamMembers_socialLinks',
+      'team_members',
+      'social',
       'pages__blocks_relumeContact_contactMethods',
       'pages__blocks_relumePricing',
       'pages__blocks_relumePricing_plans'
