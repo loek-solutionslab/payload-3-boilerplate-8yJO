@@ -84,6 +84,7 @@ const PostCard: React.FC<{ post: Post; layout?: 'grid' | 'list' | 'magazine' }> 
                 <span>
                   Door {post.authors.map(author => {
                     if (typeof author === 'string') return author
+                    if (typeof author === 'number') return 'Onbekend'
                     return author.name || 'Onbekend'
                   }).join(', ')}
                 </span>
@@ -119,7 +120,7 @@ export const PostsArchiveClient: React.FC<PostsArchiveClientProps> = ({
   const filteredPosts = activeCategory
     ? posts.filter(post => 
         post.categories?.some(cat => 
-          typeof cat === 'object' && cat.id === activeCategory
+          typeof cat === 'object' && cat.id.toString() === activeCategory
         )
       )
     : posts
@@ -150,9 +151,9 @@ export const PostsArchiveClient: React.FC<PostsArchiveClientProps> = ({
           {usedCategories.map((category) => (
             <button
               key={category.id}
-              onClick={() => setActiveCategory(category.id)}
+              onClick={() => setActiveCategory(category.id.toString())}
               className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                activeCategory === category.id 
+                activeCategory === category.id.toString() 
                   ? 'bg-black text-white' 
                   : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
               }`}

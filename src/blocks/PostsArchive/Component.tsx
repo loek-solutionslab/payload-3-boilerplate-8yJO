@@ -79,6 +79,7 @@ const PostCard: React.FC<{ post: Post; layout?: 'grid' | 'list' | 'magazine' }> 
                 <span>
                   Door {post.authors.map(author => {
                     if (typeof author === 'string') return author
+                    if (typeof author === 'number') return 'Onbekend'
                     return author.name || 'Onbekend'
                   }).join(', ')}
                 </span>
@@ -207,8 +208,8 @@ export const PostsArchiveBlock: React.FC<
         <PostsArchiveClient
           posts={posts}
           allCategories={allCategories}
-          showCategories={showCategories}
-          layout={layout}
+          showCategories={showCategories || false}
+          layout={layout || 'grid'}
         />
       </div>
     </div>

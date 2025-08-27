@@ -9,9 +9,6 @@ export const RelumeContact: Block = {
     singular: 'Relume Contact Block',
     plural: 'Relume Contact Blocks',
   },
-  admin: {
-    description: 'Contact information cards with icons, descriptions, and contact details',
-  },
   fields: [
     {
       name: 'contactMethods',
@@ -45,13 +42,6 @@ export const RelumeContact: Block = {
       labels: {
         singular: 'Contact Method',
         plural: 'Contact Methods',
-      },
-      admin: {
-        components: {
-          RowLabel: ({ data, index }) => {
-            return data?.title || `Contact Method ${String(index + 1).padStart(2, '0')}`
-          },
-        },
       },
       fields: [
         {

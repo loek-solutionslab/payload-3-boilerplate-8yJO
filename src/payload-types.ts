@@ -202,133 +202,10 @@ export interface Page {
     | MediaBlock
     | ArchiveBlock
     | FormBlock
-    | {
-        title: string;
-        features?:
-          | {
-              icon?: (number | null) | Media;
-              title: string;
-              description?: string | null;
-              link: {
-                type?: ('reference' | 'custom') | null;
-                newTab?: boolean | null;
-                reference?: {
-                  relationTo: 'pages';
-                  value: number | Page;
-                } | null;
-                url?: string | null;
-                label: string;
-                /**
-                 * Choose how the link should be rendered.
-                 */
-                appearance?: ('default' | 'outline') | null;
-              };
-              id?: string | null;
-            }[]
-          | null;
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'features';
-      }
-    | {
-        title: string;
-        description?: string | null;
-        buttonText?: string | null;
-        image?: (number | null) | Media;
-        /**
-         * HTML toegestaan voor links
-         */
-        privacyText?: string | null;
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'newsletterCTA';
-      }
-    | {
-        title: string;
-        description?: string | null;
-        image: number | Media;
-        imagePosition?: ('left' | 'right') | null;
-        primaryButton: {
-          type?: ('reference' | 'custom') | null;
-          newTab?: boolean | null;
-          reference?: {
-            relationTo: 'pages';
-            value: number | Page;
-          } | null;
-          url?: string | null;
-          label: string;
-          /**
-           * Choose how the link should be rendered.
-           */
-          appearance?: ('default' | 'outline') | null;
-        };
-        secondaryButton: {
-          type?: ('reference' | 'custom') | null;
-          newTab?: boolean | null;
-          reference?: {
-            relationTo: 'pages';
-            value: number | Page;
-          } | null;
-          url?: string | null;
-          label: string;
-          /**
-           * Choose how the link should be rendered.
-           */
-          appearance?: ('default' | 'outline') | null;
-        };
-        /**
-         * Choose a background color for this block
-         */
-        backgroundColor?:
-          | (
-              | ''
-              | 'bg-[#FFFFFF]'
-              | 'bg-[#F2F2F2]'
-              | 'bg-[#B8B8B5]'
-              | 'bg-[#656564]'
-              | 'bg-[#000000]'
-              | 'bg-[#EDF3F5]'
-              | 'bg-[#B396AE]'
-              | 'bg-[#4F758D]'
-              | 'bg-[#3F5D70]'
-              | 'bg-[#17252A]'
-              | 'bg-[#E5F7F4]'
-              | 'bg-[#40C7B8]'
-              | 'bg-[#01B09A]'
-              | 'bg-[#008C7B]'
-              | 'bg-[#00432E]'
-              | 'bg-[#FDF4FB]'
-              | 'bg-[#F6EEE8]'
-              | 'bg-[#F5E0DF]'
-              | 'bg-[#C2BAB2]'
-              | 'bg-[#484542]'
-              | 'bg-[#FFF0F0]'
-              | 'bg-[#FF7971]'
-              | 'bg-[#FF6B68]'
-              | 'bg-[#CC5555]'
-              | 'bg-[#4C2020]'
-              | 'bg-[#F2F8FC]'
-              | 'bg-[#B2D5EA]'
-              | 'bg-[#A6D2E4]'
-              | 'bg-[#61A8BA]'
-              | 'bg-[#353F43]'
-            )
-          | null;
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'hero';
-      }
-    | {
-        title?: string | null;
-        description?: string | null;
-        /**
-         * Selecteer tot 6 testimonials om weer te geven
-         */
-        testimonials: (number | Testimonial)[];
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'testimonials';
-      }
+    | FeaturesBlock
+    | NewsletterCTABlock
+    | HeroBlock
+    | TestimonialsBlock
     | FAQBlock
     | CourseArchiveBlock
     | AgeGroupsArchiveBlock
@@ -975,6 +852,149 @@ export interface Form {
     | null;
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FeaturesBlock".
+ */
+export interface FeaturesBlock {
+  title: string;
+  features?:
+    | {
+        icon?: (number | null) | Media;
+        title: string;
+        description?: string | null;
+        link: {
+          type?: ('reference' | 'custom') | null;
+          newTab?: boolean | null;
+          reference?: {
+            relationTo: 'pages';
+            value: number | Page;
+          } | null;
+          url?: string | null;
+          label: string;
+          /**
+           * Choose how the link should be rendered.
+           */
+          appearance?: ('default' | 'outline') | null;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'features';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "NewsletterCTABlock".
+ */
+export interface NewsletterCTABlock {
+  title: string;
+  description?: string | null;
+  buttonText?: string | null;
+  image?: (number | null) | Media;
+  /**
+   * HTML toegestaan voor links
+   */
+  privacyText?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'newsletterCTA';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HeroBlock".
+ */
+export interface HeroBlock {
+  title: string;
+  description?: string | null;
+  image: number | Media;
+  imagePosition?: ('left' | 'right') | null;
+  primaryButton: {
+    type?: ('reference' | 'custom') | null;
+    newTab?: boolean | null;
+    reference?: {
+      relationTo: 'pages';
+      value: number | Page;
+    } | null;
+    url?: string | null;
+    label: string;
+    /**
+     * Choose how the link should be rendered.
+     */
+    appearance?: ('default' | 'outline') | null;
+  };
+  secondaryButton: {
+    type?: ('reference' | 'custom') | null;
+    newTab?: boolean | null;
+    reference?: {
+      relationTo: 'pages';
+      value: number | Page;
+    } | null;
+    url?: string | null;
+    label: string;
+    /**
+     * Choose how the link should be rendered.
+     */
+    appearance?: ('default' | 'outline') | null;
+  };
+  /**
+   * Choose a background color for this block
+   */
+  backgroundColor?:
+    | (
+        | ''
+        | 'bg-[#FFFFFF]'
+        | 'bg-[#F2F2F2]'
+        | 'bg-[#B8B8B5]'
+        | 'bg-[#656564]'
+        | 'bg-[#000000]'
+        | 'bg-[#EDF3F5]'
+        | 'bg-[#B396AE]'
+        | 'bg-[#4F758D]'
+        | 'bg-[#3F5D70]'
+        | 'bg-[#17252A]'
+        | 'bg-[#E5F7F4]'
+        | 'bg-[#40C7B8]'
+        | 'bg-[#01B09A]'
+        | 'bg-[#008C7B]'
+        | 'bg-[#00432E]'
+        | 'bg-[#FDF4FB]'
+        | 'bg-[#F6EEE8]'
+        | 'bg-[#F5E0DF]'
+        | 'bg-[#C2BAB2]'
+        | 'bg-[#484542]'
+        | 'bg-[#FFF0F0]'
+        | 'bg-[#FF7971]'
+        | 'bg-[#FF6B68]'
+        | 'bg-[#CC5555]'
+        | 'bg-[#4C2020]'
+        | 'bg-[#F2F8FC]'
+        | 'bg-[#B2D5EA]'
+        | 'bg-[#A6D2E4]'
+        | 'bg-[#61A8BA]'
+        | 'bg-[#353F43]'
+      )
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'hero';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TestimonialsBlock".
+ */
+export interface TestimonialsBlock {
+  title?: string | null;
+  description?: string | null;
+  /**
+   * Selecteer tot 6 testimonials om weer te geven
+   */
+  testimonials: (number | Testimonial)[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'testimonials';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2320,82 +2340,10 @@ export interface PagesSelect<T extends boolean = true> {
         mediaBlock?: T | MediaBlockSelect<T>;
         archive?: T | ArchiveBlockSelect<T>;
         formBlock?: T | FormBlockSelect<T>;
-        features?:
-          | T
-          | {
-              title?: T;
-              features?:
-                | T
-                | {
-                    icon?: T;
-                    title?: T;
-                    description?: T;
-                    link?:
-                      | T
-                      | {
-                          type?: T;
-                          newTab?: T;
-                          reference?: T;
-                          url?: T;
-                          label?: T;
-                          appearance?: T;
-                        };
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        newsletterCTA?:
-          | T
-          | {
-              title?: T;
-              description?: T;
-              buttonText?: T;
-              image?: T;
-              privacyText?: T;
-              id?: T;
-              blockName?: T;
-            };
-        hero?:
-          | T
-          | {
-              title?: T;
-              description?: T;
-              image?: T;
-              imagePosition?: T;
-              primaryButton?:
-                | T
-                | {
-                    type?: T;
-                    newTab?: T;
-                    reference?: T;
-                    url?: T;
-                    label?: T;
-                    appearance?: T;
-                  };
-              secondaryButton?:
-                | T
-                | {
-                    type?: T;
-                    newTab?: T;
-                    reference?: T;
-                    url?: T;
-                    label?: T;
-                    appearance?: T;
-                  };
-              backgroundColor?: T;
-              id?: T;
-              blockName?: T;
-            };
-        testimonials?:
-          | T
-          | {
-              title?: T;
-              description?: T;
-              testimonials?: T;
-              id?: T;
-              blockName?: T;
-            };
+        features?: T | FeaturesBlockSelect<T>;
+        newsletterCTA?: T | NewsletterCTABlockSelect<T>;
+        hero?: T | HeroBlockSelect<T>;
+        testimonials?: T | TestimonialsBlockSelect<T>;
         faq?: T | FAQBlockSelect<T>;
         courseArchive?: T | CourseArchiveBlockSelect<T>;
         ageGroupsArchive?: T | AgeGroupsArchiveBlockSelect<T>;
@@ -2506,6 +2454,90 @@ export interface FormBlockSelect<T extends boolean = true> {
   form?: T;
   enableIntro?: T;
   introContent?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FeaturesBlock_select".
+ */
+export interface FeaturesBlockSelect<T extends boolean = true> {
+  title?: T;
+  features?:
+    | T
+    | {
+        icon?: T;
+        title?: T;
+        description?: T;
+        link?:
+          | T
+          | {
+              type?: T;
+              newTab?: T;
+              reference?: T;
+              url?: T;
+              label?: T;
+              appearance?: T;
+            };
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "NewsletterCTABlock_select".
+ */
+export interface NewsletterCTABlockSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  buttonText?: T;
+  image?: T;
+  privacyText?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HeroBlock_select".
+ */
+export interface HeroBlockSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  image?: T;
+  imagePosition?: T;
+  primaryButton?:
+    | T
+    | {
+        type?: T;
+        newTab?: T;
+        reference?: T;
+        url?: T;
+        label?: T;
+        appearance?: T;
+      };
+  secondaryButton?:
+    | T
+    | {
+        type?: T;
+        newTab?: T;
+        reference?: T;
+        url?: T;
+        label?: T;
+        appearance?: T;
+      };
+  backgroundColor?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TestimonialsBlock_select".
+ */
+export interface TestimonialsBlockSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  testimonials?: T;
   id?: T;
   blockName?: T;
 }

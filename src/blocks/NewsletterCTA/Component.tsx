@@ -2,7 +2,7 @@
 
 import { cn } from '@/utilities/cn'
 import React, { useState } from 'react'
-import type { NewsletterCTA as NewsletterCTAProps } from '@/payload-types'
+import type { NewsletterCTABlock as NewsletterCTAProps } from '@/payload-types'
 import { Media } from '@/components/Media'
 
 type Props = {

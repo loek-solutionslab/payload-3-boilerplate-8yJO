@@ -65,17 +65,17 @@ export const RelumeContactComponent: React.FC<RelumeContactProps> = ({ block }) 
     <section className="px-[5%] py-16 md:py-24 lg:py-28">
       <div className="container">
         <div className={`grid auto-cols-fr gap-x-12 gap-y-12 md:gap-y-16 ${
-          contactMethods.length === 1 
+          contactMethods?.length === 1 
             ? 'grid-cols-1 max-w-md' 
-            : contactMethods.length === 2 
+            : contactMethods?.length === 2 
               ? 'grid-cols-1 md:grid-cols-2' 
-              : contactMethods.length === 3
+              : contactMethods?.length === 3
                 ? 'grid-cols-1 md:grid-cols-3'
-                : contactMethods.length === 4
+                : contactMethods?.length === 4
                   ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-4'
                   : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'
         }`}>
-          {contactMethods.map((method, index) => (
+          {contactMethods?.map((method, index) => (
             <ContactMethod key={index} method={method} />
           ))}
         </div>

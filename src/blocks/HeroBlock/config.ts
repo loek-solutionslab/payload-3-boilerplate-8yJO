@@ -4,6 +4,7 @@ import { link } from '@/fields/link'
 
 export const HeroBlock: Block = {
   slug: 'hero',
+  interfaceName: 'HeroBlock',
   labels: {
     singular: 'Hero Sectie',
     plural: 'Hero Secties',

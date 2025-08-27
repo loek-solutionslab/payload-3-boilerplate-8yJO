@@ -3,6 +3,7 @@ import { link } from '@/fields/link'
 
 export const FeaturesBlock: Block = {
   slug: 'features',
+  interfaceName: 'FeaturesBlock',
   labels: {
     singular: 'Features Sectie',
     plural: 'Features Secties',

@@ -2,6 +2,7 @@ import type { Block } from 'payload'
 
 export const NewsletterCTA: Block = {
   slug: 'newsletterCTA',
+  interfaceName: 'NewsletterCTABlock',
   labels: {
     singular: 'Newsletter CTA',
     plural: 'Newsletter CTAs',
