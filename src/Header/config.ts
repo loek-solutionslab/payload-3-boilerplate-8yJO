@@ -67,7 +67,6 @@ export const Header: GlobalConfig = {
       label: 'Call-to-Action Button',
       admin: {
         description: 'Optional prominent button in the header (e.g., "Contact Us", "Sign Up")',
-        collapsed: true,
       },
       fields: [
         {
