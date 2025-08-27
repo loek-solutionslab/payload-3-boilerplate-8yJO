@@ -104,8 +104,6 @@ export const HeaderNav: React.FC<{ header: HeaderType }> = ({ header }) => {
                       block py-2 px-1 transition-colors hover:text-primary
                       ${featured ? 'font-semibold text-primary' : ''}
                     `}
-                    onClick={() => setMobileMenuOpen(false)}
-                    title={description || undefined}
                   />
                 )
               })}
