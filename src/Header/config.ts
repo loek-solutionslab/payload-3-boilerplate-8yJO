@@ -28,11 +28,6 @@ export const Header: GlobalConfig = {
       label: 'Navigation Items',
       admin: {
         description: 'Add navigation links that will appear in the main header menu.',
-        components: {
-          RowLabel: ({ data, index }) => {
-            return data?.link?.label || data?.link?.url || `Nav Item ${String(index + 1).padStart(2, '0')}`
-          },
-        },
       },
       fields: [
         link({
