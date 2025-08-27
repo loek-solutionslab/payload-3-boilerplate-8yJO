@@ -101,37 +101,28 @@ async function runMigration() {
         )`
       },
       {
-        name: 'team_members',
-        sql: `CREATE TABLE IF NOT EXISTS "team_members" (
+        name: 'pages_blocks_relume_team_team_members',
+        sql: `CREATE TABLE IF NOT EXISTS "pages_blocks_relume_team_team_members" (
           "id" SERIAL PRIMARY KEY,
+          "_order" INTEGER NOT NULL,
+          "_parent_id" INTEGER NOT NULL,
           "photo_id" INTEGER,
           "name" VARCHAR NOT NULL,
           "position" VARCHAR,
           "bio" TEXT,
-          "updated_at" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-          "created_at" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-          CONSTRAINT "team_members_photo_id_fk" FOREIGN KEY ("photo_id") REFERENCES "media"("id") ON DELETE SET NULL
+          CONSTRAINT "pages_blocks_relume_team_team_members_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "pages_blocks_relume_team"("id") ON DELETE CASCADE,
+          CONSTRAINT "pages_blocks_relume_team_team_members_photo_id_fk" FOREIGN KEY ("photo_id") REFERENCES "media"("id") ON DELETE SET NULL
         )`
       },
       {
-        name: 'pages_blocks_relume_team_members',
-        sql: `CREATE TABLE IF NOT EXISTS "pages_blocks_relume_team_members" (
+        name: 'pages_blocks_relume_team_team_members_social_links',
+        sql: `CREATE TABLE IF NOT EXISTS "pages_blocks_relume_team_team_members_social_links" (
           "id" SERIAL PRIMARY KEY,
           "_order" INTEGER NOT NULL,
           "_parent_id" INTEGER NOT NULL,
-          "team_member_id" INTEGER,
-          CONSTRAINT "pages_blocks_relume_team_members_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "pages_blocks_relume_team"("id") ON DELETE CASCADE,
-          CONSTRAINT "pages_blocks_relume_team_members_team_member_id_fk" FOREIGN KEY ("team_member_id") REFERENCES "team_members"("id") ON DELETE SET NULL
-        )`
-      },
-      {
-        name: 'social',
-        sql: `CREATE TABLE IF NOT EXISTS "social" (
-          "id" SERIAL PRIMARY KEY,
           "platform" VARCHAR NOT NULL,
           "url" VARCHAR NOT NULL,
-          "updated_at" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-          "created_at" TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+          CONSTRAINT "relume_team_social_links_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "pages_blocks_relume_team_team_members"("id") ON DELETE CASCADE
         )`
       },
       {
@@ -277,6 +268,36 @@ async function runMigration() {
       } catch (error) {
         console.error(`❌ Error adding column ${migration.column} to ${migration.table}:`, error.message)
         // Continue with other migrations instead of failing completely
+      }
+    }
+
+    // Verificatie van kritieke tabellen
+    const criticalTables = [
+      'pages_blocks_relume_team_team_members',
+      'pages_blocks_relume_team_team_members_social_links',
+      'pages_blocks_relume_contact_contact_methods',
+      'pages_blocks_relume_pricing',
+      'pages_blocks_relume_pricing_plans'
+    ]
+
+    console.log('🔍 Verifying critical tables...')
+    for (const tableName of criticalTables) {
+      try {
+        const result = await client.query(`
+          SELECT EXISTS (
+            SELECT FROM information_schema.tables 
+            WHERE table_schema = 'public' AND table_name = $1
+          );
+        `, [tableName])
+        
+        if (!result.rows[0].exists) {
+          console.error(`❌ CRITICAL: Table ${tableName} missing after migration`)
+          throw new Error(`Critical table ${tableName} missing after migration`)
+        }
+        console.log(`✅ Verified: ${tableName} exists`)
+      } catch (error) {
+        console.error(`❌ Error verifying table ${tableName}:`, error.message)
+        throw error
       }
     }
 
