@@ -1,6 +1,7 @@
 "use client";
 
 import { Button, Input } from "@relume_io/relume-ui";
+import Image from 'next/image';
 import React from "react";
 import type { RelumeCTABlock } from "@/payload-types";
 
@@ -59,13 +60,15 @@ export const RelumeCTABlockComponent: React.FC<RelumeCTABlockProps> = (props) =>
               </div>
             </div>
             <div>
-              <img
+              <Image
                 src={
                   imageUrl || 
                   'https://d22po4pjz3o32e.cloudfront.net/placeholder-image-landscape.svg'
                 }
                 className="w-full rounded-image object-cover"
                 alt={title || 'CTA image'}
+                width={600}
+                height={400}
               />
             </div>
           </div>
@@ -190,13 +193,15 @@ export const RelumeCTABlockComponent: React.FC<RelumeCTABlockProps> = (props) =>
             </div>
           </div>
           <div>
-            <img
+            <Image
               src={
                 imageUrl || 
                 'https://d22po4pjz3o32e.cloudfront.net/placeholder-image-landscape.svg'
               }
               className="w-full rounded-image object-cover"
               alt={title || 'CTA image'}
+              width={600}
+              height={400}
             />
           </div>
         </div>

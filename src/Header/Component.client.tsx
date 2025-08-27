@@ -2,6 +2,7 @@
 import { useHeaderTheme } from '@/providers/HeaderTheme'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
 
 import type { Header } from '@/payload-types'
@@ -34,11 +35,13 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ header }) => {
       <div className="py-8 border-b border-border flex justify-between items-center">
         <Link href="/" className="flex-shrink-0">
           {header?.logo && typeof header.logo === 'object' && header.logo.url ? (
-            <img 
+            <Image 
               src={header.logo.url} 
               alt={header.logo.alt || 'Site Logo'}
               className="h-8 md:h-10 w-auto"
-              loading="eager"
+              width={120}
+              height={40}
+              priority
             />
           ) : (
             <Logo loading="eager" priority="high" className="invert dark:invert-0" />

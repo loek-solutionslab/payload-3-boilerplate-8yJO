@@ -6,6 +6,9 @@ import { getPayload } from 'payload'
 import { draftMode } from 'next/headers'
 import React, { cache } from 'react'
 
+// Force dynamic rendering to prevent prerendering errors during build
+export const dynamic = 'force-dynamic'
+
 import type { Page as PageType } from '@/payload-types'
 
 import { RenderBlocks } from '@/blocks/RenderBlocks'

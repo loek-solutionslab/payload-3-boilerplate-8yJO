@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@relume_io/relume-ui";
+import Image from 'next/image';
 import React from "react";
 import type { RelumeHeaderBlock } from "@/payload-types";
 
@@ -33,10 +34,12 @@ export const RelumeHeaderBlockComponent: React.FC<RelumeHeaderProps> = (props) =
           <div className={`grid grid-cols-1 gap-x-20 gap-y-12 md:gap-y-16 lg:grid-cols-2 lg:items-center ${imagePosition === 'left' ? 'lg:grid-cols-2' : ''}`}>
             {imagePosition === 'left' && imageUrl && (
               <div>
-                <img
+                <Image
                   src={imageUrl}
                   className="w-full rounded-image object-cover"
                   alt={title || 'Header image'}
+                  width={600}
+                  height={400}
                 />
               </div>
             )}
@@ -64,10 +67,12 @@ export const RelumeHeaderBlockComponent: React.FC<RelumeHeaderProps> = (props) =
             </div>
             {imagePosition === 'right' && imageUrl && (
               <div>
-                <img
+                <Image
                   src={imageUrl}
                   className="w-full rounded-image object-cover"
                   alt={title || 'Header image'}
+                  width={600}
+                  height={400}
                 />
               </div>
             )}
@@ -108,10 +113,11 @@ export const RelumeHeaderBlockComponent: React.FC<RelumeHeaderProps> = (props) =
           </div>
         </div>
         <div className="absolute inset-0 z-0">
-          <img
+          <Image
             src={backgroundImageUrl || 'https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg'}
             className="size-full object-cover"
             alt={title || 'Background image'}
+            fill
           />
           <div className={`absolute inset-0 bg-black/${overlayOpacity}`} />
         </div>
@@ -210,7 +216,7 @@ export const RelumeHeaderBlockComponent: React.FC<RelumeHeaderProps> = (props) =
         {backgroundImageUrl && (
           <>
             <div className="absolute inset-0 z-0">
-              <img
+              <Image
                 src={backgroundImageUrl}
                 className="size-full object-cover"
                 alt={title || 'Background image'}
@@ -242,7 +248,7 @@ export const RelumeHeaderBlockComponent: React.FC<RelumeHeaderProps> = (props) =
         {backgroundImageUrl && (
           <>
             <div className="absolute inset-0 z-0">
-              <img
+              <Image
                 src={backgroundImageUrl}
                 className="size-full object-cover"
                 alt={title || 'Background image'}
@@ -313,7 +319,7 @@ export const RelumeHeaderBlockComponent: React.FC<RelumeHeaderProps> = (props) =
           </div>
           {imageUrl && (
             <div>
-              <img
+              <Image
                 src={imageUrl}
                 className="w-full rounded-image object-cover"
                 alt={title || 'Header image'}

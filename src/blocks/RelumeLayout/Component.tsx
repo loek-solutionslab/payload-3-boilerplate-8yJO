@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@relume_io/relume-ui";
+import Image from 'next/image';
 import React from "react";
 import { RxChevronRight } from "react-icons/rx";
 import type { RelumeLayoutBlock } from "@/payload-types";
@@ -36,10 +37,12 @@ export const RelumeLayoutBlockComponent: React.FC<RelumeLayoutBlockProps> = (pro
           <div className="grid grid-cols-1 gap-y-12 md:grid-cols-2 md:items-center md:gap-x-12 lg:gap-x-20">
             {imagePosition === 'left' && imageUrl && (
               <div>
-                <img
+                <Image
                   src={imageUrl}
                   className="w-full rounded-image object-cover"
                   alt={title || 'Layout image'}
+                  width={600}
+                  height={400}
                 />
               </div>
             )}
@@ -78,10 +81,12 @@ export const RelumeLayoutBlockComponent: React.FC<RelumeLayoutBlockProps> = (pro
             </div>
             {imagePosition === 'right' && imageUrl && (
               <div>
-                <img
+                <Image
                   src={imageUrl}
                   className="w-full rounded-image object-cover"
                   alt={title || 'Layout image'}
+                  width={600}
+                  height={400}
                 />
               </div>
             )}
@@ -99,10 +104,12 @@ export const RelumeLayoutBlockComponent: React.FC<RelumeLayoutBlockProps> = (pro
           <div className="grid grid-cols-1 gap-y-12 md:grid-cols-2 md:items-center md:gap-x-12 lg:gap-x-20">
             {imagePosition === 'left' && imageUrl && (
               <div>
-                <img
+                <Image
                   src={imageUrl}
                   className="w-full rounded-image object-cover"
                   alt={title || 'Layout image'}
+                  width={600}
+                  height={400}
                 />
               </div>
             )}
@@ -118,10 +125,12 @@ export const RelumeLayoutBlockComponent: React.FC<RelumeLayoutBlockProps> = (pro
             </div>
             {imagePosition === 'right' && imageUrl && (
               <div>
-                <img
+                <Image
                   src={imageUrl}
                   className="w-full rounded-image object-cover"
                   alt={title || 'Layout image'}
+                  width={600}
+                  height={400}
                 />
               </div>
             )}
@@ -154,7 +163,7 @@ export const RelumeLayoutBlockComponent: React.FC<RelumeLayoutBlockProps> = (pro
                   {features.slice(0, 4).map((feature, index) => (
                     <div key={index}>
                       <div className="mb-3 md:mb-4">
-                        <img
+                        <Image
                           src={
                             typeof feature.icon === 'object' && feature.icon?.url 
                               ? feature.icon.url 
@@ -162,6 +171,8 @@ export const RelumeLayoutBlockComponent: React.FC<RelumeLayoutBlockProps> = (pro
                           }
                           className="size-12"
                           alt={feature.title || `Feature ${index + 1}`}
+                          width={48}
+                          height={48}
                         />
                       </div>
                       <h6 className="mb-3 text-md leading-[1.4] font-bold md:mb-4 md:text-xl">
@@ -197,10 +208,12 @@ export const RelumeLayoutBlockComponent: React.FC<RelumeLayoutBlockProps> = (pro
             </div>
             {imageUrl && (
               <div>
-                <img
+                <Image
                   src={imageUrl}
                   className="w-full rounded-image object-cover"
                   alt={title || 'Layout image'}
+                  width={600}
+                  height={400}
                 />
               </div>
             )}
@@ -218,10 +231,12 @@ export const RelumeLayoutBlockComponent: React.FC<RelumeLayoutBlockProps> = (pro
           <div className="grid grid-cols-1 gap-y-12 md:grid-cols-2 md:items-center md:gap-x-12 lg:gap-x-20">
             <div className="order-2 md:order-1">
               {imageUrl && (
-                <img
+                <Image
                   src={imageUrl}
                   className="w-full rounded-image object-cover"
                   alt={title || 'Layout image'}
+                  width={600}
+                  height={400}
                 />
               )}
             </div>
@@ -280,7 +295,7 @@ export const RelumeLayoutBlockComponent: React.FC<RelumeLayoutBlockProps> = (pro
             {columns && columns.length > 0 && columns.slice(0, 3).map((column, index) => (
               <div key={index} className={`flex flex-col items-center ${alignmentClass}`}>
                 <div className="mb-5 md:mb-6">
-                  <img
+                  <Image
                     src={
                       typeof column.icon === 'object' && column.icon?.url 
                         ? column.icon.url 
@@ -288,6 +303,8 @@ export const RelumeLayoutBlockComponent: React.FC<RelumeLayoutBlockProps> = (pro
                     }
                     alt={column.title || `Column ${index + 1}`}
                     className="size-12"
+                    width={48}
+                    height={48}
                   />
                 </div>
                 <h3 className="mb-5 text-xl font-bold md:mb-6 md:text-2xl">
@@ -340,7 +357,7 @@ export const RelumeLayoutBlockComponent: React.FC<RelumeLayoutBlockProps> = (pro
               {columns && columns.length > 0 && columns.slice(0, 3).map((column, index) => (
                 <div key={index} className="flex w-full flex-col items-center text-center">
                   <div className="rb-6 mb-6 md:mb-8">
-                    <img
+                    <Image
                       src={
                         typeof column.icon === 'object' && column.icon?.url 
                           ? column.icon.url 
@@ -348,6 +365,8 @@ export const RelumeLayoutBlockComponent: React.FC<RelumeLayoutBlockProps> = (pro
                       }
                       alt={column.title || `Column ${index + 1}`}
                       className="rounded-image"
+                      width={400}
+                      height={300}
                     />
                   </div>
                   <h3 className="mb-5 text-2xl font-bold md:mb-6 md:text-3xl md:leading-[1.3] lg:text-4xl">
@@ -400,7 +419,7 @@ export const RelumeLayoutBlockComponent: React.FC<RelumeLayoutBlockProps> = (pro
           </div>
           {imageUrl && (
             <div>
-              <img
+              <Image
                 src={imageUrl}
                 className="w-full rounded-image object-cover"
                 alt={title || 'Layout image'}
