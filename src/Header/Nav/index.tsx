@@ -111,17 +111,18 @@ export const HeaderNav: React.FC<{ header: HeaderType }> = ({ header }) => {
               {/* Mobile CTA Button */}
               {ctaButton?.show && ctaButton.link && (
                 <div className="pt-4 border-t border-border mt-4">
-                  <CMSLink
-                    {...ctaButton.link}
-                    appearance="default"
-                    className={`
-                      w-full justify-center
-                      ${ctaButton.style === 'primary' ? 'bg-primary text-white hover:bg-primary/90' : ''}
-                      ${ctaButton.style === 'secondary' ? 'border border-primary text-primary hover:bg-primary hover:text-white' : ''}
-                      ${ctaButton.style === 'accent' ? 'bg-accent text-white hover:bg-accent/90' : ''}
-                    `}
-                    onClick={() => setMobileMenuOpen(false)}
-                  />
+                  <div onClick={() => setMobileMenuOpen(false)}>
+                    <CMSLink
+                      {...ctaButton.link}
+                      appearance="default"
+                      className={`
+                        w-full justify-center
+                        ${ctaButton.style === 'primary' ? 'bg-primary text-white hover:bg-primary/90' : ''}
+                        ${ctaButton.style === 'secondary' ? 'border border-primary text-primary hover:bg-primary hover:text-white' : ''}
+                        ${ctaButton.style === 'accent' ? 'bg-accent text-white hover:bg-accent/90' : ''}
+                      `}
+                    />
+                  </div>
                 </div>
               )}
             </div>
