@@ -133,7 +133,6 @@ export const RelumeTeam: Block = {
       name: 'hiringSection',
       type: 'group',
       label: 'Hiring Section',
-      dbName: 'hiring',
       admin: {
         description: 'Optional section to promote open positions',
       },
@@ -175,7 +174,6 @@ export const RelumeTeam: Block = {
           name: 'buttonLink',
           type: 'group',
           label: 'Button Link',
-          dbName: 'btn_link',
           admin: {
             condition: (_, siblingData) => Boolean(siblingData.show),
           },

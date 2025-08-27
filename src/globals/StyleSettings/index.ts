@@ -24,11 +24,6 @@ export const StyleSettings: GlobalConfig = {
               admin: {
                 description: 'Define the available background colors for blocks. These will appear as options in all block configurations.',
                 initCollapsed: false,
-                components: {
-                  RowLabel: ({ data, index }) => {
-                    return data?.name || `Color ${String(index).padStart(2, '0')}`
-                  },
-                },
               },
               fields: [
                 {
@@ -100,11 +95,6 @@ export const StyleSettings: GlobalConfig = {
               admin: {
                 description: 'Define text colors for typography and content blocks.',
                 initCollapsed: true,
-                components: {
-                  RowLabel: ({ data, index }) => {
-                    return data?.name || `Text Color ${String(index).padStart(2, '0')}`
-                  },
-                },
               },
               fields: [
                 {
@@ -145,11 +135,6 @@ export const StyleSettings: GlobalConfig = {
               admin: {
                 description: 'Define available font families for the site.',
                 initCollapsed: false,
-                components: {
-                  RowLabel: ({ data, index }) => {
-                    return data?.name || `Font ${String(index).padStart(2, '0')}`
-                  },
-                },
               },
               fields: [
                 {
@@ -221,11 +206,6 @@ export const StyleSettings: GlobalConfig = {
               admin: {
                 description: 'Define typography scale for consistent sizing.',
                 initCollapsed: true,
-                components: {
-                  RowLabel: ({ data, index }) => {
-                    return data?.name || `Size ${String(index).padStart(2, '0')}`
-                  },
-                },
               },
               fields: [
                 {
@@ -271,11 +251,6 @@ export const StyleSettings: GlobalConfig = {
               admin: {
                 description: 'Define consistent spacing values for margins, padding, and gaps.',
                 initCollapsed: true,
-                components: {
-                  RowLabel: ({ data, index }) => {
-                    return data?.name || `Spacing ${String(index).padStart(2, '0')}`
-                  },
-                },
               },
               fields: [
                 {

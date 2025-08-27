@@ -16,7 +16,7 @@ import { FAQBlock } from '@/blocks/FAQBlock/Component'
 import { CourseArchiveBlock } from '@/blocks/CourseArchive/Component'
 import { AgeGroupsArchiveBlock } from '@/blocks/AgeGroupsArchive/Component'
 import { PostsArchiveBlock } from '@/blocks/PostsArchive/Component'
-import { RelumeHeaderBlock } from '@/blocks/RelumeHeader/Component'
+import { RelumeHeaderBlockComponent } from '@/blocks/RelumeHeader/Component'
 import { RelumeLayoutBlockComponent } from '@/blocks/RelumeLayout/Component'
 import { RelumeCTABlockComponent } from '@/blocks/RelumeCTA/Component'
 import { RelumeGalleryComponent } from '@/blocks/RelumeGallery/Component'
@@ -38,7 +38,7 @@ const blockComponents = {
   courseArchive: CourseArchiveBlock,
   ageGroupsArchive: AgeGroupsArchiveBlock,
   postsArchive: PostsArchiveBlock,
-  relumeHeader: RelumeHeaderBlock,
+  relumeHeader: RelumeHeaderBlockComponent,
   relumeLayout: RelumeLayoutBlockComponent,
   relumeCTA: RelumeCTABlockComponent,
   relumeGallery: RelumeGalleryComponent,
@@ -70,7 +70,7 @@ export const RenderBlocks: React.FC<{
               
               return (
                 <div className={`my-16 ${backgroundClasses}`.trim()} key={index}>
-                  {/* @ts-expect-error */}
+                  {/* @ts-expect-error Server Component */}
                   <Block {...block} />
                 </div>
               )

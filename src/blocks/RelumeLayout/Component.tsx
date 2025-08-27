@@ -149,7 +149,7 @@ export const RelumeLayoutBlockComponent: React.FC<RelumeLayoutBlockProps> = (pro
                   {description}
                 </p>
               )}
-              {features.length > 0 && (
+              {features && features.length > 0 && (
                 <div className="grid grid-cols-1 gap-6 py-2 sm:grid-cols-2">
                   {features.slice(0, 4).map((feature, index) => (
                     <div key={index}>
