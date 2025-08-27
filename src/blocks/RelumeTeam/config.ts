@@ -102,6 +102,7 @@ export const RelumeTeam: Block = {
               name: 'platform',
               type: 'select',
               label: 'Platform',
+              dbName: 'plat',
               options: [
                 { label: 'LinkedIn', value: 'linkedin' },
                 { label: 'Twitter/X', value: 'twitter' },

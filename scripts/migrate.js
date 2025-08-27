@@ -122,7 +122,7 @@ async function runMigration() {
           "id" SERIAL PRIMARY KEY,
           "_order" INTEGER NOT NULL,
           "_parent_id" INTEGER NOT NULL,
-          "platform" VARCHAR NOT NULL,
+          "plat" VARCHAR NOT NULL,
           "url" VARCHAR NOT NULL,
           CONSTRAINT "pages__blocks_relumeTeam_teamMembers_socialLinks_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "pages__blocks_relumeTeam_teamMembers"("id") ON DELETE CASCADE
         )`
@@ -215,6 +215,15 @@ async function runMigration() {
       { table: 'header', column: 'show_search', type: 'boolean' }
     ]
 
+    // Special migration to rename platform column to plat to avoid PostgreSQL 63 char limit
+    const columnRenames = [
+      { 
+        table: 'pages__blocks_relumeTeam_teamMembers_socialLinks', 
+        oldColumn: 'platform', 
+        newColumn: 'plat' 
+      }
+    ]
+
     // First, create missing tables
     for (const tableSpec of tablesToCreate) {
       try {
@@ -270,6 +279,51 @@ async function runMigration() {
       } catch (error) {
         console.error(`❌ Error adding column ${migration.column} to ${migration.table}:`, error.message)
         // Continue with other migrations instead of failing completely
+      }
+    }
+
+    // Handle column renames for PostgreSQL identifier length limits
+    for (const rename of columnRenames) {
+      try {
+        const { table, oldColumn, newColumn } = rename
+        
+        // Check if table exists first
+        const tableCheck = await client.query(`
+          SELECT table_name 
+          FROM information_schema.tables 
+          WHERE table_schema = 'public' AND table_name = $1
+        `, [table])
+
+        if (tableCheck.rows.length === 0) {
+          console.log(`⚠️  Table ${table} does not exist, skipping column rename`)
+          continue
+        }
+
+        // Check if old column exists and new column doesn't exist
+        const oldColumnCheck = await client.query(`
+          SELECT column_name 
+          FROM information_schema.columns 
+          WHERE table_name = $1 AND column_name = $2
+        `, [table, oldColumn])
+
+        const newColumnCheck = await client.query(`
+          SELECT column_name 
+          FROM information_schema.columns 
+          WHERE table_name = $1 AND column_name = $2
+        `, [table, newColumn])
+
+        if (oldColumnCheck.rows.length > 0 && newColumnCheck.rows.length === 0) {
+          console.log(`Renaming column ${oldColumn} to ${newColumn} in ${table}...`)
+          await client.query(`ALTER TABLE "${table}" RENAME COLUMN "${oldColumn}" TO "${newColumn}"`)
+          console.log(`✅ Column renamed successfully`)
+        } else if (newColumnCheck.rows.length > 0) {
+          console.log(`ℹ️  Column ${newColumn} already exists in ${table}`)
+        } else {
+          console.log(`ℹ️  Column ${oldColumn} not found in ${table}`)
+        }
+      } catch (error) {
+        console.error(`❌ Error renaming column ${rename.oldColumn} to ${rename.newColumn} in ${rename.table}:`, error.message)
+        // Continue with other renames instead of failing completely
       }
     }
 
