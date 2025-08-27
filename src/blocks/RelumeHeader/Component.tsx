@@ -220,6 +220,8 @@ export const RelumeHeaderBlockComponent: React.FC<RelumeHeaderProps> = (props) =
                 src={backgroundImageUrl}
                 className="size-full object-cover"
                 alt={title || 'Background image'}
+                fill
+                priority
               />
               <div className={`absolute inset-0 bg-black/${overlayOpacity}`} />
             </div>
@@ -323,6 +325,8 @@ export const RelumeHeaderBlockComponent: React.FC<RelumeHeaderProps> = (props) =
                 src={imageUrl}
                 className="w-full rounded-image object-cover"
                 alt={title || 'Header image'}
+                width={600}
+                height={400}
               />
             </div>
           )}
