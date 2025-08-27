@@ -43,7 +43,6 @@ export const RelumeTeam: Block = {
       name: 'teamMembers',
       type: 'array',
       label: 'Team Members',
-      dbName: 'team_members',
       minRows: 1,
       maxRows: 20,
       labels: {
@@ -92,7 +91,6 @@ export const RelumeTeam: Block = {
           name: 'socialLinks',
           type: 'array',
           label: 'Social Media Links',
-          dbName: 'social',
           maxRows: 5,
           labels: {
             singular: 'Social Link',
@@ -104,7 +102,6 @@ export const RelumeTeam: Block = {
               name: 'platform',
               type: 'select',
               label: 'Platform',
-              dbName: 'plat',
               options: [
                 { label: 'LinkedIn', value: 'linkedin' },
                 { label: 'Twitter/X', value: 'twitter' },
@@ -181,7 +178,6 @@ export const RelumeTeam: Block = {
             {
               name: 'type',
               type: 'radio',
-              dbName: 'link_type',
               options: [
                 {
                   label: 'Internal Page',
