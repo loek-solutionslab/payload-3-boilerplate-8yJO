@@ -13,7 +13,14 @@ async function runMigration() {
     const migrations = [
       { table: 'header_nav_items', column: 'description', type: 'varchar' },
       { table: 'header_nav_items', column: 'featured', type: 'boolean' },
-      { table: 'header', column: 'logo_id', type: 'integer' }
+      { table: 'header', column: 'logo_id', type: 'integer' },
+      { table: 'header', column: 'cta_button_show', type: 'boolean' },
+      { table: 'header', column: 'cta_button_link_type', type: 'varchar' },
+      { table: 'header', column: 'cta_button_link_new_tab', type: 'boolean' },
+      { table: 'header', column: 'cta_button_link_url', type: 'varchar' },
+      { table: 'header', column: 'cta_button_link_label', type: 'varchar' },
+      { table: 'header', column: 'cta_button_style', type: 'varchar' },
+      { table: 'header', column: 'show_search', type: 'boolean' }
     ]
 
     for (const migration of migrations) {
