@@ -1,3 +1,4 @@
+import * as migration_20250828_160000_mark_existing_migrations from './20250828_160000_mark_existing_migrations';
 import * as migration_20241125_222020_initial from './20241125_222020_initial';
 import * as migration_20241214_124128 from './20241214_124128';
 import * as migration_20250827_075203_new_collections from './20250827_075203_new_collections';
@@ -7,6 +8,11 @@ import * as migration_20250827_220932_add_header_nav_description from './2025082
 import * as migration_20250828_154558_remove_hero_system from './20250828_154558_remove_hero_system';
 
 export const migrations = [
+  {
+    up: migration_20250828_160000_mark_existing_migrations.up,
+    down: migration_20250828_160000_mark_existing_migrations.down,
+    name: '20250828_160000_mark_existing_migrations',
+  },
   {
     up: migration_20241125_222020_initial.up,
     down: migration_20241125_222020_initial.down,
