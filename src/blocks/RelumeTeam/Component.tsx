@@ -137,7 +137,7 @@ export const RelumeTeamComponent: React.FC<RelumeTeamProps> = ({ block }) => {
                 : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-4'
           }`}>
             {teamMembers.map((member, index) => (
-              <TeamMember key={index} member={member} index={index} socialLinks={socialLinks} />
+              <TeamMember key={index} member={member} index={index} socialLinks={socialLinks || []} />
             ))}
           </div>
         )}
