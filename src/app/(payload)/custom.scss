@@ -1,0 +1,18 @@
+// Custom admin styles for Payload CMS
+// This file allows you to customize the admin interface
+
+// Example: Custom branding
+// .account-menu__label {
+//   color: var(--theme-primary);
+// }
+
+// Example: Hide certain admin elements
+// .template-list__template-item[data-template="style-settings"] {
+//   display: none;
+// }
+
+// Ensure the admin interface renders correctly
+html[data-payload-theme],
+body {
+  // Ensure proper styling inheritance
+}
