@@ -54,6 +54,9 @@ COPY --from=builder --chown=nextjs:nodejs /app/scripts ./scripts
 COPY --from=builder --chown=nextjs:nodejs /app/start.sh ./start.sh
 RUN chmod +x ./start.sh
 
+# Create media directory and ensure proper permissions
+RUN mkdir -p /app/public/media && chown -R nextjs:nodejs /app/public
+
 USER nextjs
 
 EXPOSE 3000

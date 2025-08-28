@@ -5,6 +5,12 @@ echo "Environment: NODE_ENV=${NODE_ENV:-development}"
 echo "Port: ${PORT:-3000}"
 echo "Hostname: ${HOSTNAME:-localhost}"
 
+# Handle Railway volume permissions for media directory
+if [ -d "/app/public/media/lost+found" ]; then
+    echo "🗂️  Removing lost+found directory created by mounted volume..."
+    rm -rf "/app/public/media/lost+found" || echo "⚠️  Could not remove lost+found directory (this is usually fine)"
+fi
+
 # In production, skip migrations as they should already be completed
 # The database schema has been fixed and migrations were run during the build process
 if [ "$NODE_ENV" = "production" ]; then
