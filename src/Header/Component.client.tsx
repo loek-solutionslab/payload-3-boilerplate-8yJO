@@ -97,7 +97,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ header }) => {
             {regularNavItems.map((navItem, index) => (
               <Link
                 key={index}
-                href={navItem.link?.url || navItem.link?.reference?.value?.slug ? `/${navItem.link.reference.value.slug}` : '#'}
+                href={navItem.link?.url || (typeof navItem.link?.reference?.value === 'object' && navItem.link.reference.value?.slug ? `/${navItem.link.reference.value.slug}` : '#')}
                 className="relative block w-auto py-3 text-md lg:inline-block lg:px-4 lg:py-6 lg:text-base hover:text-primary transition-colors"
               >
                 {navItem.link?.label || 'Link'}
@@ -166,7 +166,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ header }) => {
                                   key={linkIndex}
                                   href={linkItem.link?.type === 'custom' 
                                     ? linkItem.link.url || '#'
-                                    : linkItem.link?.reference?.value?.slug 
+                                    : linkItem.link?.reference?.value && typeof linkItem.link.reference.value === 'object' && linkItem.link.reference.value?.slug
                                       ? `/${linkItem.link.reference.value.slug}`
                                       : '#'}
                                   className="grid w-full auto-cols-fr grid-cols-[max-content_1fr] items-start gap-x-3 py-2 hover:bg-muted/50 rounded-md transition-colors"
@@ -215,7 +215,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ header }) => {
                                 <Link 
                                   href={dropdownNavItem.featuredContent.link?.type === 'custom' 
                                     ? dropdownNavItem.featuredContent.link.url || '#'
-                                    : dropdownNavItem.featuredContent.link?.reference?.value?.slug 
+                                    : dropdownNavItem.featuredContent.link?.reference?.value && typeof dropdownNavItem.featuredContent.link.reference.value === 'object' && dropdownNavItem.featuredContent.link.reference.value?.slug
                                       ? `/${dropdownNavItem.featuredContent.link.reference.value.slug}`
                                       : '#'}
                                   className="flex flex-col py-2 group"
@@ -278,7 +278,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ header }) => {
                   <Link href={
                     header.ctaButton.link.type === 'custom' 
                       ? header.ctaButton.link.url || '#'
-                      : header.ctaButton.link.reference?.value?.slug 
+                      : header.ctaButton.link.reference?.value && typeof header.ctaButton.link.reference.value === 'object' && header.ctaButton.link.reference.value?.slug
                         ? `/${header.ctaButton.link.reference.value.slug}`
                         : '#'
                   }>
@@ -358,7 +358,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ header }) => {
               {regularNavItems.map((navItem, index) => (
                 <Link
                   key={index}
-                  href={navItem.link?.url || navItem.link?.reference?.value?.slug ? `/${navItem.link.reference.value.slug}` : '#'}
+                  href={navItem.link?.url || (typeof navItem.link?.reference?.value === 'object' && navItem.link.reference.value?.slug ? `/${navItem.link.reference.value.slug}` : '#')}
                   className="relative block w-auto py-3 text-md hover:text-primary transition-colors"
                 >
                   {navItem.link?.label || 'Link'}
@@ -376,8 +376,8 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ header }) => {
                     <Link href={
                       header.ctaButton.link.type === 'custom' 
                         ? header.ctaButton.link.url || '#'
-                        : header.ctaButton.link.reference?.value?.slug 
-                          ? `/${header.ctaButton.link.reference.value.slug}`
+                        : header.ctaButton.link.reference?.value && typeof header.ctaButton.link.reference.value === 'object' && header.ctaButton.link.reference.value?.slug
+                        ? `/${header.ctaButton.link.reference.value.slug}`
                           : '#'
                     }>
                       {header.ctaButton.link.label || 'Get Started'}

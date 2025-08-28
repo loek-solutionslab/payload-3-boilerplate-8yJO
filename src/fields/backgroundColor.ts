@@ -11,8 +11,8 @@ export const backgroundColorField: Field = {
   options: [
     { label: 'None (Transparent)', value: '' },
     
-    // Note: Colors will be managed through StyleSettings global
-    // This is a temporary static list until dynamic loading is implemented
+    // Brand Colors - Static Configuration
+    // These colors match your site's design system
     
     // Neutrals
     { label: 'Neutral White', value: 'bg-[#FFFFFF]' },

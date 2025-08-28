@@ -116,13 +116,11 @@ export interface Config {
     header: Header;
     footer: Footer;
     siteSettings: SiteSetting;
-    styleSettings: StyleSetting;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
     siteSettings: SiteSettingsSelect<false> | SiteSettingsSelect<true>;
-    styleSettings: StyleSettingsSelect<false> | StyleSettingsSelect<true>;
   };
   locale: null;
   user: User & {
@@ -3527,129 +3525,6 @@ export interface SiteSetting {
   createdAt?: string | null;
 }
 /**
- * Manage site-wide colors, fonts, and design system settings.
- *
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "styleSettings".
- */
-export interface StyleSetting {
-  id: number;
-  /**
-   * Define the available background colors for blocks. These will appear as options in all block configurations.
-   */
-  backgroundColors?:
-    | {
-        /**
-         * Display name for this color (e.g., "Persian Green Light", "Neutral Dark")
-         */
-        name: string;
-        /**
-         * CSS color value (e.g., "#01B09A", "rgb(1, 176, 154)", or CSS class like "bg-primary")
-         */
-        value: string;
-        /**
-         * Group colors by category for better organization
-         */
-        category?:
-          | ('neutrals' | 'smalt-blue' | 'persian-green' | 'merino' | 'bittersweet' | 'regent-st-blue' | 'other')
-          | null;
-        /**
-         * Shade level for better organization (optional)
-         */
-        shade?: ('lightest' | 'lighter' | 'light' | 'base' | 'dark' | 'darker' | 'darkest') | null;
-        /**
-         * Check this to make this the default background color for new blocks
-         */
-        isDefault?: boolean | null;
-        id?: string | null;
-      }[]
-    | null;
-  /**
-   * Define text colors for typography and content blocks.
-   */
-  textColors?:
-    | {
-        name: string;
-        value: string;
-        usage?: ('headings' | 'body' | 'links' | 'accent' | 'muted') | null;
-        id?: string | null;
-      }[]
-    | null;
-  /**
-   * Define available font families for the site.
-   */
-  fontFamilies?:
-    | {
-        /**
-         * Display name (e.g., "Primary Heading Font", "Body Text")
-         */
-        name: string;
-        /**
-         * CSS font-family value (e.g., "Inter, sans-serif", "font-heading")
-         */
-        cssValue: string;
-        category?: ('headings' | 'body' | 'display' | 'mono') | null;
-        weights?:
-          | {
-              /**
-               * e.g., "Regular", "Medium", "Bold"
-               */
-              name?: string | null;
-              /**
-               * e.g., "400", "500", "700", "font-medium"
-               */
-              value?: string | null;
-              id?: string | null;
-            }[]
-          | null;
-        /**
-         * Check this for the default font family
-         */
-        isDefault?: boolean | null;
-        id?: string | null;
-      }[]
-    | null;
-  /**
-   * Define typography scale for consistent sizing.
-   */
-  fontSizes?:
-    | {
-        /**
-         * e.g., "Heading 1", "Body Large", "Caption"
-         */
-        name: string;
-        /**
-         * e.g., "2.5rem", "18px", "text-xl"
-         */
-        value: string;
-        category?: ('display' | 'heading' | 'body' | 'caption') | null;
-        id?: string | null;
-      }[]
-    | null;
-  /**
-   * Define consistent spacing values for margins, padding, and gaps.
-   */
-  spacing?:
-    | {
-        /**
-         * e.g., "Extra Small", "Medium", "Large"
-         */
-        name: string;
-        /**
-         * e.g., "8px", "1rem", "space-4"
-         */
-        value: string;
-        /**
-         * e.g., "Button padding", "Section margins"
-         */
-        usage?: string | null;
-        id?: string | null;
-      }[]
-    | null;
-  updatedAt?: string | null;
-  createdAt?: string | null;
-}
-/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header_select".
  */
@@ -3803,65 +3678,6 @@ export interface SiteSettingsSelect<T extends boolean = true> {
         contactEmail?: T;
         newsletterProvider?: T;
         recaptchaSiteKey?: T;
-      };
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "styleSettings_select".
- */
-export interface StyleSettingsSelect<T extends boolean = true> {
-  backgroundColors?:
-    | T
-    | {
-        name?: T;
-        value?: T;
-        category?: T;
-        shade?: T;
-        isDefault?: T;
-        id?: T;
-      };
-  textColors?:
-    | T
-    | {
-        name?: T;
-        value?: T;
-        usage?: T;
-        id?: T;
-      };
-  fontFamilies?:
-    | T
-    | {
-        name?: T;
-        cssValue?: T;
-        category?: T;
-        weights?:
-          | T
-          | {
-              name?: T;
-              value?: T;
-              id?: T;
-            };
-        isDefault?: T;
-        id?: T;
-      };
-  fontSizes?:
-    | T
-    | {
-        name?: T;
-        value?: T;
-        category?: T;
-        id?: T;
-      };
-  spacing?:
-    | T
-    | {
-        name?: T;
-        value?: T;
-        usage?: T;
-        id?: T;
       };
   updatedAt?: T;
   createdAt?: T;
