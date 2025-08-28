@@ -5,11 +5,23 @@ echo "Environment: NODE_ENV=${NODE_ENV:-development}"
 echo "Port: ${PORT:-3000}"
 echo "Hostname: ${HOSTNAME:-localhost}"
 
-# Handle Railway volume permissions for media directory
+# Handle Railway volume permissions for media directory (running as root)
+echo "🗂️  Setting up media directory permissions..."
+mkdir -p /app/public/media || true
+
+# Fix lost+found directory created by Railway volume mount
 if [ -d "/app/public/media/lost+found" ]; then
-    echo "🗂️  Removing lost+found directory created by mounted volume..."
-    rm -rf "/app/public/media/lost+found" || echo "⚠️  Could not remove lost+found directory (this is usually fine)"
+    echo "🔧 Found lost+found directory from volume mount, fixing permissions..."
+    # As root, we should be able to fix this
+    chmod -R 755 "/app/public/media/lost+found" 2>/dev/null && echo "✅ Fixed lost+found permissions" || \
+    rm -rf "/app/public/media/lost+found" 2>/dev/null && echo "✅ Removed lost+found directory" || \
+    echo "⚠️  Could not fix lost+found directory"
 fi
+
+# Ensure all media directory permissions are correct
+echo "🔧 Setting correct ownership for media directory..."
+chown -R nextjs:nodejs /app/public/media
+chmod -R 755 /app/public/media
 
 # In production, skip migrations as they should already be completed
 # The database schema has been fixed and migrations were run during the build process
@@ -34,8 +46,9 @@ fi
 
 # Check if server.js exists and start the server
 if [ -f "server.js" ]; then
-    echo "🌟 Starting Next.js server on port ${PORT:-3000}..."
-    exec node server.js
+    echo "🌟 Starting Next.js server on port ${PORT:-3000} as nextjs user..."
+    # Switch to nextjs user and start the server
+    exec su-exec nextjs:nodejs node server.js
 else
     echo "❌ server.js not found! Directory contents:"
     ls -la

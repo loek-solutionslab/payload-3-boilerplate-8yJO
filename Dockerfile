@@ -41,6 +41,9 @@ ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV PAYLOAD_MIGRATE_SKIP_PROMPT=true
 
+# Install su-exec for user switching
+RUN apk add --no-cache su-exec
+
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
@@ -57,7 +60,8 @@ RUN chmod +x ./start.sh
 # Create media directory and ensure proper permissions
 RUN mkdir -p /app/public/media && chown -R nextjs:nodejs /app/public
 
-USER nextjs
+# Don't switch to nextjs user yet - we need root for volume permissions
+# USER nextjs will be handled in start.sh after fixing permissions
 
 EXPOSE 3000
 ENV PORT=3000
