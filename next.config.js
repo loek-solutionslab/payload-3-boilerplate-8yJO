@@ -23,9 +23,7 @@ const nextConfig = {
   },
   reactStrictMode: true,
   redirects,
-  experimental: {
-    serverComponentsExternalPackages: ['pg'],
-  },
+  serverExternalPackages: ['pg'],
 }
 
 export default withPayload(nextConfig)

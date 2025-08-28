@@ -52,8 +52,8 @@ async function runMigration() {
         )`
       },
       {
-        name: 'pages_blocks_relume_pricing',
-        sql: `CREATE TABLE IF NOT EXISTS "pages_blocks_relume_pricing" (
+        name: 'pages__blocks_relumePricing',
+        sql: `CREATE TABLE IF NOT EXISTS "pages__blocks_relumePricing" (
           "id" SERIAL PRIMARY KEY,
           "_order" INTEGER NOT NULL,
           "_parent_id" INTEGER NOT NULL,
@@ -65,12 +65,12 @@ async function runMigration() {
           "yearly_tab_label" VARCHAR DEFAULT 'Jaarlijks',
           "background_color" VARCHAR,
           "block_name" VARCHAR,
-          CONSTRAINT "pages_blocks_relume_pricing_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "pages"("id") ON DELETE CASCADE
+          CONSTRAINT "pages__blocks_relumePricing_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "pages"("id") ON DELETE CASCADE
         )`
       },
       {
-        name: 'pages_blocks_relume_pricing_plans',
-        sql: `CREATE TABLE IF NOT EXISTS "pages_blocks_relume_pricing_plans" (
+        name: 'pages__blocks_relumePricing_plans',
+        sql: `CREATE TABLE IF NOT EXISTS "pages__blocks_relumePricing_plans" (
           "id" SERIAL PRIMARY KEY,
           "_order" INTEGER NOT NULL,
           "_parent_id" INTEGER NOT NULL,
@@ -82,23 +82,23 @@ async function runMigration() {
           "button_link_type" VARCHAR DEFAULT 'reference',
           "button_link_reference_id" INTEGER,
           "button_link_url" VARCHAR,
-          CONSTRAINT "pages_blocks_relume_pricing_plans_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "pages_blocks_relume_pricing"("id") ON DELETE CASCADE,
-          CONSTRAINT "pages_blocks_relume_pricing_plans_button_link_reference_id_fk" FOREIGN KEY ("button_link_reference_id") REFERENCES "pages"("id") ON DELETE SET NULL
+          CONSTRAINT "pages__blocks_relumePricing_plans_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "pages__blocks_relumePricing"("id") ON DELETE CASCADE,
+          CONSTRAINT "pages__blocks_relumePricing_plans_button_link_reference_id_fk" FOREIGN KEY ("button_link_reference_id") REFERENCES "pages"("id") ON DELETE SET NULL
         )`
       },
       {
-        name: 'pages_blocks_relume_pricing_plans_features',
-        sql: `CREATE TABLE IF NOT EXISTS "pages_blocks_relume_pricing_plans_features" (
+        name: 'pages__blocks_relumePricing_plans_features',
+        sql: `CREATE TABLE IF NOT EXISTS "pages__blocks_relumePricing_plans_features" (
           "id" SERIAL PRIMARY KEY,
           "_order" INTEGER NOT NULL,
           "_parent_id" INTEGER NOT NULL,
           "text" VARCHAR NOT NULL,
-          CONSTRAINT "pages_blocks_relume_pricing_plans_features_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "pages_blocks_relume_pricing_plans"("id") ON DELETE CASCADE
+          CONSTRAINT "pages__blocks_relumePricing_plans_features_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "pages__blocks_relumePricing_plans"("id") ON DELETE CASCADE
         )`
       },
       {
-        name: 'pages_blocks_relume_team',
-        sql: `CREATE TABLE IF NOT EXISTS "pages_blocks_relume_team" (
+        name: 'pages__blocks_relumeTeam',
+        sql: `CREATE TABLE IF NOT EXISTS "pages__blocks_relumeTeam" (
           "id" SERIAL PRIMARY KEY,
           "_order" INTEGER NOT NULL,
           "_parent_id" INTEGER NOT NULL,
@@ -108,12 +108,12 @@ async function runMigration() {
           "description" TEXT DEFAULT 'Professionele mediacoaches voor de onderbouw',
           "background_color" VARCHAR,
           "block_name" VARCHAR,
-          CONSTRAINT "pages_blocks_relume_team_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "pages"("id") ON DELETE CASCADE
+          CONSTRAINT "pages__blocks_relumeTeam_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "pages"("id") ON DELETE CASCADE
         )`
       },
       {
-        name: 'pages_blocks_relume_team_team_members',
-        sql: `CREATE TABLE IF NOT EXISTS "pages_blocks_relume_team_team_members" (
+        name: 'pages__blocks_relumeTeam_teamMembers',
+        sql: `CREATE TABLE IF NOT EXISTS "pages__blocks_relumeTeam_teamMembers" (
           "id" SERIAL PRIMARY KEY,
           "_order" INTEGER NOT NULL,
           "_parent_id" INTEGER NOT NULL,
@@ -121,8 +121,8 @@ async function runMigration() {
           "name" VARCHAR NOT NULL,
           "position" VARCHAR NOT NULL,
           "bio" TEXT NOT NULL,
-          CONSTRAINT "pages_blocks_relume_team_team_members_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "pages_blocks_relume_team"("id") ON DELETE CASCADE,
-          CONSTRAINT "pages_blocks_relume_team_team_members_photo_id_fk" FOREIGN KEY ("photo_id") REFERENCES "media"("id") ON DELETE SET NULL
+          CONSTRAINT "pages__blocks_relumeTeam_teamMembers_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "pages__blocks_relumeTeam"("id") ON DELETE CASCADE,
+          CONSTRAINT "pages__blocks_relumeTeam_teamMembers_photo_id_fk" FOREIGN KEY ("photo_id") REFERENCES "media"("id") ON DELETE SET NULL
         )`
       },
       {
@@ -138,20 +138,20 @@ async function runMigration() {
         )`
       },
       {
-        name: 'pages_blocks_relume_contact',
-        sql: `CREATE TABLE IF NOT EXISTS "pages_blocks_relume_contact" (
+        name: 'pages__blocks_relumeContact',
+        sql: `CREATE TABLE IF NOT EXISTS "pages__blocks_relumeContact" (
           "id" SERIAL PRIMARY KEY,
           "_order" INTEGER NOT NULL,
           "_parent_id" INTEGER NOT NULL,
           "_path" VARCHAR NOT NULL,
           "background_color" VARCHAR,
           "block_name" VARCHAR,
-          CONSTRAINT "pages_blocks_relume_contact_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "pages"("id") ON DELETE CASCADE
+          CONSTRAINT "pages__blocks_relumeContact_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "pages"("id") ON DELETE CASCADE
         )`
       },
       {
-        name: 'pages_blocks_relume_contact_contact_methods',
-        sql: `CREATE TABLE IF NOT EXISTS "pages_blocks_relume_contact_contact_methods" (
+        name: 'pages__blocks_relumeContact_contactMethods',
+        sql: `CREATE TABLE IF NOT EXISTS "pages__blocks_relumeContact_contactMethods" (
           "id" SERIAL PRIMARY KEY,
           "_order" INTEGER NOT NULL,
           "_parent_id" INTEGER NOT NULL,
@@ -160,12 +160,12 @@ async function runMigration() {
           "description" TEXT,
           "contact_info" VARCHAR,
           "link" VARCHAR,
-          CONSTRAINT "pages_blocks_relume_contact_contact_methods_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "pages_blocks_relume_contact"("id") ON DELETE CASCADE
+          CONSTRAINT "pages__blocks_relumeContact_contactMethods_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "pages__blocks_relumeContact"("id") ON DELETE CASCADE
         )`
       },
       {
-        name: 'pages_blocks_relume_header',
-        sql: `CREATE TABLE IF NOT EXISTS "pages_blocks_relume_header" (
+        name: 'pages__blocks_relumeHeader',
+        sql: `CREATE TABLE IF NOT EXISTS "pages__blocks_relumeHeader" (
           "id" SERIAL PRIMARY KEY,
           "_order" INTEGER NOT NULL,
           "_parent_id" INTEGER NOT NULL,
@@ -174,12 +174,12 @@ async function runMigration() {
           "description" TEXT,
           "background_color" VARCHAR,
           "block_name" VARCHAR,
-          CONSTRAINT "pages_blocks_relume_header_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "pages"("id") ON DELETE CASCADE
+          CONSTRAINT "pages__blocks_relumeHeader_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "pages"("id") ON DELETE CASCADE
         )`
       },
       {
-        name: 'pages_blocks_relume_layout',
-        sql: `CREATE TABLE IF NOT EXISTS "pages_blocks_relume_layout" (
+        name: 'pages__blocks_relumeLayout',
+        sql: `CREATE TABLE IF NOT EXISTS "pages__blocks_relumeLayout" (
           "id" SERIAL PRIMARY KEY,
           "_order" INTEGER NOT NULL,
           "_parent_id" INTEGER NOT NULL,
@@ -188,12 +188,12 @@ async function runMigration() {
           "description" TEXT,
           "background_color" VARCHAR,
           "block_name" VARCHAR,
-          CONSTRAINT "pages_blocks_relume_layout_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "pages"("id") ON DELETE CASCADE
+          CONSTRAINT "pages__blocks_relumeLayout_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "pages"("id") ON DELETE CASCADE
         )`
       },
       {
-        name: 'pages_blocks_relume_c_t_a',
-        sql: `CREATE TABLE IF NOT EXISTS "pages_blocks_relume_c_t_a" (
+        name: 'pages__blocks_relumeCTA',
+        sql: `CREATE TABLE IF NOT EXISTS "pages__blocks_relumeCTA" (
           "id" SERIAL PRIMARY KEY,
           "_order" INTEGER NOT NULL,
           "_parent_id" INTEGER NOT NULL,
@@ -206,8 +206,8 @@ async function runMigration() {
           "button_link_url" VARCHAR,
           "background_color" VARCHAR,
           "block_name" VARCHAR,
-          CONSTRAINT "pages_blocks_relume_c_t_a_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "pages"("id") ON DELETE CASCADE,
-          CONSTRAINT "pages_blocks_relume_c_t_a_button_link_reference_id_fk" FOREIGN KEY ("button_link_reference_id") REFERENCES "pages"("id") ON DELETE SET NULL
+          CONSTRAINT "pages__blocks_relumeCTA_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "pages"("id") ON DELETE CASCADE,
+          CONSTRAINT "pages__blocks_relumeCTA_button_link_reference_id_fk" FOREIGN KEY ("button_link_reference_id") REFERENCES "pages"("id") ON DELETE SET NULL
         )`
       }
     ]
@@ -229,9 +229,9 @@ async function runMigration() {
     const dataRestructuring = [
       {
         description: 'Move social links from teamMembers to top-level socialLinks',
-        oldTable: 'pages_blocks_relume_team_team_members_social_links',
-        newTable: 'pages_blocks_relume_team_social_links',
-        teamMembersTable: 'pages_blocks_relume_team_team_members'
+        oldTable: 'pages__blocks_relumeTeam_teamMembers_socialLinks',
+        newTable: 'pages__blocks_relumeTeam_socialLinks',
+        teamMembersTable: 'pages__blocks_relumeTeam_teamMembers'
       }
     ]
 
@@ -250,6 +250,22 @@ async function runMigration() {
           console.log(`✅ Table ${tableSpec.name} created successfully`)
         } else {
           console.log(`ℹ️  Table ${tableSpec.name} already exists`)
+        }
+        
+        // Special handling for the new flat socialLinks table
+        if (tableSpec.name === 'pages__blocks_relumeTeam_socialLinks') {
+          // Ensure this table is created even if old nested table exists
+          const newTableCheck = await client.query(`
+            SELECT table_name 
+            FROM information_schema.tables 
+            WHERE table_schema = 'public' AND table_name = $1
+          `, ['pages__blocks_relumeTeam_socialLinks'])
+          
+          if (newTableCheck.rows.length === 0) {
+            console.log(`🔄 Creating new flat socialLinks table...`)
+            await client.query(tableSpec.sql)
+            console.log(`✅ New flat socialLinks table created successfully`)
+          }
         }
       } catch (error) {
         console.error(`❌ Error creating table ${tableSpec.name}:`, error.message)
@@ -348,11 +364,11 @@ async function runMigration() {
 
     // Verificatie van kritieke tabellen
     const criticalTables = [
-      'pages_blocks_relume_team_team_members',
-      'pages_blocks_relume_team_social_links',
-      'pages_blocks_relume_contact_contact_methods',
-      'pages_blocks_relume_pricing',
-      'pages_blocks_relume_pricing_plans'
+      'pages__blocks_relumeTeam_teamMembers',
+      'pages__blocks_relumeTeam_socialLinks',
+      'pages__blocks_relumeContact_contactMethods',
+      'pages__blocks_relumePricing',
+      'pages__blocks_relumePricing_plans'
     ]
 
     console.log('🔍 Verifying critical tables...')
