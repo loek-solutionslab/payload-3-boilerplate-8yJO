@@ -6,9 +6,7 @@ import Link from 'next/link'
 import type { RelumeGalleryBlock } from '@/payload-types'
 import { Media } from '@/components/Media'
 
-interface RelumeGalleryProps {
-  block: RelumeGalleryBlock
-}
+interface RelumeGalleryProps extends RelumeGalleryBlock {}
 
 const GalleryImage: React.FC<{
   image: any
@@ -120,16 +118,16 @@ const Gallery08: React.FC<{ block: RelumeGalleryBlock }> = ({ block }) => {
   )
 }
 
-export const RelumeGalleryComponent: React.FC<RelumeGalleryProps> = ({ block }) => {
-  const { variant = 'gallery-04', backgroundColor } = block
+export const RelumeGalleryComponent: React.FC<RelumeGalleryProps> = (props) => {
+  const { variant = 'gallery-04', backgroundColor } = props
 
   const galleryContent = (() => {
     switch (variant) {
       case 'gallery-08':
-        return <Gallery08 block={block} />
+        return <Gallery08 block={props} />
       case 'gallery-04':
       default:
-        return <Gallery04 block={block} />
+        return <Gallery04 block={props} />
     }
   })()
 

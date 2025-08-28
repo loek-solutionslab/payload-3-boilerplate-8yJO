@@ -30,6 +30,25 @@ export const Header: GlobalConfig = {
         description: 'Add navigation links that will appear in the main header menu.',
       },
       fields: [
+        {
+          name: 'type',
+          type: 'radio',
+          label: 'Navigation Type',
+          options: [
+            {
+              label: 'Simple Link',
+              value: 'link',
+            },
+            {
+              label: 'Dropdown Menu',
+              value: 'dropdown',
+            },
+          ],
+          defaultValue: 'link',
+          admin: {
+            layout: 'horizontal',
+          },
+        },
         link({
           appearances: false,
           disableLabel: false,
@@ -57,6 +76,129 @@ export const Header: GlobalConfig = {
           admin: {
             description: 'Highlight this navigation item (e.g., different styling)',
           },
+        },
+        {
+          name: 'dropdownSections',
+          type: 'array',
+          label: 'Dropdown Sections',
+          admin: {
+            condition: (_, siblingData) => siblingData?.type === 'dropdown',
+            description: 'Configure the dropdown menu sections that appear when hovering/clicking this item',
+          },
+          fields: [
+            {
+              name: 'title',
+              type: 'text',
+              label: 'Section Title',
+              required: true,
+              admin: {
+                description: 'Title for this section of the dropdown menu',
+              },
+            },
+            {
+              name: 'links',
+              type: 'array',
+              label: 'Section Links',
+              maxRows: 6,
+              fields: [
+                {
+                  name: 'icon',
+                  type: 'upload',
+                  label: 'Icon',
+                  relationTo: 'media',
+                  admin: {
+                    description: 'Optional icon to display next to the link',
+                  },
+                },
+                link({
+                  appearances: false,
+                  disableLabel: false,
+                  overrides: {
+                    label: {
+                      label: 'Link Text',
+                    },
+                  },
+                }),
+                {
+                  name: 'description',
+                  type: 'text',
+                  label: 'Link Description',
+                  admin: {
+                    description: 'Optional description shown below the link',
+                  },
+                },
+              ],
+            },
+          ],
+          maxRows: 4,
+        },
+        {
+          name: 'featuredContent',
+          type: 'group',
+          label: 'Featured Content',
+          admin: {
+            condition: (_, siblingData) => siblingData?.type === 'dropdown',
+            description: 'Optional featured content area in the dropdown (like a highlighted blog post or promotion)',
+          },
+          fields: [
+            {
+              name: 'show',
+              type: 'checkbox',
+              label: 'Show Featured Content',
+              defaultValue: false,
+            },
+            {
+              name: 'title',
+              type: 'text',
+              label: 'Featured Section Title',
+              admin: {
+                condition: (_, siblingData) => Boolean(siblingData.show),
+              },
+            },
+            {
+              name: 'image',
+              type: 'upload',
+              label: 'Featured Image',
+              relationTo: 'media',
+              admin: {
+                condition: (_, siblingData) => Boolean(siblingData.show),
+              },
+            },
+            link({
+              appearances: false,
+              disableLabel: false,
+              overrides: {
+                admin: {
+                  condition: (_, siblingData) => Boolean(siblingData.show),
+                },
+                label: {
+                  label: 'Featured Link Text',
+                },
+              },
+            }),
+            {
+              name: 'description',
+              type: 'textarea',
+              label: 'Featured Description',
+              admin: {
+                condition: (_, siblingData) => Boolean(siblingData.show),
+              },
+            },
+            {
+              name: 'backgroundColor',
+              type: 'select',
+              label: 'Background Color',
+              options: [
+                { label: 'Default', value: 'default' },
+                { label: 'Secondary', value: 'secondary' },
+                { label: 'Muted', value: 'muted' },
+              ],
+              defaultValue: 'secondary',
+              admin: {
+                condition: (_, siblingData) => Boolean(siblingData.show),
+              },
+            },
+          ],
         },
       ],
       maxRows: 8,

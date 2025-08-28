@@ -38,6 +38,10 @@ export const RelumeHeader: Block = {
       name: 'primaryButton',
       type: 'group',
       label: 'Primary Button',
+      admin: {
+        condition: (_, siblingData) => ['header-01', 'header-05', 'header-47', 'header-50', 'header-62'].includes(siblingData.variant),
+        description: 'Primary action button (not available for simple centered variants)',
+      },
       fields: [
         {
           name: 'text',
@@ -63,6 +67,10 @@ export const RelumeHeader: Block = {
       name: 'secondaryButton',
       type: 'group',
       label: 'Secondary Button',
+      admin: {
+        condition: (_, siblingData) => ['header-01', 'header-05', 'header-47', 'header-50', 'header-62'].includes(siblingData.variant),
+        description: 'Secondary action button (not available for simple centered variants)',
+      },
       fields: [
         {
           name: 'text',
@@ -90,7 +98,8 @@ export const RelumeHeader: Block = {
       label: 'Header Image',
       relationTo: 'media',
       admin: {
-        description: 'The main image for the header section',
+        condition: (_, siblingData) => ['header-01'].includes(siblingData.variant),
+        description: 'The main image displayed alongside content (only for side-by-side layouts)',
       },
     },
     {
@@ -99,7 +108,7 @@ export const RelumeHeader: Block = {
       label: 'Background Image',
       relationTo: 'media',
       admin: {
-        condition: (_, siblingData) => ['header-05', 'header-47'].includes(siblingData.variant),
+        condition: (_, siblingData) => ['header-05', 'header-50', 'header-54'].includes(siblingData.variant),
         description: 'Background image for full-screen header variants',
       },
     },
@@ -142,7 +151,8 @@ export const RelumeHeader: Block = {
         { label: 'Right', value: 'right' },
       ],
       admin: {
-        condition: (_, siblingData) => ['header-46', 'header-47', 'header-50'].includes(siblingData.variant),
+        condition: (_, siblingData) => ['header-46', 'header-50'].includes(siblingData.variant),
+        description: 'Text alignment for centered layouts',
       },
     },
     {
@@ -153,7 +163,7 @@ export const RelumeHeader: Block = {
       min: 0,
       max: 100,
       admin: {
-        condition: (_, siblingData) => ['header-05', 'header-47'].includes(siblingData.variant),
+        condition: (_, siblingData) => ['header-05', 'header-50', 'header-54'].includes(siblingData.variant),
         description: 'Opacity of the dark overlay on background image (0-100)',
       },
     },

@@ -158,44 +158,6 @@ export interface UserAuthOperations {
 export interface Page {
   id: number;
   title: string;
-  hero: {
-    type: 'none' | 'highImpact' | 'mediumImpact' | 'lowImpact';
-    richText?: {
-      root: {
-        type: string;
-        children: {
-          type: string;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    } | null;
-    links?:
-      | {
-          link: {
-            type?: ('reference' | 'custom') | null;
-            newTab?: boolean | null;
-            reference?: {
-              relationTo: 'pages';
-              value: number | Page;
-            } | null;
-            url?: string | null;
-            label: string;
-            /**
-             * Choose how the link should be rendered.
-             */
-            appearance?: ('default' | 'outline') | null;
-          };
-          id?: string | null;
-        }[]
-      | null;
-    media?: (number | null) | Media;
-  };
   layout: (
     | CallToActionBlock
     | ContentBlock
@@ -204,7 +166,6 @@ export interface Page {
     | FormBlock
     | FeaturesBlock
     | NewsletterCTABlock
-    | HeroBlock
     | TestimonialsBlock
     | FAQBlock
     | CourseArchiveBlock
@@ -232,90 +193,6 @@ export interface Page {
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "media".
- */
-export interface Media {
-  id: number;
-  alt?: string | null;
-  caption?: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  updatedAt: string;
-  createdAt: string;
-  url?: string | null;
-  thumbnailURL?: string | null;
-  filename?: string | null;
-  mimeType?: string | null;
-  filesize?: number | null;
-  width?: number | null;
-  height?: number | null;
-  focalX?: number | null;
-  focalY?: number | null;
-  sizes?: {
-    thumbnail?: {
-      url?: string | null;
-      width?: number | null;
-      height?: number | null;
-      mimeType?: string | null;
-      filesize?: number | null;
-      filename?: string | null;
-    };
-    square?: {
-      url?: string | null;
-      width?: number | null;
-      height?: number | null;
-      mimeType?: string | null;
-      filesize?: number | null;
-      filename?: string | null;
-    };
-    small?: {
-      url?: string | null;
-      width?: number | null;
-      height?: number | null;
-      mimeType?: string | null;
-      filesize?: number | null;
-      filename?: string | null;
-    };
-    medium?: {
-      url?: string | null;
-      width?: number | null;
-      height?: number | null;
-      mimeType?: string | null;
-      filesize?: number | null;
-      filename?: string | null;
-    };
-    large?: {
-      url?: string | null;
-      width?: number | null;
-      height?: number | null;
-      mimeType?: string | null;
-      filesize?: number | null;
-      filename?: string | null;
-    };
-    xlarge?: {
-      url?: string | null;
-      width?: number | null;
-      height?: number | null;
-      mimeType?: string | null;
-      filesize?: number | null;
-      filename?: string | null;
-    };
-  };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -528,6 +405,90 @@ export interface MediaBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'mediaBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media".
+ */
+export interface Media {
+  id: number;
+  alt?: string | null;
+  caption?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+  sizes?: {
+    thumbnail?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    square?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    small?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    medium?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    large?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    xlarge?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+  };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -901,85 +862,6 @@ export interface NewsletterCTABlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'newsletterCTA';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "HeroBlock".
- */
-export interface HeroBlock {
-  title: string;
-  description?: string | null;
-  image: number | Media;
-  imagePosition?: ('left' | 'right') | null;
-  primaryButton: {
-    type?: ('reference' | 'custom') | null;
-    newTab?: boolean | null;
-    reference?: {
-      relationTo: 'pages';
-      value: number | Page;
-    } | null;
-    url?: string | null;
-    label: string;
-    /**
-     * Choose how the link should be rendered.
-     */
-    appearance?: ('default' | 'outline') | null;
-  };
-  secondaryButton: {
-    type?: ('reference' | 'custom') | null;
-    newTab?: boolean | null;
-    reference?: {
-      relationTo: 'pages';
-      value: number | Page;
-    } | null;
-    url?: string | null;
-    label: string;
-    /**
-     * Choose how the link should be rendered.
-     */
-    appearance?: ('default' | 'outline') | null;
-  };
-  /**
-   * Choose a background color for this block
-   */
-  backgroundColor?:
-    | (
-        | ''
-        | 'bg-[#FFFFFF]'
-        | 'bg-[#F2F2F2]'
-        | 'bg-[#B8B8B5]'
-        | 'bg-[#656564]'
-        | 'bg-[#000000]'
-        | 'bg-[#EDF3F5]'
-        | 'bg-[#B396AE]'
-        | 'bg-[#4F758D]'
-        | 'bg-[#3F5D70]'
-        | 'bg-[#17252A]'
-        | 'bg-[#E5F7F4]'
-        | 'bg-[#40C7B8]'
-        | 'bg-[#01B09A]'
-        | 'bg-[#008C7B]'
-        | 'bg-[#00432E]'
-        | 'bg-[#FDF4FB]'
-        | 'bg-[#F6EEE8]'
-        | 'bg-[#F5E0DF]'
-        | 'bg-[#C2BAB2]'
-        | 'bg-[#484542]'
-        | 'bg-[#FFF0F0]'
-        | 'bg-[#FF7971]'
-        | 'bg-[#FF6B68]'
-        | 'bg-[#CC5555]'
-        | 'bg-[#4C2020]'
-        | 'bg-[#F2F8FC]'
-        | 'bg-[#B2D5EA]'
-        | 'bg-[#A6D2E4]'
-        | 'bg-[#61A8BA]'
-        | 'bg-[#353F43]'
-      )
-    | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'hero';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1366,18 +1248,24 @@ export interface RelumeHeaderBlock {
   variant: 'header-01' | 'header-05' | 'header-46' | 'header-47' | 'header-50' | 'header-54' | 'header-62';
   title: string;
   description?: string | null;
+  /**
+   * Primary action button (not available for simple centered variants)
+   */
   primaryButton?: {
     text?: string | null;
     link?: string | null;
     show?: boolean | null;
   };
+  /**
+   * Secondary action button (not available for simple centered variants)
+   */
   secondaryButton?: {
     text?: string | null;
     link?: string | null;
     show?: boolean | null;
   };
   /**
-   * The main image for the header section
+   * The main image displayed alongside content (only for side-by-side layouts)
    */
   image?: (number | null) | Media;
   /**
@@ -1391,6 +1279,9 @@ export interface RelumeHeaderBlock {
         id?: string | null;
       }[]
     | null;
+  /**
+   * Text alignment for centered layouts
+   */
   alignment?: ('left' | 'center' | 'right') | null;
   /**
    * Opacity of the dark overlay on background image (0-100)
@@ -2317,28 +2208,6 @@ export interface PayloadMigration {
  */
 export interface PagesSelect<T extends boolean = true> {
   title?: T;
-  hero?:
-    | T
-    | {
-        type?: T;
-        richText?: T;
-        links?:
-          | T
-          | {
-              link?:
-                | T
-                | {
-                    type?: T;
-                    newTab?: T;
-                    reference?: T;
-                    url?: T;
-                    label?: T;
-                    appearance?: T;
-                  };
-              id?: T;
-            };
-        media?: T;
-      };
   layout?:
     | T
     | {
@@ -2349,7 +2218,6 @@ export interface PagesSelect<T extends boolean = true> {
         formBlock?: T | FormBlockSelect<T>;
         features?: T | FeaturesBlockSelect<T>;
         newsletterCTA?: T | NewsletterCTABlockSelect<T>;
-        hero?: T | HeroBlockSelect<T>;
         testimonials?: T | TestimonialsBlockSelect<T>;
         faq?: T | FAQBlockSelect<T>;
         courseArchive?: T | CourseArchiveBlockSelect<T>;
@@ -2501,39 +2369,6 @@ export interface NewsletterCTABlockSelect<T extends boolean = true> {
   buttonText?: T;
   image?: T;
   privacyText?: T;
-  id?: T;
-  blockName?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "HeroBlock_select".
- */
-export interface HeroBlockSelect<T extends boolean = true> {
-  title?: T;
-  description?: T;
-  image?: T;
-  imagePosition?: T;
-  primaryButton?:
-    | T
-    | {
-        type?: T;
-        newTab?: T;
-        reference?: T;
-        url?: T;
-        label?: T;
-        appearance?: T;
-      };
-  secondaryButton?:
-    | T
-    | {
-        type?: T;
-        newTab?: T;
-        reference?: T;
-        url?: T;
-        label?: T;
-        appearance?: T;
-      };
-  backgroundColor?: T;
   id?: T;
   blockName?: T;
 }
@@ -3477,6 +3312,7 @@ export interface Header {
    */
   navItems?:
     | {
+        type?: ('link' | 'dropdown') | null;
         link: {
           type?: ('reference' | 'custom') | null;
           newTab?: boolean | null;
@@ -3495,6 +3331,61 @@ export interface Header {
          * Highlight this navigation item (e.g., different styling)
          */
         featured?: boolean | null;
+        /**
+         * Configure the dropdown menu sections that appear when hovering/clicking this item
+         */
+        dropdownSections?:
+          | {
+              /**
+               * Title for this section of the dropdown menu
+               */
+              title: string;
+              links?:
+                | {
+                    /**
+                     * Optional icon to display next to the link
+                     */
+                    icon?: (number | null) | Media;
+                    link: {
+                      type?: ('reference' | 'custom') | null;
+                      newTab?: boolean | null;
+                      reference?: {
+                        relationTo: 'pages';
+                        value: number | Page;
+                      } | null;
+                      url?: string | null;
+                      label: string;
+                    };
+                    /**
+                     * Optional description shown below the link
+                     */
+                    description?: string | null;
+                    id?: string | null;
+                  }[]
+                | null;
+              id?: string | null;
+            }[]
+          | null;
+        /**
+         * Optional featured content area in the dropdown (like a highlighted blog post or promotion)
+         */
+        featuredContent?: {
+          show?: boolean | null;
+          title?: string | null;
+          image?: (number | null) | Media;
+          link?: {
+            type?: ('reference' | 'custom') | null;
+            newTab?: boolean | null;
+            reference?: {
+              relationTo: 'pages';
+              value: number | Page;
+            } | null;
+            url?: string | null;
+            label: string;
+          };
+          description?: string | null;
+          backgroundColor?: ('default' | 'secondary' | 'muted') | null;
+        };
         id?: string | null;
       }[]
     | null;
@@ -3767,6 +3658,7 @@ export interface HeaderSelect<T extends boolean = true> {
   navItems?:
     | T
     | {
+        type?: T;
         link?:
           | T
           | {
@@ -3778,6 +3670,46 @@ export interface HeaderSelect<T extends boolean = true> {
             };
         description?: T;
         featured?: T;
+        dropdownSections?:
+          | T
+          | {
+              title?: T;
+              links?:
+                | T
+                | {
+                    icon?: T;
+                    link?:
+                      | T
+                      | {
+                          type?: T;
+                          newTab?: T;
+                          reference?: T;
+                          url?: T;
+                          label?: T;
+                        };
+                    description?: T;
+                    id?: T;
+                  };
+              id?: T;
+            };
+        featuredContent?:
+          | T
+          | {
+              show?: T;
+              title?: T;
+              image?: T;
+              link?:
+                | T
+                | {
+                    type?: T;
+                    newTab?: T;
+                    reference?: T;
+                    url?: T;
+                    label?: T;
+                  };
+              description?: T;
+              backgroundColor?: T;
+            };
         id?: T;
       };
   ctaButton?:

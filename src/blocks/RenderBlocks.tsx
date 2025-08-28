@@ -10,7 +10,6 @@ import { FormBlock } from '@/blocks/Form/Component'
 import { MediaBlock } from '@/blocks/MediaBlock/Component'
 import { FeaturesBlock } from '@/blocks/FeaturesBlock/Component'
 import { NewsletterCTA } from '@/blocks/NewsletterCTA/Component'
-import { HeroBlock } from '@/blocks/HeroBlock/Component'
 import { TestimonialsBlock } from '@/blocks/TestimonialsBlock/Component'
 import { FAQBlock } from '@/blocks/FAQBlock/Component'
 import { CourseArchiveBlock } from '@/blocks/CourseArchive/Component'
@@ -32,7 +31,6 @@ const blockComponents = {
   mediaBlock: MediaBlock,
   features: FeaturesBlock,
   newsletterCTA: NewsletterCTA,
-  hero: HeroBlock,
   testimonials: TestimonialsBlock,
   faq: FAQBlock,
   courseArchive: CourseArchiveBlock,

@@ -9,7 +9,6 @@ import { FormBlock } from '../../blocks/Form/config'
 import { MediaBlock } from '../../blocks/MediaBlock/config'
 import { FeaturesBlock } from '../../blocks/FeaturesBlock/config'
 import { NewsletterCTA } from '../../blocks/NewsletterCTA/config'
-import { HeroBlock } from '../../blocks/HeroBlock/config'
 import { TestimonialsBlock } from '../../blocks/TestimonialsBlock/config'
 import { FAQBlock } from '../../blocks/FAQBlock/config'
 import { CourseArchive } from '../../blocks/CourseArchive/config'
@@ -22,7 +21,6 @@ import { RelumeGallery } from '../../blocks/RelumeGallery/config'
 import { RelumePricing } from '../../blocks/RelumePricing/config'
 import { RelumeTeam } from '../../blocks/RelumeTeam/config'
 import { RelumeContact } from '../../blocks/RelumeContact/config'
-import { hero } from '@/heros/config'
 import { slugField } from '@/fields/slug'
 import { populatePublishedAt } from '../../hooks/populatePublishedAt'
 import { generatePreviewPath } from '../../utilities/generatePreviewPath'
@@ -81,71 +79,55 @@ export const Pages: CollectionConfig<'pages'> = {
       required: true,
     },
     {
-      type: 'tabs',
-      tabs: [
-        {
-          fields: [hero],
-          label: 'Hero',
-        },
-        {
-          fields: [
-            {
-              name: 'layout',
-              type: 'blocks',
-              blocks: [
-                CallToAction,
-                Content,
-                MediaBlock,
-                Archive,
-                FormBlock,
-                FeaturesBlock,
-                NewsletterCTA,
-                HeroBlock,
-                TestimonialsBlock,
-                FAQBlock,
-                CourseArchive,
-                AgeGroupsArchive,
-                PostsArchive,
-                RelumeHeader,
-                RelumeLayout,
-                RelumeCTA,
-                RelumeGallery,
-                RelumePricing,
-                RelumeTeam,
-                RelumeContact,
-              ],
-              required: true,
-            },
-          ],
-          label: 'Content',
-        },
-        {
-          name: 'meta',
-          label: 'SEO',
-          fields: [
-            OverviewField({
-              titlePath: 'meta.title',
-              descriptionPath: 'meta.description',
-              imagePath: 'meta.image',
-            }),
-            MetaTitleField({
-              hasGenerateFn: true,
-            }),
-            MetaImageField({
-              relationTo: 'media',
-            }),
-
-            MetaDescriptionField({}),
-            PreviewField({
-              // if the `generateUrl` function is configured
-              hasGenerateFn: true,
-
-              // field paths to match the target field for data
-              titlePath: 'meta.title',
-              descriptionPath: 'meta.description',
-            }),
-          ],
-        },
+      name: 'layout',
+      type: 'blocks',
+      blocks: [
+        CallToAction,
+        Content,
+        MediaBlock,
+        Archive,
+        FormBlock,
+        FeaturesBlock,
+        NewsletterCTA,
+        TestimonialsBlock,
+        FAQBlock,
+        CourseArchive,
+        AgeGroupsArchive,
+        PostsArchive,
+        RelumeHeader,
+        RelumeLayout,
+        RelumeCTA,
+        RelumeGallery,
+        RelumePricing,
+        RelumeTeam,
+        RelumeContact,
+      ],
+      required: true,
+    },
+    {
+      name: 'meta',
+      label: 'SEO',
+      type: 'group',
+      fields: [
+        OverviewField({
+          titlePath: 'meta.title',
+          descriptionPath: 'meta.description',
+          imagePath: 'meta.image',
+        }),
+        MetaTitleField({
+          hasGenerateFn: true,
+        }),
+        MetaImageField({
+          relationTo: 'media',
+        }),
+        MetaDescriptionField({}),
+        PreviewField({
+          // if the `generateUrl` function is configured
+          hasGenerateFn: true,
+          // field paths to match the target field for data
+          titlePath: 'meta.title',
+          descriptionPath: 'meta.description',
+        }),
       ],
     },
     {

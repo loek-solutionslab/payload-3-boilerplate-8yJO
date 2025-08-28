@@ -11,7 +11,6 @@ import { Comments } from '@/components/Comments'
 
 import type { Post } from '@/payload-types'
 
-import { PostHero } from '@/heros/PostHero'
 import { generateMeta } from '@/utilities/generateMeta'
 import PageClient from './page.client'
 
@@ -54,7 +53,17 @@ export default async function Post({ params: paramsPromise }: Args) {
       {/* Allows redirects for valid pages too */}
       <PayloadRedirects disableNotFound url={url} />
 
-      <PostHero post={post} />
+      <header className="container py-16">
+        <h1 className="mb-6 text-4xl font-bold">{post.title}</h1>
+        {post.meta?.description && (
+          <p className="text-lg text-gray-600">{post.meta.description}</p>
+        )}
+        {post.publishedAt && (
+          <time className="text-sm text-gray-500 block mt-2">
+            {new Date(post.publishedAt).toLocaleDateString()}
+          </time>
+        )}
+      </header>
 
       <div className="flex flex-col items-center gap-4 pt-8">
         <div className="container">
