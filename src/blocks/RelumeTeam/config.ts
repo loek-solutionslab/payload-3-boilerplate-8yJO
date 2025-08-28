@@ -115,6 +115,7 @@ export const RelumeTeam: Block = {
           name: 'platform',
           type: 'select',
           label: 'Platform',
+          dbName: 'plat', // Shortened to prevent PostgreSQL identifier length issues
           options: [
             { label: 'LinkedIn', value: 'linkedin' },
             { label: 'Twitter/X', value: 'twitter' },
@@ -189,6 +190,7 @@ export const RelumeTeam: Block = {
             {
               name: 'type',
               type: 'radio',
+              dbName: 'hs_btn_type', // Shortened to prevent PostgreSQL identifier length issues
               options: [
                 {
                   label: 'Internal Page',
